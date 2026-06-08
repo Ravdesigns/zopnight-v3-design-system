@@ -243,6 +243,123 @@ html[data-theme='dark'] .calendar {
 /* Stat-strip cells need an explicit override so they don't go transparent */
 html[data-theme='dark'] .stat-strip > .stat-cell { background: transparent; }
 
+/* ─────────────────────────────────────────────────────────────────────
+ * Dark-mode border budget · sweep 2
+ *
+ * The first override block above covered .widget / .stat-card / .rec-card
+ * / .stat-strip / .table-wrap and a few others. But .card, .sg, .alert,
+ * .kpi-card, .nav-action-card, .kanban-card, .tree, .tabs, drawer
+ * sections, dropdown menus, and pattern shells still carry visible 1px
+ * borders. With multiple components on screen at once the borders pile
+ * up and the dark theme reads noisy.
+ *
+ * Fix: drop the chrome border on every passive container. Lift the
+ * background to --surface-1 so the surface itself implies the edge.
+ * Keep borders ONLY on interactive controls (.btn, .input, .fp, kbd,
+ * combobox / select triggers when focused or open). Dividers between
+ * rows downgrade from --line to --row-line so they whisper.
+ * ───────────────────────────────────────────────────────────────── */
+
+/* Passive containers · drop the static border + lift to surface-1 */
+html[data-theme='dark'] .card,
+html[data-theme='dark'] .card.sm,
+html[data-theme='dark'] .card.lg,
+html[data-theme='dark'] .sg,
+html[data-theme='dark'] .rec-card,
+html[data-theme='dark'] .nav-action-card,
+html[data-theme='dark'] .kpi-card,
+html[data-theme='dark'] .kanban-col,
+html[data-theme='dark'] .kanban-card,
+html[data-theme='dark'] .activity-timeline,
+html[data-theme='dark'] .resource-picker,
+html[data-theme='dark'] .timeline,
+html[data-theme='dark'] .alert,
+html[data-theme='dark'] .panel,
+html[data-theme='dark'] .form-card,
+html[data-theme='dark'] .settings-card,
+html[data-theme='dark'] .dropzone,
+html[data-theme='dark'] .selection-card,
+html[data-theme='dark'] .auth-shell,
+html[data-theme='dark'] .deploy-stepper,
+html[data-theme='dark'] .workflow-list,
+html[data-theme='dark'] .wizard-shell,
+html[data-theme='dark'] .revision-timeline,
+html[data-theme='dark'] .service-node,
+html[data-theme='dark'] .terminal-log,
+html[data-theme='dark'] .composite-filter-bar {
+  border-color: transparent;
+  background: var(--surface-1);
+}
+
+/* Chrome surfaces that should sit FLAT on the page (no border, no lift —
+ * just the same dark bg) · drawer + modal + dropdown menu + tooltip
+ * carry their own elevation via offset shadows or position. */
+html[data-theme='dark'] .drawer-tabs,
+html[data-theme='dark'] .tabs-bar,
+html[data-theme='dark'] .sub-nav,
+html[data-theme='dark'] .breadcrumb,
+html[data-theme='dark'] .page-header,
+html[data-theme='dark'] .stepper,
+html[data-theme='dark'] .segmented-control {
+  border-color: transparent;
+}
+
+/* Row dividers downgrade from --line (3.33:1) to --row-line (very soft).
+ * Tables, tree rows, suggestion lists, dropdown items, drawer sections
+ * still read as separated — but each line whispers instead of shouting. */
+html[data-theme='dark'] .tr-row,
+html[data-theme='dark'] .tree-row,
+html[data-theme='dark'] table tbody tr,
+html[data-theme='dark'] .dropdown-menu li,
+html[data-theme='dark'] .drawer-section,
+html[data-theme='dark'] .settings-row,
+html[data-theme='dark'] .cron-row,
+html[data-theme='dark'] .activity-row,
+html[data-theme='dark'] .timeline-row {
+  border-bottom-color: var(--row-line);
+}
+
+/* Cards inside cards (nested · rare but happens with kpi-charts) get an
+ * even subtler lift to surface-2 so the nesting reads without piling
+ * borders. */
+html[data-theme='dark'] .card .card,
+html[data-theme='dark'] .panel .card,
+html[data-theme='dark'] .card .kpi-card {
+  background: var(--surface-2);
+}
+
+/* Interactive controls KEEP their borders so they read as clickable.
+ * Re-anchor here in case any preceding rule accidentally caught them. */
+html[data-theme='dark'] .btn,
+html[data-theme='dark'] .btn-secondary,
+html[data-theme='dark'] .btn-ghost,
+html[data-theme='dark'] .input,
+html[data-theme='dark'] .form-input,
+html[data-theme='dark'] select,
+html[data-theme='dark'] textarea,
+html[data-theme='dark'] .kbd,
+html[data-theme='dark'] .fp,
+html[data-theme='dark'] .filter-chip-toggle,
+html[data-theme='dark'] .combobox-trigger,
+html[data-theme='dark'] .switch,
+html[data-theme='dark'] .toggle {
+  border-color: var(--line);
+}
+
+/* Hover bumps borders BACK on the few card-types that want a clickable
+ * affordance · stays a quiet visual cue without permanent noise. */
+html[data-theme='dark'] .card.hoverable:hover,
+html[data-theme='dark'] .sg.hoverable:hover,
+html[data-theme='dark'] .kpi-card.clickable:hover,
+html[data-theme='dark'] .kanban-card:hover,
+html[data-theme='dark'] .nav-action-card:hover {
+  border-color: var(--line);
+}
+
+/* Modal · drawer · dropdown-menu · tooltip use their own elevation
+ * (box-shadow or offset) — leave their borders alone. They aren't part
+ * of the "static page chrome" that piles up. */
+
 /* ─────────── Base ─────────── */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
