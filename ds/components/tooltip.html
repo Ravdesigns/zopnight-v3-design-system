@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Tooltip · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="tooltip"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Atom · floating</div>
+<h1 class="ds-h1">Tooltip</h1>
+<p class="ds-lead">Read-only hint surfaces. Ink-on-paper pill that appears on hover or keyboard focus. Three usage patterns: data-attribute (zero JS), explicit element (multi-line info), and disabled-wrap (the canonical reason-for-disabled affordance).</p>
+
+<section class="ds-section"><h2>Pattern A · data-attribute (most common)</h2>
+<p>Add <code>data-tooltip="text"</code> to any element. Optional <code>data-tooltip-pos="top|bottom|left|right"</code> (top is default). No JS. Triggers on <code>:hover</code> AND <code>:focus-visible</code> — keyboard parity is mandatory.</p>
+<div class="ds-demo" style="display:flex;gap:24px;flex-wrap:wrap;padding:32px;">
+  <button class="btn btn-primary" data-tooltip="Save your changes">Save</button>
+  <button class="btn btn-ghost" data-tooltip="Discard unsaved changes" data-tooltip-pos="bottom">Cancel</button>
+  <button class="btn btn-secondary" data-tooltip="Open in new tab" data-tooltip-pos="right">Open</button>
+  <button class="btn btn-secondary" data-tooltip="More options" data-tooltip-pos="left">⋯</button>
+</div>
+<div class="ds-code"><pre>&lt;button class="btn btn-primary" data-tooltip="Save your changes"&gt;Save&lt;/button&gt;
+
+&lt;button class="btn btn-ghost"
+        data-tooltip="Discard unsaved changes"
+        data-tooltip-pos="bottom"&gt;Cancel&lt;/button&gt;
+
+&lt;!-- Positions: top (default) · bottom · left · right --&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Pattern B · info-icon · multi-line content</h2>
+<p>For longer explanations beside form labels or in column headers. Wider, supports links inside. Use a real <code>&lt;div role="tooltip"&gt;</code> element controlled by JS so screen readers pick it up via <code>aria-describedby</code>.</p>
+<div class="ds-demo" style="padding:32px;">
+  <label style="display:inline-flex;align-items:center;font-size:13px;font-weight:600;color:var(--ink);">
+    Auto-shutdown after idle
+    <span class="info-icon" tabindex="0" data-tooltip="Stops the resource when CPU drops below 5% for 10 minutes. Cost-while-on continues to bill until shutdown completes." data-tooltip-pos="right" aria-describedby="tip-shutdown" role="button">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3M7 9.5v.01" stroke-linecap="round"/></svg>
+    </span>
+  </label>
+</div>
+<div class="ds-code"><pre>&lt;label&gt;
+  Auto-shutdown after idle
+  &lt;span class="info-icon" tabindex="0"
+        data-tooltip="Stops the resource when CPU drops below 5%..."
+        data-tooltip-pos="right"
+        role="button"&gt;
+    &lt;svg .../&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Pattern C · disabled-with-reason (the switch case)</h2>
+<p>The most common product UI miss: a disabled switch/button with no explanation. Wrap the disabled element in <code>.tooltip-wrap</code> so the tooltip fires on the wrap (since <code>:disabled</code> blocks events on the control itself).</p>
+<div class="ds-demo" style="display:flex;flex-direction:column;gap:16px;padding:32px;">
+  <span class="tooltip-wrap" data-tooltip="Read-only access · contact your admin to enable" data-tooltip-pos="right">
+    <label class="switch">
+      <input type="checkbox" disabled checked>
+      Auto-shutdown
+    </label>
+  </span>
+  <span class="tooltip-wrap" data-tooltip="Disabled in production · only available in staging" data-tooltip-pos="right">
+    <button class="btn btn-secondary" disabled>Restart instance</button>
+  </span>
+</div>
+<div class="ds-code"><pre>&lt;span class="tooltip-wrap"
+      data-tooltip="Read-only access · contact your admin to enable"
+      data-tooltip-pos="right"&gt;
+  &lt;label class="switch"&gt;
+    &lt;input type="checkbox" disabled checked&gt;
+    Auto-shutdown
+  &lt;/label&gt;
+&lt;/span&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Hint on truncated content</h2>
+<p>When a name or path is truncated with <code>text-overflow: ellipsis</code>, attach a tooltip carrying the full value. Cursor changes to <code>help</code> so the user knows there's more.</p>
+<div class="ds-demo" style="padding:32px;">
+  <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--font-mono);font-size:12px;">
+    <span data-truncated="true" class="tooltip-trigger"
+          data-tooltip="arn:aws:ec2:us-east-1:621534234521:instance/i-09f8e7a2b3c4d5e6f"
+          data-tooltip-pos="bottom"
+          style="display:inline-block;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+      arn:aws:ec2:us-east-1:621534234521:instance/i-09f8e7a2b3c4d5e6f
+    </span>
+    <span data-truncated="true" class="tooltip-trigger"
+          data-tooltip="/projects/payments-api/services/checkout-handler-v2"
+          data-tooltip-pos="bottom"
+          style="display:inline-block;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+      /projects/payments-api/services/checkout-handler-v2
+    </span>
+  </div>
+</div>
+</section>
+
+<section class="ds-section"><h2>Positions</h2>
+<table class="ds-table"><thead><tr><th>Position</th><th>Use when</th></tr></thead><tbody>
+<tr><td><code>top</code> (default)</td><td>Trigger sits near the bottom of the viewport, OR trigger is in a row above other content</td></tr>
+<tr><td><code>bottom</code></td><td>Trigger sits near the top of the viewport (header, top nav)</td></tr>
+<tr><td><code>right</code></td><td>Trigger is in a left-aligned form label or sidebar</td></tr>
+<tr><td><code>left</code></td><td>Trigger is in a right-aligned cell (action menu, kebab, etc.)</td></tr>
+</tbody></table>
+<p style="font-size:12.5px;color:var(--g-500);">CSS-only positioning is sufficient for most cases. For viewport-edge cases (tooltip would overflow), use a popper library (Floating UI) to flip to the opposite side.</p>
+</section>
+
+<section class="ds-section"><h2>When NOT to use a tooltip</h2>
+<table class="ds-table"><thead><tr><th>Instead</th><th>Reason</th></tr></thead><tbody>
+<tr><td>Critical info → inline copy or alert</td><td>Tooltips disappear · users miss them · don't rely on hover for must-know info</td></tr>
+<tr><td>Interactive content (button, link) → Dropdown / popover</td><td>Tooltips have <code>pointer-events: none</code> · the user can't click anything inside</td></tr>
+<tr><td>Long-form help → inline help text or doc link</td><td>Tooltip max width 260-320px · longer content scrolls off-screen</td></tr>
+<tr><td>Touch / mobile primary actions → button labels</td><td>No hover on touch · tooltips become unreachable</td></tr>
+<tr><td>Validation errors → inline error row</td><td>Errors must persist until resolved · tooltip vanishes on mouseout</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Accessibility</h2>
+<ul style="line-height:1.7;color:var(--g-700);">
+  <li><strong>Keyboard parity</strong> · tooltip fires on <code>:focus-visible</code>, not just <code>:hover</code>. The data-attribute pattern handles this automatically; for explicit-element pattern wire it in JS.</li>
+  <li><strong>Trigger must be focusable</strong> · if you're attaching a tooltip to a <code>&lt;span&gt;</code> or icon, add <code>tabindex="0"</code> and <code>role="button"</code>.</li>
+  <li><strong>Connect via aria-describedby</strong> · for screen readers, point the trigger at the tooltip's ID. The tooltip itself gets <code>role="tooltip"</code>.</li>
+  <li><strong>Escape dismisses</strong> · for explicit-element pattern, Esc should hide the tooltip without losing focus on the trigger.</li>
+  <li><strong>Never trap focus inside a tooltip</strong> · tooltips don't contain interactive content. If you find yourself wanting Tab to enter the tooltip, you actually want a Dropdown.</li>
+  <li><strong>Reduced motion</strong> · the 110ms fade is suppressed under <code>prefers-reduced-motion: reduce</code>.</li>
+</ul>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Tooltip on a disabled control explaining the constraint</div>
+    <div class="why">User learns why · doesn't bang on the dead button.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Disabled button with no explanation</div>
+    <div class="why">Feels broken · users have no path to resolution.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Short tooltip · 1-2 sentences · plain language</div>
+    <div class="why">Read at a glance. Tooltips are interrupts; respect the user's time.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Paragraph-long tooltip with bullet points</div>
+    <div class="why">Use inline help text or a docs link · tooltips aren't articles.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Inline error row under a failed form field</div>
+    <div class="why">Error persists · user sees it while typing the fix.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Tooltip on the field that shows the error on hover only</div>
+    <div class="why">User moves their mouse to type, error vanishes, user re-submits same broken value.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

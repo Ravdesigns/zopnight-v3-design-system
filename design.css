@@ -7571,19 +7571,46 @@ html[data-theme='dark'] .role-matrix { background: var(--surface-1); border-colo
   --st-pulse: var(--state-error);
 }
 
-/* ── 2. Tooltip · general-purpose floating ink pill ─────────────── */
+/* ── 2. Tooltip · floating ink pill · 3 patterns ─────────────────
+ *
+ * Pattern A · data-attribute (zero JS, ideal for short hints)
+ *   <button data-tooltip="Save changes" data-tooltip-pos="top">Save</button>
+ *
+ * Pattern B · explicit element (richer content, JS positions on hover)
+ *   <span class="tooltip-trigger" aria-describedby="tip-1">
+ *     <svg class="info-icon">...</svg>
+ *   </span>
+ *   <div role="tooltip" id="tip-1" class="tooltip info-tooltip" hidden>
+ *     Multi-line content with <a>links</a> ok inside info variant.
+ *   </div>
+ *
+ * Pattern C · disabled-with-reason wrap (the switch case)
+ *   <span class="tooltip-wrap" data-tooltip="Read-only · contact admin">
+ *     <label class="switch"><input type="checkbox" disabled></label>
+ *   </span>
+ *
+ * Rules:
+ * - Square corners (border-radius 0) · matches the system
+ * - Ink on paper · paper text on ink bg
+ * - Tooltips never contain interactive content (read-only hints only).
+ *   If you need a click target inside, that's a Dropdown / popover.
+ * - Triggers on :hover AND :focus-visible · keyboard parity is mandatory
+ * - prefers-reduced-motion · fade in 0ms · no transform animation
+ */
+
 .tooltip {
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--ink); color: var(--paper);
   font-family: var(--font-body); font-size: 11.5px; font-weight: 500;
   padding: 5px 9px;
-  border-radius: 3px;
+  border-radius: 0;
   pointer-events: none;
-  box-shadow: 0 4px 12px rgba(10,10,10,0.18);
-  z-index: 200;
+  z-index: var(--z-tooltip, 400);
   max-width: 260px;
   white-space: normal; line-height: 1.4;
+  position: absolute;
 }
+/* Arrow · 5px triangle pointing at the trigger */
 .tooltip::after {
   content: ''; position: absolute;
   border: 5px solid transparent;
@@ -7592,15 +7619,98 @@ html[data-theme='dark'] .role-matrix { background: var(--surface-1); border-colo
 .tooltip[data-placement^="bottom"]::after { top:    -10px; left: 50%; transform: translateX(-50%); border-bottom-color: var(--ink); }
 .tooltip[data-placement^="left"]::after   { right:  -10px; top:  50%; transform: translateY(-50%); border-left-color: var(--ink); }
 .tooltip[data-placement^="right"]::after  { left:   -10px; top:  50%; transform: translateY(-50%); border-right-color: var(--ink); }
-.tooltip.info-tooltip { max-width: 320px; padding: 10px 12px; text-align: left; }
-.tooltip-trigger[data-truncated="true"] { cursor: help; }
+
+/* Info variant · wider, multi-line, with links */
+.tooltip.info-tooltip { max-width: 320px; padding: 10px 12px; text-align: left; font-size: 12px; }
+.tooltip.info-tooltip a { color: var(--zop-orange); border-bottom: 1px solid var(--zop-orange); }
+.tooltip.info-tooltip a:hover { color: var(--paper); border-bottom-color: var(--paper); }
+
+/* The info-icon trigger · the canonical "i" affordance next to labels */
 .info-icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 14px; height: 14px;
   color: var(--g-500); cursor: help;
   vertical-align: -2px; margin-left: 4px;
+  transition: color var(--dur-fast, 110ms) var(--ease-out, ease);
 }
-.info-icon:hover { color: var(--ink); }
+.info-icon:hover, .info-icon:focus-visible { color: var(--ink); outline: none; }
+.tooltip-trigger[data-truncated="true"] { cursor: help; }
+
+/* ─── Pattern A · data-attribute (CSS-only, no JS required) ─────
+ * Add data-tooltip="text" + optional data-tooltip-pos="top|bottom|left|right".
+ * Tooltip renders as a pseudo-element on :hover / :focus-visible. */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::before,
+[data-tooltip]::after {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast, 110ms) var(--ease-out, ease) 200ms;
+  z-index: var(--z-tooltip, 400);
+}
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  background: var(--ink); color: var(--paper);
+  font-family: var(--font-body); font-size: 11.5px; font-weight: 500;
+  padding: 5px 9px;
+  white-space: nowrap; line-height: 1.4;
+  max-width: 260px;
+}
+[data-tooltip]::after {
+  content: '';
+  border: 5px solid transparent;
+}
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::before,
+[data-tooltip]:focus-visible::after {
+  opacity: 1;
+}
+
+/* Positions · top is default */
+[data-tooltip]:not([data-tooltip-pos])::before,
+[data-tooltip][data-tooltip-pos="top"]::before {
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+}
+[data-tooltip]:not([data-tooltip-pos])::after,
+[data-tooltip][data-tooltip-pos="top"]::after {
+  bottom: calc(100% - 2px); left: 50%; transform: translateX(-50%); border-top-color: var(--ink);
+}
+[data-tooltip][data-tooltip-pos="bottom"]::before {
+  top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+}
+[data-tooltip][data-tooltip-pos="bottom"]::after {
+  top: calc(100% - 2px); left: 50%; transform: translateX(-50%); border-bottom-color: var(--ink);
+}
+[data-tooltip][data-tooltip-pos="left"]::before {
+  right: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+}
+[data-tooltip][data-tooltip-pos="left"]::after {
+  right: calc(100% - 2px); top: 50%; transform: translateY(-50%); border-left-color: var(--ink);
+}
+[data-tooltip][data-tooltip-pos="right"]::before {
+  left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+}
+[data-tooltip][data-tooltip-pos="right"]::after {
+  left: calc(100% - 2px); top: 50%; transform: translateY(-50%); border-right-color: var(--ink);
+}
+
+/* ─── Pattern C · tooltip-wrap (for disabled controls) ───────────
+ * The wrap forwards :hover / :focus-within to itself even when the
+ * inner control is :disabled (which normally blocks events). */
+.tooltip-wrap {
+  display: inline-block;
+  position: relative;
+}
+.tooltip-wrap[data-tooltip]::before { white-space: normal; min-width: 140px; }
+
+/* Honour reduced motion · drop the fade-in transition */
+@media (prefers-reduced-motion: reduce) {
+  [data-tooltip]::before,
+  [data-tooltip]::after { transition: none; }
+}
 
 /* ── 3. Searchable combobox (single + multi-select) ─────────────── */
 .combobox {
