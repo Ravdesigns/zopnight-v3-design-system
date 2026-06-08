@@ -2571,9 +2571,16 @@ table.resources tbody tr:focus-within .row-actions { opacity: 1; }
   display: inline-flex; align-items: center; gap: 6px;
   text-transform: none; letter-spacing: 0;
 }
+/* Hover · color shift only · no background fill (was loud in dark mode
+ * and competed visually with the active state). The brightness change
+ * is enough to read as interactive. */
 .tabs button:hover:not([aria-selected="true"]):not(.active),
 .tb button:hover:not([aria-selected="true"]):not(.active) {
-  color: var(--ink); background: var(--surface-2);
+  color: var(--ink);
+}
+[data-theme="dark"] .tabs button:hover:not([aria-selected="true"]):not(.active),
+[data-theme="dark"] .tb button:hover:not([aria-selected="true"]):not(.active) {
+  color: var(--paper);
 }
 .tabs button[aria-selected="true"], .tabs button.active,
 .tb button[aria-selected="true"], .tb button.active {
@@ -2583,7 +2590,10 @@ table.resources tbody tr:focus-within .row-actions { opacity: 1; }
 [data-theme="dark"] .tabs button[aria-selected="true"],
 [data-theme="dark"] .tabs button.active,
 [data-theme="dark"] .tb button[aria-selected="true"],
-[data-theme="dark"] .tb button.active { border-bottom-color: #F4F0E2; }
+[data-theme="dark"] .tb button.active {
+  color: var(--paper);
+  border-bottom-color: var(--paper);
+}
 .tabs button svg, .tb button svg { width: 14px; height: 14px; }
 
 /* Badge slot */
@@ -7125,27 +7135,38 @@ html[data-theme='dark'] .auth-shell .auth-aside {
 }
 
 /* Loading · between click and server ack.
- * One signal only: the thumb becomes a tiny spinning ring. The track
- * keeps whatever direction-state it was in (no gradient, no pulse).
+ * One signal only: the thumb becomes a tiny spinning ring CENTERED on
+ * the track. Track stays neutral grey (regardless of :checked) so the
+ * spinner sits clearly in the middle, not at an edge.
  * Pointer-events disabled so the user can't double-toggle. */
 .switch.is-loading { cursor: progress; }
-.switch.is-loading input[type="checkbox"] {
+.switch.is-loading input[type="checkbox"],
+.switch.is-loading input[type="checkbox"]:checked {
   pointer-events: none;
+  background: var(--g-300);   /* neutral track during loading */
 }
 .switch.is-loading input[type="checkbox"]::after {
   /* Thumb becomes a 3/4 ring · paper-colored border with one transparent
-   * side · rotates 360° for the universal "loading" cue */
+   * side · rotates 360° for the universal "loading" cue.
+   * Center on the track regardless of :checked. */
   background: transparent;
-  border: 1.5px solid var(--paper);
+  border: 1.5px solid var(--ink);
   border-top-color: transparent;
   border-radius: 50%;
+  /* Center horizontally · always. */
+  left: 50%;
+  top: 50%;
+  /* Account for the thumb's own size when translating. */
+  transform: translate(-50%, -50%) rotate(0deg);
   animation: switch-spin 700ms linear infinite;
   /* Hold position · don't slide with the :checked transition */
   transition: none;
 }
 
+/* Keyframes must preserve the centering translate */
 @keyframes switch-spin {
-  to { transform: rotate(360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Failed · the toggle attempt errored. Switch snaps back to its previous
