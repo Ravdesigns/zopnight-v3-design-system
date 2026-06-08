@@ -7089,11 +7089,16 @@ html[data-theme='dark'] .auth-shell .auth-aside {
 .user-pill .name { font-weight: 500; }
 .user-pill .role { color: var(--g-500); font-size: 11px; }
 
-/* 4 · Switch · boolean toggle */
+/* 4 · Switch · boolean toggle
+ * States: off · on · loading · failed · disabled
+ * Use for: resource on/off, schedule active/paused, settings booleans.
+ * For destructive toggles (delete confirm, plan downgrade) use a modal
+ * instead — switches are for reversible decisions only. */
 .switch {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-body); font-size: 13px; color: var(--ink);
   cursor: pointer;
+  position: relative;
 }
 .switch input[type="checkbox"] {
   appearance: none; -webkit-appearance: none;
@@ -7102,17 +7107,126 @@ html[data-theme='dark'] .auth-shell .auth-aside {
   position: relative;
   cursor: pointer;
   transition: background 160ms ease;
+  flex-shrink: 0;
 }
 .switch input[type="checkbox"]::after {
   content: ''; position: absolute;
   top: 2px; left: 2px;
   width: 14px; height: 14px;
   background: var(--paper);
-  transition: left 160ms ease;
+  transition: left 160ms ease, transform 160ms ease;
 }
 .switch input[type="checkbox"]:checked { background: var(--ink); }
 .switch input[type="checkbox"]:checked::after { left: 14px; }
 .switch input[type="checkbox"]:disabled { opacity: 0.45; cursor: not-allowed; }
+.switch input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--zop-orange);
+  outline-offset: 2px;
+}
+
+/* Loading · between click and server ack.
+ * - Pointer-events disabled (user can't double-toggle while waiting)
+ * - Thumb shifts to a center-park spot and pulses (state ambiguity is honest:
+ *   the switch is neither off nor on right now, it's resolving)
+ * - Small spinner glyph appears next to the track so the user knows work
+ *   is in flight, not frozen */
+.switch.is-loading { cursor: progress; }
+.switch.is-loading input[type="checkbox"] {
+  pointer-events: none;
+  background: var(--g-300);
+}
+.switch.is-loading input[type="checkbox"]:checked {
+  background: linear-gradient(90deg, var(--g-300) 0%, var(--g-300) 50%, var(--ink) 50%, var(--ink) 100%);
+}
+.switch.is-loading input[type="checkbox"]::after {
+  left: 8px;
+  animation: switch-pulse 900ms ease-in-out infinite;
+}
+.switch.is-loading::after {
+  content: '';
+  width: 12px; height: 12px;
+  margin-left: -2px;
+  border: 1.5px solid var(--g-300);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: switch-spin 700ms linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes switch-pulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(0.85); opacity: 0.7; }
+}
+@keyframes switch-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Failed · the toggle attempt errored. Switch snaps back to its previous
+ * state with a brief shake + orange track tint. Pair with an inline error
+ * row below the switch (component-level concern, not styled here). */
+.switch.is-failed input[type="checkbox"] {
+  background: var(--state-error);
+  animation: switch-shake 400ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+.switch.is-failed input[type="checkbox"]:checked { background: var(--state-error); }
+@keyframes switch-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-3px); }
+  40%, 60% { transform: translateX(3px); }
+}
+
+/* Honour reduced-motion · drop the spin/pulse/shake to a static cue */
+@media (prefers-reduced-motion: reduce) {
+  .switch.is-loading input[type="checkbox"]::after,
+  .switch.is-loading::after,
+  .switch.is-failed input[type="checkbox"] {
+    animation: none;
+  }
+}
+
+/* Sizes */
+.switch.sm input[type="checkbox"] { width: 24px; height: 14px; }
+.switch.sm input[type="checkbox"]::after { width: 10px; height: 10px; top: 2px; left: 2px; }
+.switch.sm input[type="checkbox"]:checked::after { left: 12px; }
+.switch.lg input[type="checkbox"] { width: 38px; height: 22px; }
+.switch.lg input[type="checkbox"]::after { width: 18px; height: 18px; top: 2px; left: 2px; }
+.switch.lg input[type="checkbox"]:checked::after { left: 18px; }
+
+/* Resource toggle · the composed row used in tables / detail panels to
+ * toggle a single cloud resource on/off. Combines the switch with:
+ * - status text (Running / Stopped / Starting … / Stopping …)
+ * - optional meta line (uptime, cost-while-on)
+ * - tooltip on the disabled state explaining why */
+.resource-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-size: 13px;
+}
+.resource-toggle .rt-label {
+  display: inline-flex; flex-direction: column; gap: 2px;
+}
+.resource-toggle .rt-state {
+  font-weight: 600; color: var(--ink);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.resource-toggle .rt-state::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--g-400);
+}
+.resource-toggle[data-state="on"] .rt-state::before { background: var(--state-success); }
+.resource-toggle[data-state="off"] .rt-state::before { background: var(--g-400); }
+.resource-toggle[data-state="loading"] .rt-state::before {
+  background: var(--zop-orange); animation: cd-pulse 1.4s ease-in-out infinite;
+}
+.resource-toggle[data-state="failed"] .rt-state::before { background: var(--state-error); }
+.resource-toggle .rt-meta {
+  font-size: 11px; color: var(--g-500);
+  font-variant-numeric: tabular-nums;
+}
+.resource-toggle .rt-error {
+  font-size: 11.5px; color: var(--state-error);
+  margin-top: 4px;
+}
 
 /* 5 · Dropdown menu / popover */
 .dropdown { position: relative; display: inline-block; }

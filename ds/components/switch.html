@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Switch · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="switch"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Atom · interactive</div>
+<h1 class="ds-h1">Switch</h1>
+<p class="ds-lead">Boolean toggle for reversible decisions. Five states: off · on · loading · failed · disabled. For resource on/off where the API call takes 1-5 seconds, the loading state is non-optional — the user must know the request is in flight, not frozen.</p>
+
+<section class="ds-section"><h2>The three core states</h2>
+<div class="ds-demo" style="display:flex;gap:32px;align-items:center;flex-wrap:wrap;">
+  <label class="switch">
+    <input type="checkbox">
+    Off
+  </label>
+  <label class="switch">
+    <input type="checkbox" checked>
+    On
+  </label>
+  <label class="switch">
+    <input type="checkbox" disabled>
+    Disabled
+  </label>
+</div>
+<div class="ds-code"><pre>&lt;label class="switch"&gt;
+  &lt;input type="checkbox"&gt;
+  Off
+&lt;/label&gt;
+
+&lt;label class="switch"&gt;
+  &lt;input type="checkbox" checked&gt;
+  On
+&lt;/label&gt;
+
+&lt;label class="switch"&gt;
+  &lt;input type="checkbox" disabled&gt;
+  Disabled
+&lt;/label&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Loading · the critical state</h2>
+<p>When the user clicks a switch that fires an API call (start/stop a resource, save a setting), the switch enters <code>.is-loading</code> immediately. Pointer events disable so the user can't double-toggle. A spinner glyph appears next to the track. The thumb parks at center and pulses — the switch is in an honest "resolving" state, neither on nor off.</p>
+<div class="ds-demo" style="display:flex;gap:32px;align-items:center;flex-wrap:wrap;">
+  <label class="switch is-loading">
+    <input type="checkbox">
+    Starting…
+  </label>
+  <label class="switch is-loading">
+    <input type="checkbox" checked>
+    Stopping…
+  </label>
+</div>
+<div class="ds-code"><pre>&lt;label class="switch is-loading"&gt;
+  &lt;input type="checkbox"&gt;
+  Starting…
+&lt;/label&gt;
+
+// JS flow:
+// 1. user clicks switch
+// 2. add .is-loading to .switch · update label to "Starting…"
+// 3. call API
+// 4a. success → remove .is-loading · toggle :checked · update label
+// 4b. failure → see failed state below</pre></div>
+</section>
+
+<section class="ds-section"><h2>Failed · rollback + shake</h2>
+<p>If the API call returns an error, the switch enters <code>.is-failed</code>. Track tints orange, a brief shake animation plays, and the switch state SNAPS BACK to what it was before the click. Pair with an inline error row below explaining the failure.</p>
+<div class="ds-demo">
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <label class="switch is-failed">
+      <input type="checkbox">
+      Off
+    </label>
+    <div style="font-size:11.5px;color:var(--state-error);">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" style="vertical-align:-1px;"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v2.5M6 8v.01"/></svg>
+      Couldn't start · insufficient capacity in us-east-1. <a href="#" style="color:inherit;text-decoration:underline;">Retry</a>
+    </div>
+  </div>
+</div>
+<div class="ds-code"><pre>&lt;label class="switch is-failed"&gt;
+  &lt;input type="checkbox"&gt;
+  Off
+&lt;/label&gt;
+&lt;div class="field-error"&gt;
+  &lt;svg .../&gt; Couldn't start · insufficient capacity. &lt;a&gt;Retry&lt;/a&gt;
+&lt;/div&gt;
+
+// JS flow on error:
+// 1. remove .is-loading
+// 2. add .is-failed · stays for 400ms (shake duration)
+// 3. setTimeout(400, () =&gt; removeClass('is-failed'))
+// 4. render error row · keep visible until user dismisses or retries</pre></div>
+</section>
+
+<section class="ds-section"><h2>Sizes</h2>
+<p>Three sizes for different surface densities. Use <code>.sm</code> in dense table rows, default in detail panels, <code>.lg</code> in settings forms.</p>
+<div class="ds-demo" style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+  <label class="switch sm">
+    <input type="checkbox" checked>
+    sm · 24×14
+  </label>
+  <label class="switch">
+    <input type="checkbox" checked>
+    default · 30×18
+  </label>
+  <label class="switch lg">
+    <input type="checkbox" checked>
+    lg · 38×22
+  </label>
+</div>
+</section>
+
+<section class="ds-section"><h2>Resource toggle · the composed pattern</h2>
+<p>For the canonical "turn this cloud resource on/off" use case. Combines the switch with status text, a status dot, and optional meta (uptime, cost-while-on). The <code>data-state</code> attribute drives the dot colour and label.</p>
+<div class="ds-demo" style="display:flex;flex-direction:column;gap:14px;">
+  <div class="resource-toggle" data-state="on">
+    <label class="switch"><input type="checkbox" checked></label>
+    <div class="rt-label">
+      <span class="rt-state">Running</span>
+      <span class="rt-meta">Uptime 4h 22m · $0.42/hr</span>
+    </div>
+  </div>
+  <div class="resource-toggle" data-state="loading">
+    <label class="switch is-loading"><input type="checkbox"></label>
+    <div class="rt-label">
+      <span class="rt-state">Starting…</span>
+      <span class="rt-meta">est. 30s · ETA 11:42</span>
+    </div>
+  </div>
+  <div class="resource-toggle" data-state="off">
+    <label class="switch"><input type="checkbox"></label>
+    <div class="rt-label">
+      <span class="rt-state">Stopped</span>
+      <span class="rt-meta">Last run 2d ago · $0/hr</span>
+    </div>
+  </div>
+  <div class="resource-toggle" data-state="failed">
+    <label class="switch is-failed"><input type="checkbox"></label>
+    <div class="rt-label">
+      <span class="rt-state">Failed to start</span>
+      <span class="rt-error">Insufficient capacity in us-east-1. <a href="#" style="color:inherit;text-decoration:underline;">Retry</a></span>
+    </div>
+  </div>
+</div>
+<div class="ds-code"><pre>&lt;div class="resource-toggle" data-state="on"&gt;
+  &lt;label class="switch"&gt;&lt;input type="checkbox" checked&gt;&lt;/label&gt;
+  &lt;div class="rt-label"&gt;
+    &lt;span class="rt-state"&gt;Running&lt;/span&gt;
+    &lt;span class="rt-meta"&gt;Uptime 4h 22m · $0.42/hr&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+// data-state values: "on" "off" "loading" "failed"
+// Drives dot colour and the rt-state label.</pre></div>
+</section>
+
+<section class="ds-section"><h2>State machine</h2>
+<table class="ds-table"><thead><tr><th>From</th><th>Event</th><th>To</th><th>UI</th></tr></thead><tbody>
+<tr><td>off</td><td>click</td><td>loading</td><td>add <code>.is-loading</code> · label "Starting…"</td></tr>
+<tr><td>loading</td><td>API success</td><td>on</td><td>remove <code>.is-loading</code> · toggle <code>:checked</code> · label "Running"</td></tr>
+<tr><td>loading</td><td>API failure</td><td>off (failed)</td><td>remove <code>.is-loading</code> · add <code>.is-failed</code> for 400ms · show error row · auto-clear failed class</td></tr>
+<tr><td>on</td><td>click</td><td>loading</td><td>add <code>.is-loading</code> · label "Stopping…"</td></tr>
+<tr><td>loading</td><td>API success</td><td>off</td><td>remove <code>.is-loading</code> · uncheck · label "Stopped"</td></tr>
+<tr><td>any</td><td>permission denied</td><td>disabled</td><td><code>disabled</code> attribute on input · tooltip explaining why</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Accessibility</h2>
+<ul style="line-height:1.7;color:var(--g-700);">
+  <li>Switch is a native <code>&lt;input type="checkbox"&gt;</code> wrapped in <code>&lt;label&gt;</code> — keyboard accessible, screen-reader announces "checkbox, off / on".</li>
+  <li>For finer screen-reader semantics use <code>role="switch" aria-checked="true|false"</code> on the input so it announces as "switch" instead of "checkbox".</li>
+  <li>During loading: add <code>aria-busy="true"</code> to the parent <code>.switch</code> so assistive tech announces "busy". Update the visible label ("Starting…") so sighted users see the same.</li>
+  <li>On failure: announce the error via <code>role="alert"</code> on the error row so screen readers pick it up immediately.</li>
+  <li>Disabled needs a reason. Use <code>aria-describedby</code> pointing to a tooltip explaining "Read-only access — contact your admin."</li>
+  <li>Focus ring · orange 2px outline at 2px offset (system default).</li>
+</ul>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Switch · API call · spinner state · success/fail feedback</div>
+    <div class="why">Optimistic + honest. User sees the request is in flight.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Switch flips instantly + you call the API in the background</div>
+    <div class="why">If it fails, the switch is showing the wrong state. Users lose trust.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Resource toggle with explicit "Stopping… · ETA 30s"</div>
+    <div class="why">Tells the user the wait is real and gives them an expectation.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Use a switch to delete something irreversible</div>
+    <div class="why">Switches are for reversible decisions. Destructive needs a modal with explicit confirm.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>On failure: switch snaps back + inline error · user stays in context</div>
+    <div class="why">Local recovery. No modal, no toast disruption.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>On failure: leave the switch in the new state and show a toast</div>
+    <div class="why">Toast disappears. User has no idea their toggle silently rolled back later. State and signal must agree.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

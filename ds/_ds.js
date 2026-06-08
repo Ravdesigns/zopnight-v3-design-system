@@ -38,6 +38,7 @@
       { id: 'kbd',            name: 'Kbd',            href: 'kbd.html' },
       { id: 'mono-id',        name: 'Mono ID · copy', href: 'mono-id.html' },
       { id: 'tags-chips',     name: 'Tags · chips',   href: 'tags-chips.html' },
+      { id: 'switch',         name: 'Switch · toggle', href: 'switch.html' },
       { id: 'provider-marks', name: 'Provider marks', href: 'provider-marks.html' },
     ]},
     { label: 'Molecules', items: [
