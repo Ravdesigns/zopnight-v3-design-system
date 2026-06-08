@@ -48,7 +48,7 @@
 </section>
 
 <section class="ds-section"><h2>Loading · the critical state</h2>
-<p>When the user clicks a switch that fires an API call (start/stop a resource, save a setting), the switch enters <code>.is-loading</code> immediately. Pointer events disable so the user can't double-toggle. A spinner glyph appears next to the track. The thumb parks at center and pulses — the switch is in an honest "resolving" state, neither on nor off.</p>
+<p>When the user clicks a switch that fires an API call (start/stop a resource, save a setting), the switch enters <code>.is-loading</code> immediately. One signal: the thumb becomes a small spinning ring. The track keeps its direction state (no gradient, no pulse). Pointer events disable so the user can't double-toggle. The visible label ("Starting…", "Stopping…") carries the secondary cue.</p>
 <div class="ds-demo" style="display:flex;gap:32px;align-items:center;flex-wrap:wrap;">
   <label class="switch is-loading">
     <input type="checkbox">

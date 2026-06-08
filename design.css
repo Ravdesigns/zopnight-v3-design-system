@@ -7125,38 +7125,25 @@ html[data-theme='dark'] .auth-shell .auth-aside {
 }
 
 /* Loading · between click and server ack.
- * - Pointer-events disabled (user can't double-toggle while waiting)
- * - Thumb shifts to a center-park spot and pulses (state ambiguity is honest:
- *   the switch is neither off nor on right now, it's resolving)
- * - Small spinner glyph appears next to the track so the user knows work
- *   is in flight, not frozen */
+ * One signal only: the thumb becomes a tiny spinning ring. The track
+ * keeps whatever direction-state it was in (no gradient, no pulse).
+ * Pointer-events disabled so the user can't double-toggle. */
 .switch.is-loading { cursor: progress; }
 .switch.is-loading input[type="checkbox"] {
   pointer-events: none;
-  background: var(--g-300);
-}
-.switch.is-loading input[type="checkbox"]:checked {
-  background: linear-gradient(90deg, var(--g-300) 0%, var(--g-300) 50%, var(--ink) 50%, var(--ink) 100%);
 }
 .switch.is-loading input[type="checkbox"]::after {
-  left: 8px;
-  animation: switch-pulse 900ms ease-in-out infinite;
-}
-.switch.is-loading::after {
-  content: '';
-  width: 12px; height: 12px;
-  margin-left: -2px;
-  border: 1.5px solid var(--g-300);
-  border-top-color: var(--ink);
+  /* Thumb becomes a 3/4 ring · paper-colored border with one transparent
+   * side · rotates 360° for the universal "loading" cue */
+  background: transparent;
+  border: 1.5px solid var(--paper);
+  border-top-color: transparent;
   border-radius: 50%;
   animation: switch-spin 700ms linear infinite;
-  flex-shrink: 0;
+  /* Hold position · don't slide with the :checked transition */
+  transition: none;
 }
 
-@keyframes switch-pulse {
-  0%, 100% { transform: scale(1);   opacity: 1; }
-  50%      { transform: scale(0.85); opacity: 0.7; }
-}
 @keyframes switch-spin {
   to { transform: rotate(360deg); }
 }
@@ -7179,9 +7166,13 @@ html[data-theme='dark'] .auth-shell .auth-aside {
 /* Honour reduced-motion · drop the spin/pulse/shake to a static cue */
 @media (prefers-reduced-motion: reduce) {
   .switch.is-loading input[type="checkbox"]::after,
-  .switch.is-loading::after,
   .switch.is-failed input[type="checkbox"] {
     animation: none;
+  }
+  /* Reduced-motion fallback for loading · static dashed ring · no spin */
+  .switch.is-loading input[type="checkbox"]::after {
+    border-style: dashed;
+    border-color: var(--paper);
   }
 }
 
