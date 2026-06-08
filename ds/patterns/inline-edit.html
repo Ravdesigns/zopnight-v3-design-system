@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Inline edit · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+<style>
+.ie-row { display: inline-flex; align-items: center; gap: 8px; padding: 4px 8px; border: 1px solid transparent; cursor: pointer; transition: background 120ms ease, border-color 120ms ease; }
+.ie-row:hover { background: var(--surface-2); }
+.ie-row:hover .pencil { opacity: 1; }
+.ie-row .pencil { opacity: 0; color: var(--g-500); transition: opacity 120ms ease; }
+.ie-row.editing { background: var(--paper); border-color: var(--line); padding: 2px 2px 2px 8px; }
+.ie-row .ie-input { border: 0; background: transparent; font-family: var(--font-body); font-size: 13px; color: var(--ink); outline: 0; width: 200px; padding: 4px 0; }
+.ie-actions { display: inline-flex; gap: 2px; }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-inline-edit"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · edit</div>
+<h1 class="ds-h1">Inline edit</h1>
+<p class="ds-lead">Edit values in place. Hover reveals pencil hint, click expands into an input with confirm/cancel.</p>
+<section class="ds-section"><h2>Idle → hover → editing</h2><p>Hover reveals pencil hint · click puts the row into edit mode with confirm/cancel actions.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;gap:12px;"><div class="ie-row"><span style="color:var(--ink);font-size:13px;">payments-api-prod</span><svg class="pencil" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2l3 3-7 7H2v-3z"/></svg></div><div class="ie-row editing"><input class="ie-input" value="payments-api-prod" /><div class="ie-actions"><button class="btn btn-ghost btn-sm" style="padding:0 8px;height:24px;"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M3 3l6 6M9 3l-6 6"/></svg></button><button class="btn btn-primary btn-sm" style="padding:0 8px;height:24px;"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M2 6.5l3 3 5-7"/></svg></button></div></div></div></div><div class="ds-code"><pre>&lt;div class=&quot;ie-row&quot;&gt;
+  &lt;span&gt;payments-api-prod&lt;/span&gt;
+  &lt;svg class=&quot;pencil&quot;&gt;✏&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;!-- on click → --&gt;
+&lt;div class=&quot;ie-row editing&quot;&gt;
+  &lt;input class=&quot;ie-input&quot; value=&quot;payments-api-prod&quot; /&gt;
+  &lt;button class=&quot;btn btn-ghost btn-sm&quot;&gt;×&lt;/button&gt;
+  &lt;button class=&quot;btn btn-primary btn-sm&quot;&gt;✓&lt;/button&gt;
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Keyboard contract</h2><table class="ds-table"><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody><tr><td><code>Enter</code></td><td>Confirm + save</td></tr><tr><td><code>Escape</code></td><td>Cancel + restore</td></tr><tr><td><code>Tab</code></td><td>Confirm + move to next editable cell</td></tr><tr><td><code>Click outside</code></td><td>Confirm + save (debounced 300ms)</td></tr></tbody></table></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

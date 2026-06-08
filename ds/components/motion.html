@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Motion · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+<style>
+  .anim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0 0; }
+  .anim-tile { background: var(--paper); border: 1px solid var(--line); padding: 0; overflow: hidden; }
+  .anim-tile .stage { padding: 32px 20px; display: flex; align-items: center; justify-content: center; min-height: 120px; background: var(--surface-1); border-bottom: 1px solid var(--line); }
+  .anim-tile .meta { padding: 12px 14px; }
+  .anim-tile .name { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--ink); }
+  .anim-tile .spec { font-size: 11px; color: var(--g-500); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+  .demo-bento { position: relative; animation: demo-bento-loop 2.2s ease-in-out infinite; }
+  .demo-bento::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--zop-orange); transform: scaleY(0); transform-origin: top; animation: demo-stripe-loop 2.2s ease-in-out infinite; }
+  @keyframes demo-bento-loop { 0%, 100% { transform: translateY(0); box-shadow: none; } 50% { transform: translateY(-4px); box-shadow: 0 8px 0 -4px var(--ink); } }
+  @keyframes demo-stripe-loop { 0%, 25% { transform: scaleY(0); } 50%, 75% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+
+  .demo-copy { cursor: pointer; position: relative; }
+  .demo-copy::after { content: 'Copied!'; position: absolute; top: -32px; left: 50%; transform: translateX(-50%) scale(0.8); background: var(--ink); color: var(--paper); font-family: var(--font-body); font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 2px; opacity: 0; pointer-events: none; transition: opacity 200ms ease, transform 200ms ease; white-space: nowrap; }
+  .demo-copy::before { content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: var(--ink); opacity: 0; transition: opacity 200ms ease; }
+  .demo-copy.flash::after { opacity: 1; transform: translateX(-50%) scale(1); }
+  .demo-copy.flash::before { opacity: 1; }
+
+  .demo-drawer-stage { width: 280px; height: 140px; border: 1px solid var(--line); background: var(--bg-app); position: relative; overflow: hidden; }
+  .demo-drawer-stage::before { content: ''; position: absolute; inset: 0; background: rgba(10,10,10,0.3); opacity: 0; animation: demo-backdrop 2.6s ease-in-out infinite; }
+  .demo-drawer-stage::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 140px; background: var(--paper); border-left: 1px solid var(--line); transform: translateX(100%); animation: demo-drawer 2.6s ease-in-out infinite; }
+  @keyframes demo-backdrop { 0%, 100% { opacity: 0; } 35%, 75% { opacity: 1; } }
+  @keyframes demo-drawer  { 0%, 100% { transform: translateX(100%); } 35%, 75% { transform: translateX(0); } }
+
+  .demo-drill { color: var(--ink); border: 1px solid var(--line); padding: 4px 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer; text-decoration: none; }
+  .demo-drill .arr { opacity: 0.35; animation: demo-drill 2.4s ease-in-out infinite; }
+  @keyframes demo-drill { 0%, 100% { opacity: 0.35; transform: translateX(0); } 50% { opacity: 1; transform: translateX(2px); } }
+
+  .demo-sort { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--g-500); }
+  .demo-sort .ind { width: 10px; height: 10px; opacity: 0; animation: demo-sort 2.4s ease-in-out infinite; color: var(--ink); }
+  @keyframes demo-sort { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+  .demo-skel { width: 200px; height: 14px; background: linear-gradient(90deg, var(--surface-2) 0%, var(--surface-3) 50%, var(--surface-2) 100%); background-size: 200% 100%; animation: skel-shimmer 1.4s linear infinite; }
+  @keyframes skel-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  .demo-toast { animation: toast-loop 3.6s ease-in-out infinite; }
+  @keyframes toast-loop { 0%, 100% { transform: translateY(20px); opacity: 0; } 15%, 80% { transform: translateY(0); opacity: 1; } }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="motion"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Foundation</div>
+<h1 class="ds-h1">Motion</h1>
+<p class="ds-lead">Live gallery of every animation in the system. Each runs continuously here so you can study the timing. All animations respect <code>prefers-reduced-motion</code>.</p>
+
+<section class="ds-section">
+  <h2>Durations</h2>
+  <table class="ds-table">
+    <thead><tr><th>Token</th><th>Range</th><th>Use for</th></tr></thead>
+    <tbody>
+      <tr><td><code>--dur-fast</code></td><td>120–160ms</td><td>hover · focus · color shifts · tooltip fade</td></tr>
+      <tr><td><code>--dur-med</code></td><td>220ms</td><td>cards lift · borders · transforms · indent guides</td></tr>
+      <tr><td><code>--dur-slow</code></td><td>320–520ms</td><td>drawer slide · chart mount · section reveal</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Easing</h2>
+  <table class="ds-table">
+    <thead><tr><th>Token</th><th>Curve</th><th>Use for</th></tr></thead>
+    <tbody>
+      <tr><td><code>--ease-out</code></td><td><code>cubic-bezier(0.22, 1, 0.36, 1)</code></td><td>most UI · settles in</td></tr>
+      <tr><td><code>--ease-in-out</code></td><td><code>cubic-bezier(0.65, 0, 0.35, 1)</code></td><td>pulses · bobs · breathing</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Live animations</h2>
+  <p>Every animation that ships with the system, looping so you can see the timing.</p>
+
+  <div class="anim-grid">
+
+    <div class="anim-tile">
+      <div class="stage"><span class="status-dot crit"><span class="dot"></span>Critical</span></div>
+      <div class="meta">
+        <div class="name">Critical pulse</div>
+        <div class="spec">1.4s · ease-in-out · scale 1→1.15 · soft red glow</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><span class="sb critical"><span class="dot"></span>Critical</span></div>
+      <div class="meta">
+        <div class="name">Severity pulse</div>
+        <div class="spec">.sb.critical · same 1.4s pulse</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><span class="sc err">500</span></div>
+      <div class="meta">
+        <div class="name">5xx status pulse</div>
+        <div class="spec">.sc.err · same 1.4s pulse</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><span class="cd critical"><svg class="ico" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg><span class="lbl">Fires</span><span class="val">38s</span></span></div>
+      <div class="meta">
+        <div class="name">Countdown pulse</div>
+        <div class="spec">.cd.critical · pulse on clock icon</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage">
+        <svg style="width:80px;overflow:visible;animation:n3-bob 2.8s ease-in-out infinite;" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/><rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="14" y="14" width="2" height="2" fill="#FCFAF2"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="34" y="14" width="2" height="2" fill="#FCFAF2"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+        </svg>
+      </div>
+      <div class="meta">
+        <div class="name">Nimbus bob</div>
+        <div class="spec">Wave 2.8s · Search 3.6s · Sleep 4.4s · Cheer 2.4s</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage" style="overflow:visible;">
+        <div class="card demo-bento" style="margin:0;padding:12px 16px;max-width:200px;font-size:12px;">
+          <strong>business-hours</strong>
+          <div style="color:var(--g-500);font-size:11px;margin-top:2px;">28 resources</div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Card bento hover</div>
+        <div class="spec">220ms · −4px lift + ink offset + orange stripe</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><div class="demo-drawer-stage"></div></div>
+      <div class="meta">
+        <div class="name">Drawer slide-in</div>
+        <div class="spec">240ms · translateX(24px)→0 + backdrop fade</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage" style="overflow:visible;">
+        <div class="demo-copy" id="copy-demo">
+          <span class="mono-id chip">i-0a3f9b7c</span>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Copy flash tooltip</div>
+        <div class="spec">200ms in · 1.4s hold · 200ms out · ink-pill</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><a class="demo-drill" href="#">View 12 <span class="arr">→</span></a></div>
+      <div class="meta">
+        <div class="name">Drillable arrow</div>
+        <div class="spec">220ms · 0.35→1 opacity + 2px slide</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><span class="demo-sort">Name <span class="ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></span></div>
+      <div class="meta">
+        <div class="name">Sortable chevron</div>
+        <div class="spec">120ms · fades in on hover · rotates for asc</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage"><div style="display:flex;flex-direction:column;gap:6px;"><div class="demo-skel"></div><div class="demo-skel" style="width:140px;"></div><div class="demo-skel" style="width:170px;"></div></div></div>
+      <div class="meta">
+        <div class="name">Skeleton shimmer</div>
+        <div class="spec">1.4s linear · gradient sweep · loading states</div>
+      </div>
+    </div>
+
+    <div class="anim-tile">
+      <div class="stage" style="overflow:visible;align-items:flex-end;padding-bottom:8px;">
+        <div class="demo-toast" style="background:var(--ink);color:var(--paper);padding:8px 12px;font-family:var(--font-body);font-size:11px;display:inline-flex;align-items:center;gap:8px;">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#5F8642" stroke-width="2"><path d="M2 6.5l3 3 5-7"/></svg>
+          Schedule saved
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Toast notification</div>
+        <div class="spec">300ms in · 3s hold · 300ms out · bottom-right</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="ds-section">
+  <h2>3% color budget</h2>
+  <div class="ds-callout">
+    <strong>Rule:</strong> state color (orange · red · green) covers ≤3% of any view. Cream + ink + greys carry the remaining 97%.
+    <br><br>
+    A screen with too much state color reads noisy and erodes the urgency of the things that <em>actually</em> need attention. Pull state colors back to the badge, dot, or icon · not the whole surface.
+  </div>
+</section>
+
+<section class="ds-section">
+  <h2>Pulse · for "happening now" only</h2>
+  <p>Pulses are reserved for genuinely critical, active state. Don't pulse for "new" · that's what the orange stripe is for.</p>
+  <table class="ds-table">
+    <thead><tr><th>Component</th><th>When it pulses</th></tr></thead>
+    <tbody>
+      <tr><td><code>.status-dot.crit</code></td><td>Active breach right now</td></tr>
+      <tr><td><code>.sb.critical</code></td><td>Critical-severity finding</td></tr>
+      <tr><td><code>.sc.err</code></td><td>5xx HTTP error</td></tr>
+      <tr><td><code>.cd.critical</code></td><td>Countdown under 1 minute</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Reduced-motion contract</h2>
+  <p>Every pulse · bob · slide · scale halts when the user prefers reduced motion. Not optional · already in <code>design.css</code>.</p>
+  <div class="ds-code"><pre>@media (prefers-reduced-motion: reduce) {
+  .status-dot.crit::before,
+  .sb.critical .dot,
+  .sc.err::before,
+  .cd.critical .ico   { animation: none; }
+
+  .empty-v3 .n3       { animation: none !important; }
+
+  .card.hoverable:hover,
+  .card.active        { transform: none; }
+
+  .drawer-backdrop,
+  .drawer-panel       { animation: none; }
+}</pre></div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+<script>
+  const c = document.querySelector('#copy-demo');
+  if (c) setInterval(() => { c.classList.add('flash'); setTimeout(() => c.classList.remove('flash'), 1400); }, 2400);
+</script>
+</body>
+</html>

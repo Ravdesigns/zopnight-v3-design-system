@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Page header · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-header"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · layout</div>
+<h1 class="ds-h1">Page header</h1>
+<p class="ds-lead">Page-top heading row. Title + optional eyebrow / breadcrumb + right-aligned actions.</p>
+<section class="ds-section"><h2>Anatomy</h2><p>Page title + optional eyebrow + optional right-side actions. Sits above the page content with bottom border.</p><div class="ds-demo"><div style="border:1px solid var(--line);background:var(--paper);padding:24px 28px;"><div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;"><div><div class="ds-eyebrow" style="margin-bottom:6px;">Cloud Estate</div><h1 style="font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:0;">Resources</h1></div><div style="display:flex;gap:8px;"><button class="btn btn-secondary btn-sm">Refresh</button><button class="btn btn-primary btn-sm">Connect cloud account →</button></div></div></div></div><div class="ds-code"><pre>&lt;header class=&quot;page-head&quot;&gt;
+  &lt;div&gt;
+    &lt;div class=&quot;eyebrow&quot;&gt;Cloud Estate&lt;/div&gt;
+    &lt;h1&gt;Resources&lt;/h1&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;page-actions&quot;&gt;
+    &lt;button class=&quot;btn btn-secondary btn-sm&quot;&gt;Refresh&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary btn-sm&quot;&gt;Connect cloud account →&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</pre></div></section><section class="ds-section"><h2>With breadcrumb</h2><div class="ds-demo"><div style="border:1px solid var(--line);background:var(--paper);padding:24px 28px;"><nav style="font-size:12px;color:var(--g-500);margin-bottom:8px;"><a href="#" style="color:var(--g-500);text-decoration:none;">Resources</a> <span style="margin:0 6px;">·</span> <a href="#" style="color:var(--g-500);text-decoration:none;">payments</a> <span style="margin:0 6px;">·</span> <span style="color:var(--ink);font-weight:500;">payments-api-prod</span></nav><h1 style="font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:0;display:flex;align-items:center;gap:10px;"><span class="provider-mark aws"></span>payments-api-prod <span style="font-family:var(--font-body);font-size:14px;color:var(--g-500);font-weight:400;">us-east-1 · i-0a3f9b7c</span></h1></div></div><div class="ds-code"><pre>&lt;nav class=&quot;breadcrumb&quot;&gt;…&lt;/nav&gt;
+&lt;h1&gt;
+  &lt;span class=&quot;provider-mark aws&quot;&gt;&lt;/span&gt;
+  payments-api-prod
+  &lt;span class=&quot;sub-id&quot;&gt;us-east-1 · i-0a3f9b7c&lt;/span&gt;
+&lt;/h1&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

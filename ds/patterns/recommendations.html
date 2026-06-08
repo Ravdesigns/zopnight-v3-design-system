@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Recommendations list · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-recs"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · suggestions</div>
+<h1 class="ds-h1">Recommendations list</h1>
+<p class="ds-lead">Stacked suggestion rows. Sort critical → default → applied.</p>
+<section class="ds-section"><h2>Recommendations list</h2><p>Repeating suggestion rows with state. Critical sits on top with persistent stripe.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;gap:8px;">
+  <div class="sg critical hoverable">
+    <div>
+      <div class="sg-h">
+        <h3 class="sg-title">Delete 12 orphaned EBS volumes</h3>
+        <span class="sb critical sm"><span class="dot"></span>Critical</span>
+      </div>
+      <p class="sg-desc">12 volumes have been unattached for 90+ days.</p>
+      <div class="sg-meta"><span>Risk · <strong style="color:var(--ink)">very low</strong></span></div>
+    </div>
+    <div class="sg-side">
+      <div class="sg-savings">$84<span style="font-size:14px;color:var(--g-500);font-weight:500;">/mo</span></div>
+      <div class="sg-savings-label">Estimated</div>
+      <div class="sg-actions"><button class="btn btn-ghost btn-sm">Dismiss</button><button class="btn btn-primary btn-sm">Apply</button></div>
+    </div>
+  </div>
+  <div class="sg hoverable">
+    <div>
+      <div class="sg-h"><h3 class="sg-title">Right-size payments-api-prod → c6i.2xlarge</h3></div>
+      <p class="sg-desc">14-day avg CPU is 18%. Downsizing keeps headroom.</p>
+      <div class="sg-meta"><span>Risk · <strong style="color:var(--ink)">low</strong></span><span>Confidence · <strong style="color:var(--ink)">92%</strong></span></div>
+    </div>
+    <div class="sg-side">
+      <div class="sg-savings">$642<span style="font-size:14px;color:var(--g-500);font-weight:500;">/mo</span></div>
+      <div class="sg-savings-label">Estimated</div>
+      <div class="sg-actions"><button class="btn btn-ghost btn-sm">Dismiss</button><button class="btn btn-primary btn-sm">Apply</button></div>
+    </div>
+  </div>
+  <div class="sg applied">
+    <div>
+      <div class="sg-h"><h3 class="sg-title">Shut down qa-warehouse outside business hours</h3></div>
+      <p class="sg-desc">Applied 4d ago. Captured $312/mo.</p>
+    </div>
+    <div class="sg-side"><div class="sg-savings">$312<span style="font-size:14px;color:var(--g-500);font-weight:500;">/mo</span></div><div class="sg-savings-label">Captured</div></div>
+  </div>
+</div></div><div class="ds-code"><pre>&lt;!-- Critical first · then default · then applied --&gt;
+&lt;div class=&quot;sg critical hoverable&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;sg hoverable&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;sg applied&quot;&gt;…&lt;/div&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

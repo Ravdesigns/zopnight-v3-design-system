@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Composition rules · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="composition"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Foundation · structural rules</div>
+<h1 class="ds-h1">Composition rules</h1>
+<p class="ds-lead">Which components can nest inside which. What stacking order they sit in. When a deeper interaction would trap the user and what to do instead.</p>
+
+<section class="ds-section"><h2>Z-index scale · know your layers</h2>
+<table class="ds-table"><thead><tr><th>Token</th><th>Value</th><th>Used by</th></tr></thead><tbody>
+<tr><td><code>--z-base</code></td><td>0</td><td>Page content · cards · tables</td></tr>
+<tr><td><code>--z-sticky</code></td><td>10</td><td>Sticky table headers · sub-nav · floating CTAs</td></tr>
+<tr><td><code>--z-dropdown</code></td><td>50</td><td>Combobox · select · kebab menu</td></tr>
+<tr><td><code>--z-drawer</code></td><td>100</td><td>Right/left drawers</td></tr>
+<tr><td><code>--z-modal</code></td><td>200</td><td>Confirm modals · wizards</td></tr>
+<tr><td><code>--z-toast</code></td><td>300</td><td>Snackbar · toast queue</td></tr>
+<tr><td><code>--z-tooltip</code></td><td>400</td><td>Tooltips · popovers · top of everything</td></tr>
+</tbody></table>
+<p>Never use literal z-index values in component CSS · pull from the scale. If a use case needs a value not on the scale, that's a sign the component belongs at a different layer.</p>
+</section>
+
+<section class="ds-section"><h2>Composition matrix · what nests in what</h2>
+<table class="ds-table"><thead><tr><th>Inside →<br>Container ↓</th><th>Tabs</th><th>Tooltip</th><th>Dropdown</th><th>Drawer</th><th>Modal</th><th>Toast</th></tr></thead><tbody>
+<tr><th>Page</th><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr><th>Card</th><td>✓ rare</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td><td>·</td></tr>
+<tr><th>Drawer</th><td>✓</td><td>✓</td><td>✓</td><td><strong>✗ ever</strong></td><td>⚠ only confirm</td><td>·</td></tr>
+<tr><th>Modal</th><td>✓ rare</td><td>✓</td><td>✓</td><td>✗</td><td><strong>✗ ever</strong></td><td>·</td></tr>
+<tr><th>Tooltip</th><td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>·</td></tr>
+<tr><th>Toast</th><td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>·</td></tr>
+</tbody></table>
+<p style="font-size:12px;color:var(--g-500);">✓ allowed · ⚠ allowed only in specific case · ✗ never · · non-applicable</p>
+</section>
+
+<section class="ds-section"><h2>The four hard rules</h2>
+<ol style="line-height:1.7;color:var(--g-700);">
+  <li><strong>Never nest a modal in a modal.</strong> If the user opened a modal and now needs another decision, replace the content of the existing modal (multi-step wizard) · don't stack a second one. The exception: a <em>destructive confirm</em> inside a wizard ("Are you sure you want to discard?") gets a small overlay but uses the same z-index · see Modal sizes.</li>
+  <li><strong>Never nest a drawer in a drawer.</strong> A drawer is a working surface for one task. If sub-work appears, push the new content into the existing drawer with a back affordance · don't open a second.</li>
+  <li><strong>Tooltips never contain interactive content.</strong> They are read-only hint surfaces. If you need a click target, that's a popover (which is a Dropdown). Tooltips also never contain a tooltip.</li>
+  <li><strong>Toasts never block flow.</strong> They auto-dismiss · don't anchor to specific elements · don't contain forms. If the work requires confirmation, use a modal.</li>
+</ol>
+</section>
+
+<section class="ds-section"><h2>Replacing nesting with sequence</h2>
+<p>When the matrix says no, the answer is almost always: <em>replace the content, don't stack on top of it</em>.</p>
+<table class="ds-table"><thead><tr><th>Bad nesting</th><th>Good replacement</th></tr></thead><tbody>
+<tr><td>Drawer → opens modal → opens drawer</td><td>Wizard inside the original drawer with step indicator</td></tr>
+<tr><td>Modal → "Edit details" opens a second modal</td><td>The first modal becomes a 2-step form · same surface</td></tr>
+<tr><td>Tooltip with a link inside</td><td>Popover (Dropdown) · click to open · keyboard accessible</td></tr>
+<tr><td>Toast with "Undo" button + confirm modal on click</td><td>Snackbar with single-tap "Undo" · no confirm</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Focus trap inheritance</h2>
+<p>Any overlay that takes focus (modal, drawer) traps Tab inside it. When a sub-overlay is allowed (rare · confirm-discard pattern only) the trap moves to the deepest one. On dismissal, focus returns up the stack · never to body.</p>
+<div class="ds-code"><pre>// Pseudo-flow for the confirm-discard exception:
+openWizardDrawer();             // trap: drawer
+//   user clicks "Cancel" on dirty form
+openConfirmModal();              // trap moves: modal (drawer locked)
+//   user confirms or cancels
+closeConfirmModal();             // trap returns: drawer
+//   user finishes or closes
+closeWizardDrawer();             // trap returns: page</pre></div>
+</section>
+
+<section class="ds-section"><h2>Stacking context · the gotcha</h2>
+<p>A child element with <code>transform</code>, <code>filter</code>, or <code>position: fixed</code> creates a new stacking context. Inside that context, <code>--z-toast</code> won't escape to global top · it's relative to the parent's stacking context.</p>
+<p>Practical rule: render overlays (modal, drawer, toast, tooltip) as direct children of <code>&lt;body&gt;</code> via a portal. React: <code>createPortal(modal, document.body)</code>. Vanilla: <code>document.body.appendChild()</code>.</p>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

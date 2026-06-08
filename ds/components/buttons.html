@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Buttons · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="buttons"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Atom · interactive</div>
+<h1 class="ds-h1">Buttons</h1>
+<p class="ds-lead">Five variants (primary · secondary · ghost · upgrade · destructive) at three heights. Each variant ships with a contrast-matched hover bar so the press affordance is unmistakable.</p>
+<section class="ds-section"><h2>Primary · default size</h2><p>The most prominent action on a surface. Ink fill on paper, paper fill on ink. One per surface · never two side by side.</p><div class="ds-demo"><button class="btn btn-primary">Save changes</button>
+<button class="btn btn-primary"><svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7l3 3 5-7"/></svg> Confirm</button></div><div class="ds-code"><pre>&lt;button class=&quot;btn btn-primary&quot;&gt;Save changes&lt;/button&gt;</pre></div></section><section class="ds-section"><h2>Variants</h2><p>Five visual weights · same height grid. Hover bars contrast with each variant's base color.</p><div class="ds-demo"><button class="btn btn-primary">Primary</button>
+<button class="btn btn-secondary">Secondary</button>
+<button class="btn btn-ghost">Ghost</button>
+<button class="btn btn-upgrade">Upgrade</button>
+<button class="btn btn-destructive">Delete</button></div><div class="ds-code"><pre>&lt;button class=&quot;btn btn-primary&quot;&gt;Primary&lt;/button&gt;
+&lt;button class=&quot;btn btn-secondary&quot;&gt;Secondary&lt;/button&gt;
+&lt;button class=&quot;btn btn-ghost&quot;&gt;Ghost&lt;/button&gt;
+&lt;button class=&quot;btn btn-upgrade&quot;&gt;Upgrade&lt;/button&gt;
+&lt;button class=&quot;btn btn-destructive&quot;&gt;Delete&lt;/button&gt;</pre></div><table class="ds-table"><thead><tr><th>Variant</th><th>Use for</th><th>Background</th><th>Hover bar</th></tr></thead><tbody><tr><td><code>.btn-primary</code></td><td>Main CTA per surface</td><td>ink</td><td>orange</td></tr><tr><td><code>.btn-secondary</code></td><td>Alt actions, dismiss</td><td>paper + line</td><td>ink</td></tr><tr><td><code>.btn-ghost</code></td><td>Tertiary, dense rows</td><td>transparent</td><td>surface-2</td></tr><tr><td><code>.btn-upgrade</code></td><td>Plan upgrades, brand moments</td><td>orange</td><td>ink</td></tr><tr><td><code>.btn-destructive</code></td><td>Delete / irreversible</td><td>red</td><td>ink</td></tr></tbody></table></section><section class="ds-section"><h2>Sizes</h2><p>Three height tiers: <code>.btn-sm</code> (26px), default (32px), <code>.btn-lg</code> (40px). Pick by surface density.</p><div class="ds-demo"><button class="btn btn-primary btn-sm">Small</button>
+<button class="btn btn-primary">Default</button>
+<button class="btn btn-primary btn-lg">Large</button></div><div class="ds-code"><pre>&lt;button class=&quot;btn btn-primary btn-sm&quot;&gt;Small&lt;/button&gt;
+&lt;button class=&quot;btn btn-primary&quot;&gt;Default&lt;/button&gt;
+&lt;button class=&quot;btn btn-primary btn-lg&quot;&gt;Large&lt;/button&gt;</pre></div></section><section class="ds-section"><h2>Don't do this</h2><p>Common antipatterns to avoid.</p><div class="ds-dodont"><div class="ds-do"><span class="tag">✓ Do</span><div><button class="btn btn-primary">Save</button> <button class="btn btn-ghost">Cancel</button></div><div class="why">Primary action gets the only ink fill. Cancel uses ghost so the eye lands on Save.</div></div><div class="ds-dont"><span class="tag">✗ Don't</span><div><button class="btn btn-destructive">Save</button> <button class="btn btn-primary">Cancel</button></div><div class="why">Never use destructive red for a primary save. Never put two ink-filled buttons side by side.</div></div></div><div class="ds-dodont"><div class="ds-do"><span class="tag">✓ Do</span><div><button class="btn btn-destructive">Delete account</button></div><div class="why">Destructive variant clearly names the consequence.</div></div><div class="ds-dont"><span class="tag">✗ Don't</span><div><button class="btn btn-primary">Click here</button></div><div class="why">Generic labels lose the affordance. Always state the verb + object.</div></div></div></section><section class="ds-section"><h2>Disabled state</h2><p>Reduce opacity to 0.45 and disable pointer events. Never just grey out · preserve the variant identity.</p><div class="ds-demo"><button class="btn btn-primary" disabled>Save</button>
+<button class="btn btn-secondary" disabled>Cancel</button></div><div class="ds-code"><pre>&lt;button class=&quot;btn btn-primary&quot; disabled&gt;Save&lt;/button&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

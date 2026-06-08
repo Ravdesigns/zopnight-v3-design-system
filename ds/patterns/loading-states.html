@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Loading states · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-loading-states"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · async UX</div>
+<h1 class="ds-h1">Loading states · decision tree</h1>
+<p class="ds-lead">The same fetch can need a skeleton, a spinner, a progress bar, or nothing · depending on how long, how much, and how often. This page tells you which to use when.</p>
+
+<section class="ds-section"><h2>The decision tree</h2>
+<table class="ds-table"><thead><tr><th>Expected duration</th><th>Pattern</th><th>Why</th></tr></thead><tbody>
+<tr><td>&lt; 200ms</td><td><strong>Nothing</strong></td><td>Faster than perception. Showing a loader makes it feel slower.</td></tr>
+<tr><td>200ms – 1s</td><td>Inline spinner inside the trigger</td><td>Spinner replaces text in the button · field shows pending dot</td></tr>
+<tr><td>1s – 3s</td><td>Skeleton at the destination</td><td>Reserve layout so content doesn't jump in. Mimic the final shape.</td></tr>
+<tr><td>3s – 10s</td><td>Skeleton + Nimbus search pose</td><td>Acknowledge the wait. Personality reduces frustration.</td></tr>
+<tr><td>&gt; 10s · determinate</td><td>Progress bar with % and ETA</td><td>Long jobs need a sense of progress · cancel button</td></tr>
+<tr><td>&gt; 10s · indeterminate</td><td>Status text that updates · "Connecting…" → "Authenticating…" → "Loading data…"</td><td>Each line changes the user's belief that something is happening</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>The result-state matrix</h2>
+<p>Once the fetch returns, four outcomes exist. The UI must distinguish them clearly · the worst sin is showing "no data" when the fetch errored.</p>
+<table class="ds-table"><thead><tr><th>Outcome</th><th>State</th><th>UI</th></tr></thead><tbody>
+<tr><td>Data returned · &gt; 0 rows</td><td>Loaded</td><td>Render content</td></tr>
+<tr><td>Data returned · 0 rows</td><td>Empty</td><td>Empty state with Nimbus + CTA · "Create your first…"</td></tr>
+<tr><td>Data returned · 0 after filter</td><td>Filtered-empty</td><td>Smaller empty state · "No matches · clear filters"</td></tr>
+<tr><td>Fetch failed</td><td>Error</td><td>Error state · explain what went wrong · Retry button</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Skeleton vs spinner · the rule</h2>
+<p><strong>Skeleton</strong> when you know the destination layout (table, card grid, detail page). <strong>Spinner</strong> when you don't (button submitting, dropdown filtering, undefined surface).</p>
+<div class="ds-demo" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+  <div>
+    <div style="font-size:11px;font-weight:600;color:var(--g-500);margin-bottom:8px;">Skeleton · table</div>
+    <div class="card" style="padding:10px;">
+      <div style="height:14px;background:var(--surface-2);border-radius:3px;margin-bottom:8px;animation:skel 1.4s ease-in-out infinite;"></div>
+      <div style="height:14px;background:var(--surface-2);border-radius:3px;margin-bottom:8px;width:80%;animation:skel 1.4s ease-in-out infinite;"></div>
+      <div style="height:14px;background:var(--surface-2);border-radius:3px;width:60%;animation:skel 1.4s ease-in-out infinite;"></div>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:11px;font-weight:600;color:var(--g-500);margin-bottom:8px;">Spinner · button</div>
+    <button class="btn btn-primary" disabled style="position:relative;">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="animation:spin 1s linear infinite;"><path d="M7 1.5a5.5 5.5 0 1 0 5.5 5.5" stroke-linecap="round"/></svg>
+      Saving…
+    </button>
+  </div>
+</div>
+</section>
+
+<section class="ds-section"><h2>Optimistic UI · when to skip the loader</h2>
+<p>For actions where success is the overwhelmingly likely outcome (toggle a checkbox, rename in place, like/star), update the UI immediately and reconcile in the background. If the request fails, revert + toast.</p>
+<table class="ds-table"><thead><tr><th>Action</th><th>Optimistic OK?</th></tr></thead><tbody>
+<tr><td>Toggle switch · star · pin</td><td>Yes</td></tr>
+<tr><td>Inline rename</td><td>Yes</td></tr>
+<tr><td>Add tag to row</td><td>Yes</td></tr>
+<tr><td>Delete · destructive</td><td><strong>No</strong> · always confirm + wait for server ack</td></tr>
+<tr><td>Money movement · plan change</td><td><strong>No</strong> · the user must see "Confirmed"</td></tr>
+<tr><td>Form save</td><td>No · give explicit "Saving…" then "Saved"</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Slow-connection handling</h2>
+<p>After 8s without a response, the spinner / skeleton is no longer informative. Switch to a status line:</p>
+<div class="ds-demo">
+  <div class="alert" style="display:flex;align-items:center;gap:8px;">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2v3M7 9v.01M2.5 5.5l1.5 1M9.5 8l1.5 .5"/></svg>
+    Still loading · this is taking longer than usual. <a href="#">Cancel</a>
+  </div>
+</div>
+<p style="margin-top:14px;color:var(--g-500);font-size:12.5px;">After 30s: replace the loader entirely with an error-with-retry. Don't leave the user staring at a spinner indefinitely.</p>
+</section>
+
+<section class="ds-section"><h2>State persistence across navigation</h2>
+<table class="ds-table"><thead><tr><th>User action</th><th>State</th></tr></thead><tbody>
+<tr><td>Navigates back to a list they just viewed</td><td>Skeleton flashes <strong>only if</strong> data is &gt; 30s stale · otherwise instant from cache</td></tr>
+<tr><td>Refreshes the page</td><td>Skeleton from scratch · scroll position restored</td></tr>
+<tr><td>Background tab returns to focus</td><td>Quiet refetch · stale-while-revalidate · subtle "Updated" pill if data changed</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Skeleton table rows · then real data appears in place</div>
+    <div class="why">Layout doesn't jump. User's eye doesn't need to re-acquire.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Centred spinner on blank page · then table pops in</div>
+    <div class="why">CLS · the cursor was hovering nothing, now it's hovering "Delete".</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>"No projects yet · <span class="tag">Create one</span>"</div>
+    <div class="why">Empty state with the action surfaced.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Show 0-row table with column headers and no message</div>
+    <div class="why">Ambiguous · is it loading? broken? actually empty?</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+<style>
+@keyframes skel { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</body>
+</html>

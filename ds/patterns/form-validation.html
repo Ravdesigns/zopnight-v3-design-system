@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Form validation · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-form-validation"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · forms</div>
+<h1 class="ds-h1">Form validation</h1>
+<p class="ds-lead">When to validate · where the error sits · what it says · how it clears. Forms are the highest-cost interaction in the product · the validation pattern decides whether the user finishes or rage-quits.</p>
+
+<section class="ds-section"><h2>The validation timing matrix</h2>
+<table class="ds-table"><thead><tr><th>Field type</th><th>Validate on</th><th>Why</th></tr></thead><tbody>
+<tr><td>Required text · most fields</td><td><strong>Blur</strong> · then live on subsequent input</td><td>Don't shout at the user mid-typing. Wait until they move on.</td></tr>
+<tr><td>Email · URL · regex format</td><td>Blur · then live</td><td>Same. Live re-check rewards the fix.</td></tr>
+<tr><td>Password creation</td><td><strong>Live</strong> · per keystroke</td><td>User wants to see strength meter / rule checks fill in.</td></tr>
+<tr><td>Username uniqueness</td><td>Blur + debounced async (300ms)</td><td>Server check. Show pending state.</td></tr>
+<tr><td>Numeric range · slider</td><td>Live (clamped at edges)</td><td>Value is constrained by the control · no error needed.</td></tr>
+<tr><td>Whole form</td><td>Submit</td><td>Catches anything blur missed. Focus moves to first error.</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Anatomy · the standard field</h2>
+<div class="ds-demo">
+  <div style="max-width:360px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;">Workspace name <span style="color:var(--state-error);">*</span></label>
+    <input class="input is-error" value="acme " style="width:100%;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--state-error);margin-top:6px;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v2.5M6 8v.01"/></svg>
+      Trailing space · please remove
+    </div>
+  </div>
+</div>
+<div class="ds-code"><pre>&lt;label&gt;
+  Workspace name &lt;span class="req"&gt;*&lt;/span&gt;
+&lt;/label&gt;
+&lt;input class="input is-error" aria-invalid="true" aria-describedby="err-name"&gt;
+&lt;div class="field-error" id="err-name" role="alert"&gt;
+  &lt;svg .../&gt; Trailing space · please remove
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>The three states</h2>
+<div class="ds-demo" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+  <div>
+    <label style="display:block;font-size:11px;font-weight:600;color:var(--g-500);margin-bottom:4px;">Default</label>
+    <input class="input" placeholder="Workspace name" style="width:100%;">
+  </div>
+  <div>
+    <label style="display:block;font-size:11px;font-weight:600;color:var(--g-500);margin-bottom:4px;">Valid</label>
+    <input class="input" value="acme-prod" style="width:100%;border-color:var(--state-success);">
+  </div>
+  <div>
+    <label style="display:block;font-size:11px;font-weight:600;color:var(--g-500);margin-bottom:4px;">Error</label>
+    <input class="input is-error" value="acme prod" style="width:100%;">
+  </div>
+</div>
+<p style="margin-top:14px;color:var(--g-500);font-size:12.5px;">Default = clean · validation hasn't fired yet. Valid = check after async (uniqueness, format). Error = red border + message.</p>
+</section>
+
+<section class="ds-section"><h2>Error placement · always below, never overlay</h2>
+<table class="ds-table"><thead><tr><th>Placement</th><th>Use</th></tr></thead><tbody>
+<tr><td>Below the field · 6px gap</td><td><strong>Default</strong> · everything else</td></tr>
+<tr><td>Inline at top of form · alert banner</td><td>Whole-form error (auth failure · 500 · validation summary on submit with 5+ errors)</td></tr>
+<tr><td>Tooltip on focus</td><td><strong>Never</strong> for errors · only for format hints</td></tr>
+<tr><td>Modal · separate page</td><td>Never. Don't yank context for validation.</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Async validation · username taken example</h2>
+<div class="ds-demo" style="max-width:360px;">
+  <label style="display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;">Subdomain</label>
+  <div style="position:relative;">
+    <input class="input" value="acme" style="width:100%;padding-right:32px;">
+    <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--g-500)" stroke-width="1.5" style="animation:spin 1s linear infinite;"><path d="M7 1.5a5.5 5.5 0 1 0 5.5 5.5" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+  <div style="font-size:11.5px;color:var(--g-500);margin-top:6px;">Checking availability…</div>
+</div>
+<p style="margin-top:14px;color:var(--g-500);font-size:12.5px;">300ms debounce after typing stops. Spinner inside the input · helper text replaces with "Available" (success) or "Taken" (error) when done.</p>
+</section>
+
+<section class="ds-section"><h2>Error message copy guide</h2>
+<table class="ds-table"><thead><tr><th>Pattern</th><th>Good</th><th>Bad</th></tr></thead><tbody>
+<tr><td>Tell the user what to do, not what they did</td><td>"Add at least one team member"</td><td>"Team members field is required"</td></tr>
+<tr><td>Plain language · no jargon</td><td>"Use only letters, numbers, and dashes"</td><td>"Must match /^[a-z0-9-]+$/i"</td></tr>
+<tr><td>No exclamation points</td><td>"Email format isn't valid"</td><td>"Invalid email!"</td></tr>
+<tr><td>Don't blame</td><td>"This couldn't be saved · please try again"</td><td>"You did this wrong"</td></tr>
+<tr><td>Include the value if useful</td><td>"<code>acme prod</code> can't contain spaces"</td><td>"Invalid input"</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Submit · the four outcomes</h2>
+<table class="ds-table"><thead><tr><th>Outcome</th><th>UI</th></tr></thead><tbody>
+<tr><td>All valid · saving</td><td>Submit button → <code>btn-loading</code> with spinner · disable other inputs · keep form rendered</td></tr>
+<tr><td>Saved</td><td>Toast "Saved" · close form / route to detail · undo button on toast</td></tr>
+<tr><td>Field errors</td><td>Highlight all errors · scroll to first · focus it · top-of-form summary count "3 fields need attention"</td></tr>
+<tr><td>Server error · 500 · network</td><td>Alert banner at top of form: "Couldn't save · please try again. <a>Retry</a>" · form stays editable · button re-enables</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div style="font-size:11.5px;color:var(--state-error);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" style="vertical-align:-1px;margin-right:2px;"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v2.5M6 8v.01"/></svg>Add at least 8 characters</div>
+    <div class="why">Tells the user what to fix.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div style="font-size:11.5px;color:var(--state-error);">❌ FAILED VALIDATION</div>
+    <div class="why">All-caps · vague · uses emoji glyph · no instruction.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Validate on blur, then live until valid</div>
+    <div class="why">User finishes their thought, then sees feedback.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Show "Too short" on the 1st keystroke</div>
+    <div class="why">Premature · feels combative · doesn't let the user finish.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+<style>@keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }</style>
+</body>
+</html>

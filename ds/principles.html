@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Principles · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../design.css" />
+<link rel="stylesheet" href="_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="principles"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Overview</div>
+<h1 class="ds-h1">Principles</h1>
+<p class="ds-lead">Eight rules that keep the system coherent. When in doubt, refer here.</p>
+<section class="ds-section"><h2>01 · Reskin, never restructure</h2><p>The OG ZopNight app is being reskinned. The structure and flow of the app don't change · only the visual treatment.</p><div class="ds-demo"><div class="ds-callout warn"><strong>Don't:</strong> rearrange information architecture, change navigation, introduce new modes or flows. <strong>Do:</strong> apply the locked components to the existing markup.</div></div></section><section class="ds-section"><h2>02 · The character IS the brand</h2><p>Nimbus is the ZopCloud product symbol with a face. The body never changes · only the eyes and mouth swap to express mood. He lives anywhere with no chrome, card, or backdrop.</p></section><section class="ds-section"><h2>03 · 3% color budget</h2><p>State colors cover ≤3% of any view. Cream + ink + greys carry 97%. Pull state colors back to the dot or icon, not the surface.</p></section><section class="ds-section"><h2>04 · Sentence case, no shouty caps</h2><p>Tabs, buttons, headings · sentence case. Only <code>.lbl</code> eyebrows and badge text use uppercase, and only at 10px with letter-spacing.</p></section><section class="ds-section"><h2>05 · Soft hover, hard active</h2><p>Hover = surface-2 lift. Active/selected = ink fill or orange left stripe. Never use hard borders for hover (clashes with surrounding bordered components).</p></section><section class="ds-section"><h2>06 · Pulse only for now</h2><p>Animation pulses are reserved for genuinely critical state. Don't pulse for "new" · that's what the orange stripe is for.</p></section><section class="ds-section"><h2>07 · Tabular numerals everywhere</h2><p>Stat values, table number columns, mono IDs · always tabular-nums so digit widths align.</p></section><section class="ds-section"><h2>08 · No JetBrains Mono</h2><p>Two fonts only: Space Grotesk + Inter. <code>--font-mono</code> exists as an alias to Inter for backward-compat, but render is always Inter.</p></section>
+<div class="ds-foot">
+  <span>ZopNight V3 · design system handoff</span>
+  <a href="index.html">← back to overview</a>
+</div>
+</main>
+<script src="_ds.js"></script>
+</body>
+</html>

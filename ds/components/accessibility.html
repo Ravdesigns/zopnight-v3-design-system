@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Accessibility · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="accessibility"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Foundation · cross-cutting</div>
+<h1 class="ds-h1">Accessibility</h1>
+<p class="ds-lead">The system meets WCAG 2.1 AA across colour, focus, motion, and keyboard. This page is the rulebook devs apply per component · what shortcut activates a control, what ARIA role it needs, when motion must be suppressed.</p>
+
+<section class="ds-section"><h2>The four rules · in order of how often you'll forget them</h2>
+<table class="ds-table"><thead><tr><th>#</th><th>Rule</th><th>Test</th></tr></thead><tbody>
+<tr><td>1</td><td>Everything operable by mouse must be operable by keyboard.</td><td>Unplug your mouse. Try the page.</td></tr>
+<tr><td>2</td><td>Every interactive element must show a visible focus ring on <code>:focus-visible</code>.</td><td>Tab through the page. Always know where you are.</td></tr>
+<tr><td>3</td><td>Every state change communicated by colour must also be communicated by text or icon.</td><td>Convert the screen to greyscale. Status still parseable?</td></tr>
+<tr><td>4</td><td>Animation pauses under <code>prefers-reduced-motion: reduce</code>.</td><td>System Settings → Display → Reduce Motion. App still works?</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Keyboard nav matrix · component by component</h2>
+<table class="ds-table"><thead><tr><th>Component</th><th>Key</th><th>Action</th></tr></thead><tbody>
+<tr><td rowspan="2">Button</td><td><code>Enter</code> / <code>Space</code></td><td>Activate</td></tr>
+<tr><td><code>Tab</code></td><td>Move focus</td></tr>
+<tr><td rowspan="3">Dropdown · combobox</td><td><code>↓</code> / <code>↑</code></td><td>Move highlight</td></tr>
+<tr><td><code>Enter</code></td><td>Select highlighted</td></tr>
+<tr><td><code>Esc</code></td><td>Close, return focus to trigger</td></tr>
+<tr><td rowspan="3">Tabs</td><td><code>← →</code></td><td>Switch tab</td></tr>
+<tr><td><code>Home</code> / <code>End</code></td><td>First / last tab</td></tr>
+<tr><td><code>Tab</code></td><td>Move into panel content</td></tr>
+<tr><td rowspan="3">Modal · drawer</td><td><code>Esc</code></td><td>Close (unless destructive · then no Esc)</td></tr>
+<tr><td><code>Tab</code></td><td>Cycles within modal (focus trap)</td></tr>
+<tr><td>·</td><td>Focus returns to trigger on close</td></tr>
+<tr><td rowspan="2">Tooltip</td><td>focus on trigger</td><td>Tooltip appears</td></tr>
+<tr><td><code>Esc</code></td><td>Dismiss without losing focus</td></tr>
+<tr><td rowspan="3">Tree</td><td><code>↓ ↑</code></td><td>Move row</td></tr>
+<tr><td><code>→</code> / <code>←</code></td><td>Expand / collapse · or move to parent</td></tr>
+<tr><td><code>Enter</code></td><td>Open</td></tr>
+<tr><td rowspan="4">Table · datagrid</td><td><code>↑ ↓</code></td><td>Move row</td></tr>
+<tr><td><code>← →</code></td><td>Move cell</td></tr>
+<tr><td><code>Space</code></td><td>Toggle row selection</td></tr>
+<tr><td><code>Shift+Space</code></td><td>Range select</td></tr>
+<tr><td>⌘K palette</td><td><code>⌘K</code> · <code>↑↓⏎Esc</code></td><td>Open · navigate · run · close</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Focus ring · the only one we use</h2>
+<p>One ring style across the whole app · orange, 2px, with a 2px paper offset so it reads on coloured backgrounds too. Never hide the focus ring with <code>outline: none</code> without replacing it.</p>
+<div class="ds-demo" style="display:flex;gap:14px;align-items:center;">
+  <button class="btn btn-primary" style="outline: 2px solid var(--zop-orange); outline-offset: 2px;">Focus state</button>
+  <input class="input" value="focused field" style="outline: 2px solid var(--zop-orange); outline-offset: 2px;">
+</div>
+<div class="ds-code"><pre>:focus-visible {
+  outline: 2px solid var(--zop-orange);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+/* Never do this without a replacement: */
+button:focus { outline: none; }   /* ✗ */</pre></div>
+</section>
+
+<section class="ds-section"><h2>ARIA · the patterns you'll actually need</h2>
+<table class="ds-table"><thead><tr><th>Component</th><th>Role + state</th></tr></thead><tbody>
+<tr><td>Toggle button (Theme, View)</td><td><code>aria-pressed="true|false"</code></td></tr>
+<tr><td>Combobox</td><td><code>role="combobox"</code> · <code>aria-expanded</code> · <code>aria-controls</code> · listbox has <code>role="listbox"</code></td></tr>
+<tr><td>Grouped multi-select</td><td><code>role="listbox" aria-multiselectable="true"</code> · groups use <code>role="group"</code> with <code>aria-labelledby</code></td></tr>
+<tr><td>Tabs</td><td><code>role="tablist"</code> · tabs <code>role="tab"</code> · panels <code>role="tabpanel"</code> · <code>aria-selected</code></td></tr>
+<tr><td>Modal · drawer</td><td><code>role="dialog" aria-modal="true" aria-labelledby="heading-id"</code></td></tr>
+<tr><td>Tooltip</td><td><code>role="tooltip"</code> · trigger gets <code>aria-describedby</code></td></tr>
+<tr><td>Kanban column</td><td><code>role="region" aria-label="Backlog"</code> · cards inside get <code>aria-grabbed</code> while dragged</td></tr>
+<tr><td>Empty state</td><td><code>role="status"</code> if appearing after an action; otherwise no role</td></tr>
+<tr><td>Toast</td><td><code>role="status"</code> for info · <code>role="alert"</code> for error</td></tr>
+<tr><td>Progress</td><td><code>role="progressbar" aria-valuenow aria-valuemin aria-valuemax</code></td></tr>
+<tr><td>Loading spinner</td><td><code>role="status" aria-label="Loading"</code></td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Screen reader landmarks · once per page</h2>
+<div class="ds-code"><pre>&lt;header role="banner"&gt;       &lt;!-- top bar --&gt;
+&lt;nav role="navigation"&gt;       &lt;!-- sidebar nav --&gt;
+&lt;main role="main"&gt;             &lt;!-- page content --&gt;
+&lt;aside role="complementary"&gt;  &lt;!-- side panels --&gt;
+&lt;footer role="contentinfo"&gt;   &lt;!-- footer --&gt;</pre></div>
+<p>Skip-to-content link is the first interactive thing on every page · drops the cursor at <code>#main</code>.</p>
+<div class="ds-code"><pre>&lt;a href="#main" class="skip-link"&gt;Skip to content&lt;/a&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Motion sensitivity</h2>
+<p>Every animation in the system honours <code>prefers-reduced-motion: reduce</code>. When set, transitions reduce to opacity-only or are removed entirely. Nimbus stops his idle breathing too.</p>
+<div class="ds-code"><pre>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}</pre></div>
+</section>
+
+<section class="ds-section"><h2>Colour-blindness · don't rely on green/red alone</h2>
+<p>~8% of men have red-green colour deficiency. Status badges always pair colour with an icon or text suffix so the meaning survives a greyscale render.</p>
+<div class="ds-demo">
+  <span class="alert success"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l2 2 4-5"/></svg> Success · never green alone</span>
+  <span class="alert error" style="margin-left:8px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3l6 6M9 3l-6 6"/></svg> Error · pair red with ✗</span>
+</div>
+</section>
+
+<section class="ds-section"><h2>Contrast · WCAG levels we hit</h2>
+<table class="ds-table"><thead><tr><th>Surface</th><th>Foreground</th><th>Ratio</th><th>Level</th></tr></thead><tbody>
+<tr><td>Paper</td><td>Ink</td><td>17.4 : 1</td><td>AAA</td></tr>
+<tr><td>Paper</td><td>--g-700</td><td>9.1 : 1</td><td>AAA</td></tr>
+<tr><td>Paper</td><td>--g-500</td><td>4.8 : 1</td><td>AA body</td></tr>
+<tr><td>Ink (dark)</td><td>Paper</td><td>17.4 : 1</td><td>AAA</td></tr>
+<tr><td>--zop-orange</td><td>Paper</td><td>3.4 : 1</td><td>AA large / UI</td></tr>
+<tr><td>Dark <code>--state-success</code></td><td>Surface</td><td>7.1 : 1</td><td>AAA</td></tr>
+<tr><td>Dark <code>--state-error</code></td><td>Surface</td><td>5.7 : 1</td><td>AA</td></tr>
+<tr><td>Dark <code>--line</code></td><td>Surface</td><td>3.97 : 1</td><td>UI</td></tr>
+</tbody></table>
+<p>Run any new colour pair through <a href="https://webaim.org/resources/contrastchecker/">WebAIM contrast checker</a> before shipping. Body text needs ≥ 4.5:1 · UI elements ≥ 3:1 · prefer AAA (≥ 7:1) for the workhorse pairs.</p>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div><span class="alert error">✗ Save failed · please try again</span></div>
+    <div class="why">Colour + icon + verb. Meaning survives greyscale.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div><span class="alert error">Failed</span></div>
+    <div class="why">Single word with red-only signal · lost in greyscale, ambiguous when scanned.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div><button class="btn btn-primary" aria-label="Delete invoice INV-4421">Delete</button></div>
+    <div class="why">Icon-only or terse buttons get <code>aria-label</code> with the full action target.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div><button class="btn btn-ghost">⋯</button></div>
+    <div class="why">No label · no accessible name. Screen reader says "button" with no context.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>ZopNight V3 · Design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../design.css" />
+<link rel="stylesheet" href="_ds.css" />
+<style>
+  .hero {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 56px;
+    display: grid;
+    grid-template-columns: 1fr 160px;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 64px; font-weight: 600; letter-spacing: -0.03em;
+    margin: 10px 0 18px; line-height: 1.02;
+    color: var(--ink);
+  }
+  .hero p {
+    font-size: 17px; line-height: 1.55; color: var(--g-700);
+    max-width: 60ch; margin: 0 0 32px;
+  }
+  .hero .stats {
+    display: flex; gap: 48px; flex-wrap: wrap;
+    padding-top: 28px; border-top: 1px solid var(--line);
+  }
+  .hero .stat .n {
+    font-family: var(--font-display); font-size: 40px; font-weight: 600;
+    letter-spacing: -0.025em; color: var(--ink); line-height: 1;
+  }
+  .hero .stat .l {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--g-400);
+    margin-top: 8px;
+  }
+  .hero .nimbus-wrap {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero .nimbus-wrap svg {
+    width: 140px;
+    overflow: visible;
+    animation: n3-bob 2.8s ease-in-out infinite;
+  }
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero .nimbus-wrap { display: none; }
+    .hero h1 { font-size: 44px; }
+  }
+
+  .grid-section { margin-bottom: 48px; }
+  .grid-section h2 {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 600; letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+  .grid-section .lbl {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--zop-orange);
+    margin-bottom: 4px;
+  }
+  .grid-section p { font-size: 14px; color: var(--g-700); margin: 0 0 20px; line-height: 1.55; max-width: 68ch; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .ds-tile {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 4px;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    position: relative;
+    will-change: transform;
+  }
+  .ds-tile::after {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--zop-orange);
+    transform: scaleY(0); transform-origin: top;
+    transition: transform 220ms ease;
+    pointer-events: none;
+  }
+  .ds-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 -4px var(--ink);
+  }
+  .ds-tile:hover::after { transform: scaleY(1); }
+  .ds-tile .name {
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+    color: var(--ink); letter-spacing: -0.005em;
+  }
+  .ds-tile .desc { font-size: 12px; color: var(--g-500); line-height: 1.45; }
+
+  /* Mini visual previews inside each tile */
+  .ds-tile .vis {
+    height: 88px; margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-1);
+    border: 1px solid var(--row-line);
+    overflow: hidden;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+  .ds-tile .vis.column { flex-direction: column; gap: 4px; padding: 8px 10px; }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="index"></aside>
+<main class="ds-main">
+  <div class="hero">
+    <div>
+      <div class="ds-eyebrow">ZopNight V3</div>
+      <h1>Design system<br>handoff</h1>
+      <p>Locked-in components, patterns, and tokens for the ZopNight reskin. Drop-in CSS classes; existing markup keeps working via aliases. ApexCharts adopted as the default chart library.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">52</div><div class="l">Components</div></div>
+        <div class="stat"><div class="n">18</div><div class="l">Patterns</div></div>
+        <div class="stat"><div class="n">70</div><div class="l">Gap-fill items</div></div>
+        <div class="stat"><div class="n">30</div><div class="l">Chart examples</div></div>
+        <div class="stat"><div class="n">1</div><div class="l">CSS file</div></div>
+      </div>
+    </div>
+    <div class="nimbus-wrap">
+      <svg viewBox="-4 -4 80 44" shape-rendering="crispEdges" aria-hidden="true">
+        <g transform="translate(0, 6) scale(0.75)">
+          <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="40" y="0" width="8" height="4" fill="#FCFAF2"/>
+          <rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/>
+          <rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/>
+          <rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+          <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="14" y="14" width="2" height="2" fill="#FCFAF2"/>
+          <rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="34" y="14" width="2" height="2" fill="#FCFAF2"/>
+          <rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+        </g>
+        <rect x="42" y="14" width="6" height="6" fill="#FCFAF2"/><rect x="48" y="8" width="6" height="6" fill="#FCFAF2"/>
+        <rect x="54" y="2" width="6" height="6" fill="#FCFAF2"/><rect x="58" y="-8" width="12" height="12" fill="#FCFAF2"/>
+        <rect x="72" y="-6" width="6" height="2" fill="#F58549"/><rect x="74" y="-2" width="6" height="2" fill="#F58549"/><rect x="72" y="2" width="6" height="2" fill="#F58549"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="lbl">Start here</div>
+    <h2>Foundation</h2>
+    <p>Tokens, fonts, motion, and the cross-cutting rules. Every component is built from these.</p>
+    <div class="card-grid">
+      <a class="ds-tile" href="components/color-tokens.html"><div class="vis" style="background:linear-gradient(90deg,var(--zop-orange) 0 33%, var(--ink) 33% 66%, var(--paper) 66% 100%);border:0;"></div><div class="name">Color tokens</div><div class="desc">Brand · state · greys · surfaces</div></a>
+      <a class="ds-tile" href="components/typography.html"><div class="vis" style="font-family:'Space Grotesk';font-size:32px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);">Aa Bb</div><div class="name">Typography</div><div class="desc">Space Grotesk + Inter</div></a>
+      <a class="ds-tile" href="components/motion.html"><div class="vis"><span class="status-dot crit"><span class="dot"></span>Pulse</span></div><div class="name">Motion · 3% rule</div><div class="desc">Durations, easings, reduced-motion</div></a>
+      <a class="ds-tile" href="components/breakpoints.html"><div class="vis" style="gap:4px;font-family:'JetBrains Mono';font-size:10px;color:var(--g-500);">sm · md · lg · xl · 2xl</div><div class="name">Breakpoints</div><div class="desc">640 · 768 · 1024 · 1280 · 1536</div></a>
+      <a class="ds-tile" href="components/icons.html"><div class="vis" style="gap:14px;"><svg width="18" height="18" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3 3"/></svg><svg width="18" height="18" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 7l3 3 5-7"/></svg><svg width="18" height="18" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M7 2v10M2 7h10"/></svg></div><div class="name">Icons</div><div class="desc">Inline SVG · 1.5px stroke · 5 sizes</div></a>
+      <a class="ds-tile" href="components/accessibility.html"><div class="vis" style="font-family:'Space Grotesk';font-size:20px;font-weight:600;color:var(--zop-orange);">A11y</div><div class="name">Accessibility</div><div class="desc">Keyboard · focus · ARIA · contrast</div></a>
+      <a class="ds-tile" href="components/composition.html"><div class="vis" style="font-family:'JetBrains Mono';font-size:9px;color:var(--g-500);line-height:1.4;">drawer&nbsp;&nbsp;&nbsp;⊃<br>&nbsp;&nbsp;tabs&nbsp;&nbsp;⊃<br>&nbsp;&nbsp;&nbsp;&nbsp;tooltip</div><div class="name">Composition</div><div class="desc">What nests in what · z-index scale</div></a>
+      <a class="ds-tile" href="components/nimbus.html"><div class="vis"><svg style="width:48px;overflow:visible;animation:n3-bob 2.8s ease-in-out infinite;" viewBox="-2 -2 36 32" shape-rendering="crispEdges"><rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/><rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/></svg></div><div class="name">Nimbus mascot</div><div class="desc">11 poses · cursor tracking · easter eggs</div></a>
+      <a class="ds-tile" href="principles.html"><div class="vis" style="font-family:'Space Grotesk';font-size:24px;color:var(--zop-orange);font-weight:600;">8</div><div class="name">Principles</div><div class="desc">The eight rules of the system</div></a>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="lbl">Tier 1</div>
+    <h2>Atoms</h2>
+    <p>The smallest reusable parts. Each ships with sizes, variants, and a full state matrix.</p>
+    <div class="card-grid">
+      <a class="ds-tile" href="components/buttons.html"><div class="vis"><button class="btn btn-primary btn-sm">Save</button><button class="btn btn-secondary btn-sm">Cancel</button><button class="btn btn-destructive btn-sm">Delete</button></div><div class="name">Buttons</div><div class="desc">5 variants × 3 sizes</div></a>
+      <a class="ds-tile" href="components/status-dots.html"><div class="vis"><span class="status-dot ok"><span class="dot"></span>OK</span><span class="status-dot warn"><span class="dot"></span>Soon</span><span class="status-dot crit"><span class="dot"></span>Critical</span></div><div class="name">Status dots</div><div class="desc">6 states · pulse on critical</div></a>
+      <a class="ds-tile" href="components/inputs.html"><div class="vis column"><input class="form-input sm" value="prod-aws" style="max-width:160px;" readonly /><div style="display:flex;gap:10px;align-items:center;"><input type="checkbox" class="zn-check" checked /><span class="kbd kbd-sm">⌘ K</span></div></div><div class="name">Inputs</div><div class="desc">Text · select · check · radio</div></a>
+      <a class="ds-tile" href="components/kbd.html"><div class="vis" style="gap:10px;"><span class="kbd kbd-sm">Esc</span><span class="kbd-group"><span class="kbd">⌘</span><span class="kbd-plus">+</span><span class="kbd">K</span></span><span class="kbd kbd-lg">Shift</span></div><div class="name">Kbd</div><div class="desc">Shortcut chip · 3 sizes</div></a>
+      <a class="ds-tile" href="components/mono-id.html"><div class="vis column"><span class="mono-id">i-0a3f9b7c</span><span class="mono-id chip"><span class="id-label">ID</span>i-0a3f9b7c</span></div><div class="name">Mono ID + copy</div><div class="desc">Resource identifier · flash on copy</div></a>
+      <a class="ds-tile" href="components/tags-chips.html"><div class="vis"><span class="tag-pill ok">Running</span><span class="tag-pill warn">Expiring</span><span class="tag-pair"><span class="k">env</span><span class="v">prod</span></span></div><div class="name">Tags · chips</div><div class="desc">Pill · pair · drillable</div></a>
+      <a class="ds-tile" href="components/provider-marks.html"><div class="vis" style="gap:12px;"><span class="provider-mark aws"></span><span class="provider-mark gcp"></span><span class="provider-mark azure"></span><span class="provider-mark k8s"></span></div><div class="name">Provider marks</div><div class="desc">AWS · GCP · Azure · K8s SVGs</div></a>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="lbl">Tier 2</div>
+    <h2>Molecules</h2>
+    <p>Atoms composed into useful units. Each maps to a clear job.</p>
+    <div class="card-grid">
+      <a class="ds-tile" href="components/filter-pills.html"><div class="vis column"><button class="fp is-active"><span class="lbl">Status</span><span class="sep">·</span><span class="val">Running</span><span class="count">+2</span></button><button class="fp"><span class="lbl">Region</span><span class="sep">·</span><span class="val">All</span></button></div><div class="name">Filter pills</div><div class="desc">Clear × · count · sm · disabled</div></a>
+      <a class="ds-tile" href="components/severity.html"><div class="vis"><span class="sb critical"><span class="dot"></span>Critical</span><span class="sb high"><span class="dot"></span>High</span><span class="sb low"><span class="dot"></span>Low</span></div><div class="name">Severity</div><div class="desc">4 tiers · solid · count</div></a>
+      <a class="ds-tile" href="components/method-status.html"><div class="vis" style="gap:6px;"><span class="mp get">GET</span><span class="mp post">POST</span><span class="mp delete">DELETE</span><span class="sc ok">200</span><span class="sc err">503</span></div><div class="name">Method · HTTP</div><div class="desc">7 verbs · 4 status tiers</div></a>
+      <a class="ds-tile" href="components/alerts.html"><div class="vis" style="padding:8px;"><div class="alert sm warn" style="font-size:11px;width:100%;"><span class="icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1L1 14h14L8 1z"/></svg></span><div class="body"><strong>Schedule fires</strong>in 12 minutes</div></div></div><div class="name">Alerts · banners</div><div class="desc">4 levels · solid · sm · close</div></a>
+      <a class="ds-tile" href="components/empty-states.html"><div class="vis"><svg style="width:64px;overflow:visible;animation:n3-bob 2.8s ease-in-out infinite;" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/><rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="14" y="14" width="2" height="2" fill="#FCFAF2"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="34" y="14" width="2" height="2" fill="#FCFAF2"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/></svg></div><div class="name">Empty · Nimbus</div><div class="desc">4 poses · wave/search/sleep/cheer</div></a>
+      <a class="ds-tile" href="components/pagination.html"><div class="vis"><div class="pg sm" style="padding:0;border:0;"><span class="pages"><button class="arrow"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m7.5 3-3 3 3 3"/></svg></button><button>1</button><button aria-current="page">2</button><button>3</button><span class="ellipsis">…</span><button>12</button><button class="arrow"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4.5 3 3 3-3 3"/></svg></button></span></div></div><div class="name">Pagination</div><div class="desc">Arrows · ellipsis · ipp · sm</div></a>
+      <a class="ds-tile" href="components/tabs.html"><div class="vis" style="padding:0;align-items:flex-end;"><div class="tb" style="margin:0;font-size:11px;"><button>Overview</button><button aria-selected="true">Resources <span class="badge">412</span></button><button>History</button></div></div><div class="name">Tabs</div><div class="desc">Sentence case · icons · badges</div></a>
+      <a class="ds-tile" href="components/countdown.html"><div class="vis column" style="gap:6px;"><span class="cd sm"><span class="lbl">Next</span><span class="val">19:00</span></span><span class="cd sm critical"><span class="lbl">Fires</span><span class="val">38s</span></span></div><div class="name">Countdown</div><div class="desc">4 states · clock · sm</div></a>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="lbl">Tier 3</div>
+    <h2>Organisms</h2>
+    <p>Composed components that own a meaningful slice of the screen.</p>
+    <div class="card-grid">
+      <a class="ds-tile" href="components/cards.html"><div class="vis" style="padding:0;"><div class="card sm" style="margin:0;font-size:11px;padding:8px 12px;"><strong style="color:var(--ink);">Card title</strong><div style="color:var(--g-500);font-size:10px;">Sm/lg/callout/hoverable</div></div></div><div class="name">Cards</div><div class="desc">Bento hover signature</div></a>
+      <a class="ds-tile" href="components/stat-strip.html"><div class="vis" style="padding:0;"><div class="ss sm" style="margin:0;grid-template-columns:1fr 1fr;font-size:10px;"><div class="cell" style="padding:6px 8px;grid-template-rows:14px 18px;gap:2px;"><span class="lbl" style="font-size:8px;">Spend</span><span class="val" style="font-size:13px;">$48K</span></div><div class="cell" style="padding:6px 8px;grid-template-rows:14px 18px;gap:2px;"><span class="lbl" style="font-size:8px;">Saved</span><span class="val savings" style="font-size:13px;">$12K</span></div></div></div><div class="name">Stat strip</div><div class="desc">Delta · sub · icon · clickable</div></a>
+      <a class="ds-tile" href="components/table.html"><div class="vis"><div style="font-family:'JetBrains Mono';font-size:9px;color:var(--g-500);">▾ Name &nbsp; Cost</div></div><div class="name">Table</div><div class="desc">Sortable · actions · name-stack</div></a>
+      <a class="ds-tile" href="components/drawer.html"><div class="vis" style="padding:0;"><div style="width:80%;height:48px;background:var(--paper);border:1px solid var(--line);position:relative;"><div style="position:absolute;right:0;top:0;width:32px;height:100%;background:var(--surface-2);border-left:1px solid var(--line);"></div></div></div><div class="name">Drawer</div><div class="desc">Slide-over · sticky footer · sizes</div></a>
+      <a class="ds-tile" href="components/suggestion.html"><div class="vis" style="padding:0;"><div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;color:var(--state-success);">$642<span style="font-size:10px;color:var(--g-500);">/mo</span></div></div><div class="name">Suggestion row</div><div class="desc">Bento hover · lifecycle states</div></a>
+      <a class="ds-tile" href="components/tree.html"><div class="vis"><div style="font-family:'JetBrains Mono';font-size:9px;color:var(--g-700);line-height:1.4;">▾ cluster<br>&nbsp;&nbsp;▾ ns: payments<br>&nbsp;&nbsp;&nbsp;&nbsp;◦ deploy</div></div><div class="name">Tree explorer</div><div class="desc">CSS-var depth · indent guides</div></a>
+      <a class="ds-tile" href="components/charts.html"><div class="vis" style="padding:0;"><svg viewBox="0 0 80 40" style="width:100%;height:100%;"><polyline points="2,32 14,28 26,20 38,24 50,12 62,16 76,4" fill="none" stroke="var(--zop-orange)" stroke-width="2"/></svg></div><div class="name">Charts (ApexCharts)</div><div class="desc">30 product-ready examples</div></a>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="lbl">Compositions</div>
+    <h2>Patterns</h2>
+    <p>Common combinations showing how components fit together into real screens.</p>
+    <div class="card-grid">
+      <a class="ds-tile" href="patterns/page-header.html"><div class="name">Page header</div><div class="desc">Title · breadcrumb · actions</div></a>
+      <a class="ds-tile" href="patterns/filter-table.html"><div class="name">Filter row + table</div><div class="desc">Search · filters · sortable · pagination</div></a>
+      <a class="ds-tile" href="patterns/drawer-form.html"><div class="name">Drawer with form</div><div class="desc">Edit flow with sticky footer</div></a>
+      <a class="ds-tile" href="patterns/empty-state.html"><div class="name">Empty state flow</div><div class="desc">Nimbus pose mapping</div></a>
+      <a class="ds-tile" href="patterns/recommendations.html"><div class="name">Recommendations list</div><div class="desc">Critical → default → applied</div></a>
+      <a class="ds-tile" href="patterns/settings-form.html"><div class="name">Settings form</div><div class="desc">Two-column section layout</div></a>
+      <a class="ds-tile" href="patterns/tabs-pane.html"><div class="name">Tabs + content</div><div class="desc">Strip + pane below</div></a>
+      <a class="ds-tile" href="patterns/kpi-charts.html"><div class="name">KPI strip + charts</div><div class="desc">Dashboard layout</div></a>
+      <a class="ds-tile" href="patterns/skeleton.html"><div class="name">Loading · skeletons</div><div class="desc">Shimmer placeholders</div></a>
+      <a class="ds-tile" href="patterns/toast.html"><div class="name">Toast notifications</div><div class="desc">Non-blocking feedback</div></a>
+      <a class="ds-tile" href="patterns/inline-edit.html"><div class="name">Inline edit</div><div class="desc">Pencil hint → confirm/cancel</div></a>
+      <a class="ds-tile" href="patterns/wizard.html"><div class="name">Multi-step wizard</div><div class="desc">Onboarding · complex flows</div></a>
+      <a class="ds-tile" href="patterns/modal.html"><div class="name">Confirmation modal</div><div class="desc">Destructive · irreversible</div></a>
+      <a class="ds-tile" href="patterns/interaction-states.html"><div class="name">Interaction states</div><div class="desc">Idle · hover · active · focus · …</div></a>
+      <a class="ds-tile" href="patterns/form-validation.html"><div class="name">Form validation</div><div class="desc">Timing · placement · error copy</div></a>
+      <a class="ds-tile" href="patterns/loading-states.html"><div class="name">Loading states</div><div class="desc">Skeleton vs spinner vs empty vs error</div></a>
+      <a class="ds-tile" href="patterns/microcopy.html"><div class="name">Microcopy</div><div class="desc">Voice · button labels · error copy</div></a>
+      <a class="ds-tile" href="patterns/animation-orchestration.html"><div class="name">Animation orchestration</div><div class="desc">Page transitions · staggered reveals</div></a>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="lbl">Handoff extras</div>
+    <h2>Engineering reference</h2>
+    <p>What you need beyond the components themselves · migration paths, versioning, JS theming hooks, and the Figma source.</p>
+    <div class="card-grid">
+      <a class="ds-tile" href="../MIGRATION.md"><div class="vis" style="font-family:'JetBrains Mono';font-size:10px;color:var(--g-700);line-height:1.5;">.tag-soft<br>→ .tag-pill</div><div class="name">Migration · V2 → V3</div><div class="desc">Codemod patterns · alias table · deprecation timeline</div></a>
+      <a class="ds-tile" href="../CHANGELOG.md"><div class="vis" style="font-family:'Space Grotesk';font-size:18px;color:var(--ink);font-weight:600;">1.1.0</div><div class="name">Changelog</div><div class="desc">Versioning policy · what changed when</div></a>
+      <a class="ds-tile" href="../tokens.js"><div class="vis" style="font-family:'JetBrains Mono';font-size:10px;color:var(--g-700);">tokens.zopOrange</div><div class="name">tokens.js</div><div class="desc">JS export · readCssToken() · Recharts + Apex helpers</div></a>
+      <a class="ds-tile" href="https://www.figma.com" target="_blank" rel="noopener"><div class="vis" style="font-family:'Space Grotesk';font-size:18px;color:var(--zop-orange);font-weight:600;">Figma →</div><div class="name">Figma library</div><div class="desc">Designer source · component frames</div></a>
+    </div>
+  </div>
+
+  <div class="ds-foot">
+    <div class="left">
+      <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+        <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+      </svg>
+      <span>ZopNight V3 · design system</span>
+      <span class="version">v1.1 · 2026-06-05</span>
+    </div>
+    <div class="right">
+      <a href="../DESIGN-SYSTEM.md">DESIGN-SYSTEM.md</a>
+      <a href="../MIGRATION.md">Migration</a>
+      <a href="../CHANGELOG.md">Changelog</a>
+      <a href="../charts-gallery.html">Charts gallery</a>
+    </div>
+  </div>
+</main>
+<script src="_ds.js"></script>
+</body>
+</html>

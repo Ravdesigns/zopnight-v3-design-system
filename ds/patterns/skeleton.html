@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Loading · skeletons · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+<style>
+.skel { background: linear-gradient(90deg, var(--surface-2) 0%, var(--surface-3) 50%, var(--surface-2) 100%); background-size: 200% 100%; animation: skel-shimmer 1.4s linear infinite; display: block; }
+@keyframes skel-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.skel-line { height: 12px; margin-bottom: 8px; }
+.skel-circle { width: 32px; height: 32px; border-radius: 50%; }
+.skel-block { width: 100%; height: 120px; }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; background: var(--surface-2); } }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-skeleton"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · loading</div>
+<h1 class="ds-h1">Loading · skeletons</h1>
+<p class="ds-lead">Shimmering placeholders that reserve layout space while data loads. Same shape as the final content so nothing jumps when the response arrives.</p>
+<section class="ds-section"><h2>Why skeleton?</h2><p>Reserves layout space while data loads. Prevents content-jump when the response arrives. Should always have the same shape as the final content.</p></section><section class="ds-section"><h2>Skeleton primitives</h2><div class="ds-demo"><div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;"><div style="width:180px;"><div class="skel skel-line" style="width:80%;"></div><div class="skel skel-line" style="width:60%;"></div><div class="skel skel-line" style="width:70%;"></div></div><div class="skel skel-circle"></div><div style="width:160px;"><div class="skel skel-block"></div></div></div></div><div class="ds-code"><pre>&lt;div class=&quot;skel skel-line&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;skel skel-circle&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;skel skel-block&quot;&gt;&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Skeleton table row</h2><p>Match column widths to the real table.</p><div class="ds-demo"><div class="table-wrap" style="margin:0;"><table class="resources"><thead><tr><th class="check-cell"></th><th>Name</th><th>Type</th><th>Region</th><th class="num">Cost</th></tr></thead><tbody><tr><td class="check-cell"><div class="skel" style="width:14px;height:14px;"></div></td><td><div class="skel skel-line" style="width:60%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:50%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:55%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:40%;margin-bottom:0;margin-left:auto;"></div></td></tr><tr><td class="check-cell"><div class="skel" style="width:14px;height:14px;"></div></td><td><div class="skel skel-line" style="width:75%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:60%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:50%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:45%;margin-bottom:0;margin-left:auto;"></div></td></tr><tr><td class="check-cell"><div class="skel" style="width:14px;height:14px;"></div></td><td><div class="skel skel-line" style="width:65%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:55%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:50%;margin-bottom:0;"></div></td><td><div class="skel skel-line" style="width:35%;margin-bottom:0;margin-left:auto;"></div></td></tr></tbody></table></div></div><div class="ds-code"><pre>&lt;tr&gt;
+  &lt;td class=&quot;check-cell&quot;&gt;&lt;div class=&quot;skel&quot; style=&quot;width:14px;height:14px;&quot;&gt;&lt;/div&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;div class=&quot;skel skel-line&quot;&gt;&lt;/div&gt;&lt;/td&gt;
+  …
+&lt;/tr&gt;</pre></div></section><section class="ds-section"><h2>Skeleton stat strip</h2><div class="ds-demo"><div class="ss" style="margin:0;"><div class="cell"><div class="skel skel-line" style="width:60%;"></div><div class="skel" style="height:26px;width:80%;"></div><div class="skel skel-line" style="width:50%;margin-bottom:0;margin-top:8px;"></div></div><div class="cell"><div class="skel skel-line" style="width:50%;"></div><div class="skel" style="height:26px;width:70%;"></div><div class="skel skel-line" style="width:60%;margin-bottom:0;margin-top:8px;"></div></div><div class="cell"><div class="skel skel-line" style="width:70%;"></div><div class="skel" style="height:26px;width:50%;"></div><div class="skel skel-line" style="width:55%;margin-bottom:0;margin-top:8px;"></div></div><div class="cell"><div class="skel skel-line" style="width:40%;"></div><div class="skel" style="height:26px;width:40%;"></div><div class="skel skel-line" style="width:60%;margin-bottom:0;margin-top:8px;"></div></div></div></div><div class="ds-code"><pre>&lt;div class=&quot;ss&quot;&gt;
+  &lt;div class=&quot;cell&quot;&gt;
+    &lt;div class=&quot;skel skel-line&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;skel&quot; style=&quot;height:26px;&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;skel skel-line&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  …
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Skeleton card grid</h2><div class="ds-demo"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"><div class="card" style="margin:0;"><div class="skel skel-line" style="width:60%;"></div><div class="skel skel-line" style="width:90%;"></div><div class="skel skel-line" style="width:70%;margin-bottom:0;"></div></div><div class="card" style="margin:0;"><div class="skel skel-line" style="width:50%;"></div><div class="skel skel-line" style="width:80%;"></div><div class="skel skel-line" style="width:65%;margin-bottom:0;"></div></div><div class="card" style="margin:0;"><div class="skel skel-line" style="width:70%;"></div><div class="skel skel-line" style="width:85%;"></div><div class="skel skel-line" style="width:60%;margin-bottom:0;"></div></div></div></div><div class="ds-code"><pre>&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;skel skel-line&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;skel skel-line&quot;&gt;&lt;/div&gt;
+  …
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Token</h2><div class="ds-code"><pre>/* Skeleton primitive · in design.css */
+.skel {
+  background: linear-gradient(90deg,
+    var(--surface-2) 0%,
+    var(--surface-3) 50%,
+    var(--surface-2) 100%);
+  background-size: 200% 100%;
+  animation: skel-shimmer 1.4s linear infinite;
+}
+
+@keyframes skel-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

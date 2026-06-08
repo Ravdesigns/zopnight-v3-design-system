@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Charts (ApexCharts) · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="charts"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Organism · data viz</div>
+<h1 class="ds-h1">Charts (ApexCharts)</h1>
+<p class="ds-lead">ApexCharts is the default chart library · CDN drop-in, zero React, brand-matched out of the box.</p>
+<section class="ds-section"><h2>Library</h2><p>Default chart library is <strong>ApexCharts</strong> (CDN drop-in, zero React, no build pipeline).</p><div class="ds-code"><pre>&lt;!-- in &lt;head&gt; --&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/apexcharts@3.49.1/dist/apexcharts.min.js&quot;&gt;&lt;/script&gt;</pre></div></section><section class="ds-section"><h2>Brand-matched tooltips</h2><p>Every ApexCharts instance globally inherits ink-pill tooltips with paper text via <code>design.css</code>. No per-chart wiring needed.</p><div class="ds-code"><pre>/* in design.css (already applied) */
+.apexcharts-tooltip {
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+  font-family: var(--font-body) !important;
+  …
+}</pre></div></section><section class="ds-section"><h2>Token wiring</h2><p>Read tokens from CSS variables at chart-init time so themes flow through.</p><div class="ds-code"><pre>const css = (n) =&gt; getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const tokens = {
+  orange: css(&#x27;--zop-orange&#x27;),
+  blue:   css(&#x27;--zop-blue&#x27;),
+  green:  css(&#x27;--state-success&#x27;),
+  ink:    css(&#x27;--ink&#x27;),
+  g500:   css(&#x27;--g-500&#x27;),
+  line:   css(&#x27;--line&#x27;),
+};
+
+new ApexCharts(el, {
+  series: [{ data: [12, 18, 22, 28, 34] }],
+  colors: [tokens.orange],
+  chart: { fontFamily: &quot;&#x27;Inter&#x27;, sans-serif&quot;, foreColor: tokens.g500, toolbar: { show: false } },
+  grid: { borderColor: tokens.line, strokeDashArray: 3 },
+}).render();</pre></div></section><section class="ds-section"><h2>30 ready-to-use chart examples</h2><p>All wired with brand colors, Inter font, Space Grotesk for big numerals, ink-pill tooltips.</p><div class="ds-demo"><a href="../../charts-gallery.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-body);font-size:13px;font-weight:500;">Open charts gallery →</a></div><div class="ds-code"><pre>&lt;!-- 30 product-ready chart examples --&gt;
+charts-gallery.html</pre></div></section><section class="ds-section"><h2>Chart types in the gallery</h2><table class="ds-table"><thead><tr><th>Category</th><th>Charts</th></tr></thead><tbody><tr><td><strong>Time series</strong></td><td>line · area · stacked area · stepped · multi-line QoQ · combo · dual-axis</td></tr><tr><td><strong>Comparison</strong></td><td>bar (h/v) · grouped · stacked column · stacked 100% · pareto · bullet</td></tr><tr><td><strong>Composition</strong></td><td>donut · concentric donuts · donut+legend table · polar area · treemap</td></tr><tr><td><strong>Distribution</strong></td><td>heatmap · calendar heatmap · box plot · bubble</td></tr><tr><td><strong>Single value</strong></td><td>radial gauge · semi-gauge · sparklines · KPI tiles</td></tr><tr><td><strong>Domain-specific</strong></td><td>forecast cone · anomaly markers · anomaly band · funnel · waterfall · schedule range · reservation coverage</td></tr></tbody></table></section>
+<section class="ds-section"><h2>Inline preview · 4 examples</h2><p>A quick taste of the gallery. Hover any chart to see the brand-matched ink-pill tooltip.</p><div class="ds-demo" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px;"><div><div style="font-family:var(--font-display);font-size:13px;font-weight:600;margin-bottom:6px;">Spend trend</div><div id="mini-line"></div></div><div><div style="font-family:var(--font-display);font-size:13px;font-weight:600;margin-bottom:6px;">Savings captured</div><div id="mini-area"></div></div><div><div style="font-family:var(--font-display);font-size:13px;font-weight:600;margin-bottom:6px;">By account</div><div id="mini-bar"></div></div><div><div style="font-family:var(--font-display);font-size:13px;font-weight:600;margin-bottom:6px;">Provider split</div><div id="mini-donut"></div></div></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.1/dist/apexcharts.min.js"></script>
+<script src="../_ds.js"></script>
+<script>
+  if (window.ApexCharts) {
+    const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    const T = { orange: css('--zop-orange'), blue: css('--zop-blue'), green: css('--state-success'), ink: css('--ink'), g500: css('--g-500'), line: css('--line') };
+    const base = { chart: { fontFamily: "'Inter', sans-serif", toolbar: { show: false }, foreColor: T.g500 }, dataLabels: { enabled: false }, tooltip: { theme: 'light' }, grid: { borderColor: T.line, strokeDashArray: 3 } };
+    const noAxis = { xaxis: { labels: { show: false }, axisTicks: { show: false }, axisBorder: { show: false } }, yaxis: { labels: { show: false } } };
+    const line = document.getElementById('mini-line');
+    if (line) new ApexCharts(line, Object.assign({}, base, noAxis, { chart: Object.assign({}, base.chart, { type: 'line', height: 140 }), series: [{ data: [12,18,22,28,34,30,38] }], colors: [T.orange], stroke: { curve: 'smooth', width: 2 } })).render();
+    const area = document.getElementById('mini-area');
+    if (area) new ApexCharts(area, Object.assign({}, base, noAxis, { chart: Object.assign({}, base.chart, { type: 'area', height: 140 }), series: [{ data: [4,8,12,16,20,24,30] }], colors: [T.green], stroke: { curve: 'smooth', width: 2 }, fill: { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0.05 } } })).render();
+    const bar = document.getElementById('mini-bar');
+    if (bar) new ApexCharts(bar, Object.assign({}, base, noAxis, { chart: Object.assign({}, base.chart, { type: 'bar', height: 140 }), series: [{ data: [42,31,28,18,12] }], colors: [T.orange], plotOptions: { bar: { columnWidth: '55%' } } })).render();
+    const donut = document.getElementById('mini-donut');
+    if (donut) new ApexCharts(donut, { chart: { type: 'donut', height: 140, fontFamily: "'Inter', sans-serif", toolbar: { show: false } }, series: [52,28,14,6], labels: ['AWS','GCP','Azure','K8s'], colors: [T.orange, T.blue, T.green, T.ink], plotOptions: { pie: { donut: { size: '70%' } } }, legend: { show: false }, stroke: { width: 0 }, dataLabels: { enabled: false }, tooltip: { theme: 'light' } }).render();
+  }
+</script>
+</body>
+</html>

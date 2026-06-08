@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Typography · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="typography"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Foundation</div>
+<h1 class="ds-h1">Typography</h1>
+<p class="ds-lead">Two-font system. Display for headings + big numbers. Body for everything else. <code>--font-mono</code> is aliased to Inter (no separate mono font).</p>
+<section class="ds-section"><h2>Two fonts</h2><p>Space Grotesk for display + big stat numerals. Inter for everything else. No mono font.</p><div class="ds-demo"><div style="font-family:'Space Grotesk';font-size:48px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;color:var(--ink);">Space Grotesk</div>
+<div style="font-family:'Inter';font-size:32px;font-weight:500;color:var(--ink);margin-top:12px;">Inter · the workhorse</div></div><div class="ds-code"><pre>/* Tokens */
+--font-display: &#x27;Space Grotesk&#x27;, sans-serif;
+--font-body:    &#x27;Inter&#x27;, sans-serif;
+--font-mono:    &#x27;Inter&#x27;, sans-serif;  /* alias · no separate mono */</pre></div></section><section class="ds-section"><h2>Display scale</h2><p>Space Grotesk · used for page headings + big stat numerals.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;gap:8px;"><div style="font-family:'Space Grotesk';font-size:48px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;">48 / 600 / Display XL</div><div style="font-family:'Space Grotesk';font-size:32px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;">32 / 600 / Display L</div><div style="font-family:'Space Grotesk';font-size:24px;font-weight:600;letter-spacing:-0.01em;line-height:1.2;">24 / 600 / Display M (h2)</div><div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;letter-spacing:-0.01em;line-height:1.25;">18 / 600 / Display S (h3)</div></div></div></section><section class="ds-section"><h2>Body scale</h2><p>Inter · used for everything else.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;gap:8px;color:var(--ink);"><div style="font-size:16px;line-height:1.6;">16 / 400 / Body L · lead paragraphs</div><div style="font-size:14px;line-height:1.55;">14 / 400 / Body · standard paragraph copy</div><div style="font-size:13px;line-height:1.5;color:var(--g-700);">13 / 400 / Body S · descriptions, captions</div><div style="font-size:12px;line-height:1.45;color:var(--g-500);">12 / 400 / Body XS · timestamps, meta</div><div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;color:var(--g-500);">10 / 600 / Eyebrow / Label</div></div></div></section><section class="ds-section"><h2>Tabular numerals</h2><p>Apply <code>font-variant-numeric: tabular-nums</code> on any column of numbers (table cells, stat values, log timestamps) so digit widths align vertically.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;font-family:'Inter';font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink);"><div>$1,284.40</div><div>$842.10</div><div>$3,210.00</div><div>$190.00</div></div></div><div class="ds-code"><pre>&lt;td class=&quot;num&quot;&gt;$1,284.40&lt;/td&gt;
+&lt;!-- .num automatically applies tabular-nums + right-align --&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

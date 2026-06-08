@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Nimbus v3 · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+<style>
+  .pose-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 16px 0 0; }
+  .pose-tile { background: var(--paper); border: 1px solid var(--line); padding: 0; overflow: hidden; }
+  .pose-tile .stage { padding: 28px 16px; display: flex; align-items: center; justify-content: center; min-height: 160px; background: var(--surface-1); border-bottom: 1px solid var(--line); }
+  .pose-tile .meta { padding: 10px 14px; }
+  .pose-tile .name { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--ink); }
+  .pose-tile .spec { font-size: 11px; color: var(--g-500); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="nimbus"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Brand · mascot</div>
+<h1 class="ds-h1">Nimbus v3</h1>
+<p class="ds-lead">The ZopCloud logo, alive. Eyes track your cursor. Body breathes. Blinks naturally. Different rhythm per pose. Easter eggs fire at random ~ once every 2 minutes.</p>
+
+<section class="ds-section">
+  <h2>Move your mouse</h2>
+  <p>Watch the pupils follow.</p>
+  <div class="ds-demo" style="justify-content: center; min-height: 240px;">
+    <div data-nimbus="idle" data-nimbus-size="200"></div>
+  </div>
+  <div class="ds-code"><pre>&lt;div data-nimbus="idle"&gt;&lt;/div&gt;
+&lt;script src="../../nimbus.js"&gt;&lt;/script&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>All poses</h2>
+  <p>Each pose ships its own accessory + bob rhythm. The body geometry never changes · only the face + props swap.</p>
+  <div class="pose-grid">
+    <div class="pose-tile"><div class="stage"><div data-nimbus="idle" data-nimbus-size="120"></div></div><div class="meta"><div class="name">idle</div><div class="spec">eyes track cursor · 4.2s breath</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="wave" data-nimbus-size="160"></div></div><div class="meta"><div class="name">wave</div><div class="spec">arm + motion lines · 2.8s breath</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="search" data-nimbus-size="160"></div></div><div class="meta"><div class="name">search</div><div class="spec">magnifying glass · 3.6s breath</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="sleep" data-nimbus-size="160"></div></div><div class="meta"><div class="name">sleep</div><div class="spec">Zs float up · 4.4s breath</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="cheer" data-nimbus-size="160"></div></div><div class="meta"><div class="name">cheer</div><div class="spec">^_^ + sparkles · 2.4s</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="build" data-nimbus-size="160"></div></div><div class="meta"><div class="name">build</div><div class="spec">wrench · 3.8s</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="win" data-nimbus-size="160"></div></div><div class="meta"><div class="name">win</div><div class="spec">trophy + open mouth · 2.6s</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="money" data-nimbus-size="160"></div></div><div class="meta"><div class="name">money</div><div class="spec">coin · savings milestone</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="walk" data-nimbus-size="140"></div></div><div class="meta"><div class="name">walk</div><div class="spec">alternating legs · 1.6s · journey state</div></div></div>
+    <div class="pose-tile"><div class="stage"><div data-nimbus="wink" data-nimbus-size="120"></div></div><div class="meta"><div class="name">wink</div><div class="spec">easter egg · rare</div></div></div>
+  </div>
+</section>
+
+<section class="ds-section">
+  <h2>Hands &amp; legs</h2>
+  <p>Every pose now has stubby mitten hands at the side (3-pixel thumb + 3-finger palm on the wave arm) and stair-stepped feet with an ink sole. Walk pose alternates the legs at 0.7s rhythm.</p>
+  <div class="ds-demo" style="justify-content: space-around; min-height: 220px;">
+    <div data-nimbus="idle" data-nimbus-size="140"></div>
+    <div data-nimbus="walk" data-nimbus-size="140"></div>
+    <div data-nimbus="wave" data-nimbus-size="160"></div>
+  </div>
+</section>
+
+<section class="ds-section">
+  <h2>Behaviours</h2>
+  <table class="ds-table">
+    <thead><tr><th>Behaviour</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cursor tracking</strong></td><td>Pupils offset by ±1.2px horizontally · ±0.8px vertically based on cursor direction (clamped). Tracked poses: idle · wave · search · build · peek.</td></tr>
+      <tr><td><strong>Breath</strong></td><td>Whole body translates Y by −1.5px on a sine wave. Rhythm varies per pose (2.4s for cheer · 4.4s for sleep).</td></tr>
+      <tr><td><strong>Blink</strong></td><td>Eyes close (1-row line) for 110–150ms at random intervals 5–9 seconds apart. Happy/wink/sleep poses don't blink.</td></tr>
+      <tr><td><strong>Easter eggs</strong></td><td>~0.012% chance per frame to swap into wink or money pose for 1.8 seconds, then return.</td></tr>
+      <tr><td><strong>Sleep Zs</strong></td><td>Two Z marks · float up + fade · staggered by 1.4s.</td></tr>
+      <tr><td><strong>Reduced motion</strong></td><td>All animations + cursor tracking halt. Eyes stay centered. Easter eggs disabled.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Switching pose at runtime</h2>
+  <div class="ds-code"><pre>const el = document.querySelector('[data-nimbus]');
+Nimbus.setPose(el, 'cheer');     // celebrate a saving
+Nimbus.setPose(el, 'sleep');     // page is idle
+Nimbus.setPose(el, 'search');    // user is filtering
+
+// Available poses:
+Nimbus.poses;
+// ['idle', 'wave', 'search', 'sleep', 'cheer', 'build', 'win', 'money', 'wink', 'peek']</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Where Nimbus shows up</h2>
+  <table class="ds-table">
+    <thead><tr><th>Surface</th><th>Pose</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Sidebar (above profile)</td><td><code>idle</code></td><td>Ambient · auto-cycles emotion every 30s</td></tr>
+      <tr><td>Sign-in pitch</td><td><code>wave</code></td><td>Welcome moment</td></tr>
+      <tr><td>Empty state · no data</td><td><code>wave</code></td><td>"Hi! Nothing here yet"</td></tr>
+      <tr><td>Empty state · filtered out</td><td><code>search</code></td><td>"Looking but nothing matches"</td></tr>
+      <tr><td>Empty state · paused</td><td><code>sleep</code></td><td>"Schedules are paused"</td></tr>
+      <tr><td>Empty state · success</td><td><code>cheer</code></td><td>"All caught up"</td></tr>
+      <tr><td>Savings milestone toast</td><td><code>money</code></td><td>"You saved $10K this month"</td></tr>
+      <tr><td>Recommendation applied</td><td><code>win</code></td><td>Brief celebration · 2s</td></tr>
+      <tr><td>404 / error page</td><td><code>peek</code></td><td>Peeking from the corner</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../../nimbus.js"></script>
+<script src="../_ds.js"></script>
+</body>
+</html>

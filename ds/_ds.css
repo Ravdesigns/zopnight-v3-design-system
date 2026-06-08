@@ -1,0 +1,469 @@
+/* ═════════════════════════════════════════════════════════════════
+ * Design system handoff pages · shared layout
+ * Each doc page imports design.css for live components + this file
+ * for the docs chrome (sidebar nav, code blocks, section anchors).
+ * ═════════════════════════════════════════════════════════════════ */
+
+body {
+  background: var(--bg-app);
+  font-family: var(--font-body);
+  color: var(--ink);
+  margin: 0;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.ds-sidebar {
+  background: var(--paper);
+  border-right: 1px solid var(--line);
+  padding: 24px 18px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.ds-sidebar h1 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.ds-sidebar .sub {
+  font-family: var(--font-body); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--g-500);
+  margin-bottom: 18px;
+}
+.ds-sidebar .group { margin-top: 14px; }
+.ds-sidebar .group-label {
+  font-family: var(--font-body); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--g-400);
+  margin-bottom: 4px;
+}
+.ds-sidebar nav { display: flex; flex-direction: column; }
+.ds-sidebar nav a {
+  display: block;
+  padding: 5px 8px 5px 10px;
+  font-size: 12.5px;
+  color: var(--g-700);
+  text-decoration: none;
+  transition: background 120ms ease, color 120ms ease;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  position: relative;
+  border-left: 2px solid transparent;
+}
+.ds-sidebar nav a:hover { background: var(--surface-2); color: var(--ink); }
+.ds-sidebar nav a[aria-current="page"] {
+  background: var(--surface-2); color: var(--ink); font-weight: 600;
+  border-left-color: var(--zop-orange);
+}
+
+.ds-main {
+  padding: 48px 56px;
+  max-width: 1100px;
+  min-width: 0;
+}
+
+.ds-h1 {
+  font-family: var(--font-display);
+  font-size: 38px; font-weight: 600; letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+.ds-eyebrow {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--zop-orange);
+  margin-bottom: 12px;
+}
+.ds-lead {
+  font-size: 16px; line-height: 1.6; color: var(--g-700);
+  max-width: 68ch; margin: 0 0 40px;
+}
+
+.ds-section {
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+  margin-top: 40px;
+}
+.ds-section:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+.ds-section h2 {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 600; letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.ds-section h3 {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 600; letter-spacing: -0.005em;
+  margin: 24px 0 8px;
+}
+.ds-section p {
+  font-size: 14px; line-height: 1.6; color: var(--g-700);
+  max-width: 68ch; margin: 0 0 16px;
+}
+
+/* Live example block */
+.ds-demo {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 28px;
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+  margin: 16px 0 0;
+}
+.ds-demo.column { flex-direction: column; align-items: stretch; }
+.ds-demo.center { justify-content: center; }
+.ds-demo.dark { background: var(--bg-app); }
+
+/* Code block (copy-paste snippet) */
+.ds-code {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace;
+  font-size: 12px; line-height: 1.55;
+  padding: 16px 18px;
+  border-top: 0;
+  overflow-x: auto;
+  margin: 0 0 24px;
+  position: relative;
+}
+.ds-code pre { margin: 0; white-space: pre; }
+.ds-code .copy {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(255,255,255,0.08); border: 0;
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-body); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 8px; cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.ds-code .copy:hover { background: rgba(255,255,255,0.16); color: var(--paper); }
+
+/* Props / modifiers table */
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 16px 0 0;
+}
+.ds-table th {
+  text-align: left;
+  font-family: var(--font-body); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--g-500);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+}
+.ds-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--row-line);
+  vertical-align: top;
+  color: var(--ink);
+}
+.ds-table tr:last-child td { border-bottom: 0; }
+.ds-table code {
+  font-family: 'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace;
+  font-size: 11.5px;
+  background: var(--surface-2);
+  padding: 1px 5px;
+  color: var(--zop-orange);
+}
+.ds-table .desc { color: var(--g-700); }
+
+/* Inline code in prose */
+.ds-section p code, .ds-section li code {
+  font-family: 'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace;
+  font-size: 12.5px;
+  background: var(--surface-2);
+  padding: 1px 5px;
+  color: var(--zop-orange);
+}
+
+/* Callout boxes */
+.ds-callout {
+  background: var(--surface-1);
+  border-left: 3px solid var(--zop-orange);
+  padding: 14px 16px;
+  font-size: 13px; line-height: 1.55; color: var(--g-700);
+  margin: 16px 0;
+}
+.ds-callout.good { border-left-color: var(--state-success); }
+.ds-callout.warn { border-left-color: var(--state-warn); }
+.ds-callout strong { color: var(--ink); }
+.ds-callout-h {
+  font-family: var(--font-body); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink);
+  margin-bottom: 4px;
+}
+
+/* Lists */
+.ds-section ul { font-size: 14px; line-height: 1.7; color: var(--g-700); padding-left: 18px; }
+.ds-section ul li { margin-bottom: 4px; }
+
+/* Page foot */
+.ds-foot {
+  margin-top: 64px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--g-500);
+}
+.ds-foot a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.ds-foot a:hover { color: var(--zop-orange); border-bottom-color: var(--zop-orange); }
+
+/* Responsive */
+@media (max-width: 800px) {
+  body { grid-template-columns: 1fr; }
+  .ds-sidebar { position: relative; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .ds-main { padding: 32px 24px; }
+}
+
+/* ═════════════════════════════════════════════════════════════════
+ * DESIGN CRITIQUE POLISH PASS
+ * Hierarchy rhythm · anchors · demo heights · search · syntax · footer
+ * ═════════════════════════════════════════════════════════════════ */
+
+/* Section anchors · hash-link on hover */
+.ds-section h2, .ds-section h3 { position: relative; scroll-margin-top: 32px; }
+.ds-section h2 .anchor, .ds-section h3 .anchor {
+  position: absolute; left: -22px; top: 50%; transform: translateY(-50%);
+  opacity: 0; transition: opacity 120ms ease;
+  color: var(--g-400); text-decoration: none;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: 0.85em;
+}
+.ds-section h2:hover .anchor,
+.ds-section h3:hover .anchor { opacity: 1; }
+.ds-section h2 .anchor:hover, .ds-section h3 .anchor:hover { color: var(--zop-orange); }
+
+/* h3 earns its own visual line · slightly bigger + tighter tracking */
+.ds-section h3 {
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  margin: 28px 0 8px;
+}
+
+/* Lead text on every page sits tighter to the h1 */
+.ds-lead { margin-top: 12px; }
+
+/* Variable section spacing · break the uniformity */
+.ds-section.compact { padding-top: 20px; margin-top: 24px; }
+.ds-section.spacious { padding-top: 48px; margin-top: 56px; }
+
+/* Advanced / system-rule sections get subtle surface-1 tint */
+.ds-section.system {
+  background: var(--surface-1);
+  margin-left: -32px; margin-right: -32px;
+  padding: 32px;
+  border-top: 0;
+}
+
+/* Demo block · consistent min height + better column behaviour */
+.ds-demo {
+  min-height: 96px;
+}
+.ds-demo.tall { min-height: 180px; }
+.ds-demo.compact { min-height: 64px; padding: 18px; }
+
+/* Code block · richer styling + syntax tokens */
+.ds-code {
+  font-size: 12.5px;
+  line-height: 1.6;
+  padding: 18px 20px 18px 20px;
+  border: 0;
+  position: relative;
+  margin: 0 0 28px;
+}
+.ds-code .lang {
+  position: absolute; top: 12px; left: 18px;
+  font-family: var(--font-body); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.ds-code pre { margin: 0; padding-top: 6px; }
+.ds-code .copy {
+  top: 10px; right: 12px;
+  padding: 5px 10px;
+  font-size: 9.5px;
+  border-radius: 0;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.ds-code .copy:hover { background: rgba(255,255,255,0.2); color: var(--paper); }
+
+/* Syntax tokens (applied by _ds.js highlighter) */
+.ds-code .tok-tag    { color: #F19367; }   /* HTML tag · soft orange */
+.ds-code .tok-attr   { color: #B5B0A0; }   /* attribute name · muted cream */
+.ds-code .tok-str    { color: #C8E0B8; }   /* string · soft green */
+.ds-code .tok-punct  { color: #6E6A60; }   /* punctuation · dim */
+.ds-code .tok-com    { color: #6E6A60; font-style: italic; }
+.ds-code .tok-key    { color: #F9C39B; }   /* JS keywords · light orange */
+.ds-code .tok-prop   { color: #E0AF82; }   /* CSS prop names */
+.ds-code .tok-val    { color: #C8E0B8; }   /* CSS values */
+
+/* ⌘ K Search · modal overlay */
+.ds-search-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,10,10,0.45);
+  display: none; align-items: flex-start; justify-content: center;
+  padding-top: 96px;
+  animation: ds-fade 160ms ease both;
+}
+.ds-search-overlay[open] { display: flex; }
+@keyframes ds-fade { from { opacity: 0; } to { opacity: 1; } }
+.ds-search {
+  width: 560px; max-width: 92vw;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 36px rgba(10,10,10,0.18);
+  display: flex; flex-direction: column;
+  max-height: 70vh; overflow: hidden;
+}
+.ds-search input {
+  border: 0; outline: 0; background: transparent;
+  font-family: var(--font-body);
+  font-size: 16px; color: var(--ink);
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+}
+.ds-search input::placeholder { color: var(--g-400); }
+.ds-search-results { overflow-y: auto; padding: 8px 0; }
+.ds-search-results a {
+  display: block; padding: 8px 22px;
+  font-size: 13px; color: var(--g-700);
+  text-decoration: none;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center;
+}
+.ds-search-results a:hover, .ds-search-results a.active {
+  background: var(--surface-2); color: var(--ink);
+}
+.ds-search-results .group {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--g-400);
+}
+.ds-search-results .empty {
+  padding: 22px; text-align: center; color: var(--g-500); font-size: 13px;
+}
+.ds-search-hint {
+  padding: 10px 22px;
+  border-top: 1px solid var(--line);
+  background: var(--surface-1);
+  font-size: 11px; color: var(--g-500);
+  display: flex; gap: 18px;
+}
+.ds-search-hint .kbd {
+  font-size: 9px; padding: 1px 5px;
+  background: var(--paper); border: 1px solid var(--line);
+  margin: 0 3px;
+}
+
+/* Search trigger button (in sidebar) */
+.ds-search-trigger {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  font-family: var(--font-body);
+  font-size: 12px; color: var(--g-500);
+  cursor: pointer;
+  margin-bottom: 18px;
+  transition: border-color 120ms ease;
+}
+.ds-search-trigger:hover { border-color: var(--g-500); }
+.ds-search-trigger .kbd {
+  margin-left: auto;
+  background: var(--paper); border: 1px solid var(--line);
+  padding: 1px 5px; font-size: 9px;
+  font-family: var(--font-body); font-weight: 600;
+  color: var(--g-500);
+}
+.ds-search-trigger svg { width: 12px; height: 12px; color: var(--g-500); }
+
+/* Better footer */
+.ds-foot {
+  margin-top: 80px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--g-500);
+  flex-wrap: wrap; gap: 16px;
+}
+.ds-foot .left, .ds-foot .right {
+  display: flex; align-items: center; gap: 14px;
+}
+.ds-foot .mini-nimbus {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+}
+.ds-foot .version {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--g-500);
+}
+.ds-foot a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.ds-foot a:hover { color: var(--zop-orange); border-bottom-color: var(--zop-orange); }
+
+/* Don't-do paired examples */
+.ds-dodont {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin: 12px 0 24px;
+}
+.ds-dodont .ds-do, .ds-dodont .ds-dont {
+  border: 1px solid var(--line);
+  padding: 18px;
+  background: var(--paper);
+  display: flex; flex-direction: column;
+  gap: 12px;
+  min-height: 120px;
+}
+.ds-dodont .ds-do .tag, .ds-dodont .ds-dont .tag {
+  font-family: var(--font-body); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 8px; align-self: flex-start;
+}
+.ds-dodont .ds-do .tag { color: var(--paper); background: var(--state-success); }
+.ds-dodont .ds-dont .tag { color: var(--paper); background: var(--state-error); }
+.ds-dodont .ds-do .why, .ds-dodont .ds-dont .why {
+  font-size: 12px; color: var(--g-700); line-height: 1.5;
+  margin-top: auto;
+}
+
+/* Contrast-ratio badge for color-tokens page */
+.ratio {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 6px;
+  background: var(--surface-2);
+  color: var(--g-700);
+}
+.ratio.pass { color: var(--state-success); }
+.ratio.fail { color: var(--state-error); }
+
+/* ═════════════════════════════════════════════════════════════════
+ * Theme toggle (light · dark) — sits in the sidebar
+ * ═════════════════════════════════════════════════════════════════ */
+.ds-theme-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 0 14px;
+  border: 1px solid var(--line);
+  background: var(--surface-1);
+}
+.ds-theme-toggle button {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  padding: 7px 8px;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-body);
+  font-size: 11.5px; font-weight: 500;
+  color: var(--g-500);
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.ds-theme-toggle button:hover { color: var(--ink); }
+.ds-theme-toggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+}
+.ds-theme-toggle svg { width: 12px; height: 12px; }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Tabs · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="tabs"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Molecule · navigation</div>
+<h1 class="ds-h1">Tabs</h1>
+<p class="ds-lead">One unified tabs system. Sentence-case labels, badge + icon slots, three modifiers (sm · card-wrap).</p>
+<section class="ds-section"><h2>Sentence case · the only style</h2><p>No uppercase shouty caps. One <code>.tb</code> system used everywhere.</p><div class="ds-demo"><div class="tb"><button>Schedules</button><button aria-selected="true">Recommendations</button><button>Teams</button><button>Budgets</button><button>Activity</button></div></div><div class="ds-code"><pre>&lt;div class=&quot;tb&quot;&gt;
+  &lt;button&gt;Schedules&lt;/button&gt;
+  &lt;button aria-selected=&quot;true&quot;&gt;Recommendations&lt;/button&gt;
+  …
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>With badges + icons</h2><p>Optional <code>&lt;span class="badge"&gt;</code> · icon SVGs render before the label.</p><div class="ds-demo"><div class="tb"><button><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="10" height="8"/><path d="M2 6h10"/></svg>Overview</button><button aria-selected="true">Resources <span class="badge">412</span></button><button>Schedules <span class="badge">12</span></button></div></div><div class="ds-code"><pre>&lt;button&gt;Resources &lt;span class=&quot;badge&quot;&gt;412&lt;/span&gt;&lt;/button&gt;</pre></div></section><section class="ds-section"><h2>Small · drawer/sidebar</h2><p><code>.tb.sm</code>.</p><div class="ds-demo"><div class="tb sm"><button aria-selected="true">Details</button><button>Schedules <span class="badge">3</span></button><button>Activity</button></div></div><div class="ds-code"><pre>&lt;div class=&quot;tb sm&quot;&gt;…&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Card-wrap · feature pages</h2><p><code>.tb.card-wrap</code> · sits inside a surface-1 panel with a 1px border.</p><div class="ds-demo"><div class="tb card-wrap"><button>Overview</button><button aria-selected="true">Resources <span class="badge">412</span></button><button>History</button></div></div><div class="ds-code"><pre>&lt;div class=&quot;tb card-wrap&quot;&gt;…&lt;/div&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

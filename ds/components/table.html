@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Table · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="table"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Organism · data</div>
+<h1 class="ds-h1">Table</h1>
+<p class="ds-lead">Resources table with sortable headers, trailing actions, name-stack, .compact density. Selected & hover rows share <code>surface-2</code> to avoid confusion.</p>
+<section class="ds-section"><h2>Default</h2><p>Headers in soft uppercase. Body rows hover with surface-2.</p><div class="ds-demo"><div class="table-wrap" style="margin:0;"><table class="resources"><thead><tr><th class="check-cell"><span class="cbx"></span></th><th>Name</th><th>Type</th><th>Region</th><th class="num">MTD Cost</th></tr></thead><tbody><tr><td class="check-cell"><span class="cbx"></span></td><td>payments-api-prod</td><td>ec2-instance</td><td>us-east-1</td><td class="num">$1,284</td></tr><tr><td class="check-cell"><span class="cbx" aria-checked="true"></span></td><td>analytics-warehouse</td><td>bigquery</td><td>us-central1</td><td class="num">$842</td></tr></tbody></table></div></div><div class="ds-code"><pre>&lt;div class=&quot;table-wrap&quot;&gt;
+  &lt;table class=&quot;resources&quot;&gt;
+    &lt;thead&gt;…&lt;/thead&gt;
+    &lt;tbody&gt;…&lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Sortable headers</h2><p>Add <code>.sortable</code> · the chevron fades in on hover · <code>.asc</code> / <code>.desc</code> sets the active direction (chevron flips).</p><div class="ds-demo"><div class="table-wrap" style="margin:0;"><table class="resources"><thead><tr><th class="sortable asc">Name<span class="sort-ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></th><th class="sortable">Type<span class="sort-ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></th><th class="num sortable desc">Cost<span class="sort-ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></th></tr></thead><tbody><tr><td>payments-api-prod</td><td>ec2</td><td class="num">$1,284</td></tr></tbody></table></div></div><div class="ds-code"><pre>&lt;th class=&quot;sortable asc&quot;&gt;Name &lt;span class=&quot;sort-ind&quot;&gt;▼&lt;/span&gt;&lt;/th&gt;</pre></div></section><section class="ds-section"><h2>Name + meta stack</h2><p><code>.cell-name-stack</code> · name on top, sub-meta below.</p><div class="ds-demo"><div class="table-wrap" style="margin:0;"><table class="resources"><tbody><tr><td><div class="cell-name-stack"><span class="name">payments-api-prod</span><span class="meta">i-0a3f9b7c · attached business-hours</span></div></td><td>ec2-instance</td><td class="num">$1,284</td></tr></tbody></table></div></div><div class="ds-code"><pre>&lt;td&gt;
+  &lt;div class=&quot;cell-name-stack&quot;&gt;
+    &lt;span class=&quot;name&quot;&gt;payments-api-prod&lt;/span&gt;
+    &lt;span class=&quot;meta&quot;&gt;i-0a3f9b7c · …&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/td&gt;</pre></div></section><section class="ds-section"><h2>Trailing actions</h2><p><code>.cell-actions</code> + <code>.row-icon</code> · right-aligned · surface-2 hover.</p><div class="ds-demo"><div class="table-wrap" style="margin:0;"><table class="resources"><tbody><tr><td>payments-api-prod</td><td class="num">$1,284</td><td class="cell-actions"><button class="row-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2l3 3-7 7H2v-3z"/></svg></button><button class="row-icon"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="11" cy="7" r="1"/></svg></button></td></tr></tbody></table></div></div><div class="ds-code"><pre>&lt;td class=&quot;cell-actions&quot;&gt;
+  &lt;button class=&quot;row-icon&quot;&gt;✏&lt;/button&gt;
+  &lt;button class=&quot;row-icon&quot;&gt;⋯&lt;/button&gt;
+&lt;/td&gt;</pre></div></section><section class="ds-section"><h2>Compact density</h2><p><code>.table-wrap.compact</code> · 8px padding for scrolling-heavy tables.</p><div class="ds-demo"><div class="table-wrap compact" style="margin:0;"><table class="resources"><thead><tr><th>Name</th><th>Cost</th></tr></thead><tbody><tr><td>row-1</td><td class="num">$12</td></tr><tr><td>row-2</td><td class="num">$22</td></tr><tr><td>row-3</td><td class="num">$48</td></tr></tbody></table></div></div><div class="ds-code"><pre>&lt;div class=&quot;table-wrap compact&quot;&gt;…&lt;/div&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

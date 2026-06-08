@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Filter row + table · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-filter-table"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · data</div>
+<h1 class="ds-h1">Filter row + table</h1>
+<p class="ds-lead">Search + filter pills + sortable table + pagination. The default data list pattern.</p>
+<section class="ds-section"><h2>Filter row + table</h2><p>Filter pills + search · sortable table · pagination at the bottom. The most common screen pattern in the app.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;gap:12px;">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <input class="form-input sm" placeholder="Search resources…" style="max-width:280px;" />
+    <button class="fp"><span class="lbl">Account</span><span class="sep">·</span><span class="val">All</span><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 4.5 3 3 3-3"/></svg></button>
+    <button class="fp is-active"><span class="lbl">Status</span><span class="sep">·</span><span class="val">Running</span><span class="count">+2</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>
+    <button class="fp-clear">Clear all</button>
+  </div>
+  <div class="table-wrap" style="margin:0;">
+    <table class="resources">
+      <thead><tr>
+        <th class="check-cell"><span class="cbx"></span></th>
+        <th class="sortable asc">Name<span class="sort-ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></th>
+        <th class="sortable">Type<span class="sort-ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></th>
+        <th>Region</th>
+        <th class="num sortable desc">MTD<span class="sort-ind"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="check-cell"><span class="cbx"></span></td>
+          <td><div class="cell-name-stack"><span class="name"><span class="provider-mark sm aws" style="vertical-align:-3px;margin-right:6px;"></span>payments-api-prod</span><span class="meta">i-0a3f9b7c · attached business-hours</span></div></td>
+          <td>ec2-instance</td><td>us-east-1</td><td class="num">$1,284.40</td>
+          <td class="cell-actions"><button class="row-icon"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="11" cy="7" r="1"/></svg></button></td>
+        </tr>
+        <tr>
+          <td class="check-cell"><span class="cbx" aria-checked="true"></span></td>
+          <td><div class="cell-name-stack"><span class="name"><span class="provider-mark sm gcp" style="vertical-align:-3px;margin-right:6px;"></span>analytics-warehouse</span><span class="meta">bigquery dataset · us-central1</span></div></td>
+          <td>bigquery</td><td>us-central1</td><td class="num">$842.10</td>
+          <td class="cell-actions"><button class="row-icon"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="11" cy="7" r="1"/></svg></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pg" style="padding:0;border:0;">
+    <span class="summary"><strong>1–12</strong> of <strong>412</strong> resources</span>
+    <span class="pages">
+      <button class="arrow" disabled><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m7.5 3-3 3 3 3"/></svg></button>
+      <button aria-current="page">1</button><button>2</button><button>3</button><span class="ellipsis">…</span><button>35</button>
+      <button class="arrow"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4.5 3 3 3-3 3"/></svg></button>
+    </span>
+    <span class="ipp">Rows<select class="ipp-select"><option>12</option><option>24</option></select></span>
+  </div>
+</div></div><div class="ds-code"><pre>&lt;!-- 1. Filter row --&gt;
+&lt;div class=&quot;filter-row&quot;&gt;
+  &lt;input class=&quot;form-input sm&quot; placeholder=&quot;Search…&quot; /&gt;
+  &lt;button class=&quot;fp&quot;&gt;…&lt;/button&gt;
+  &lt;button class=&quot;fp-clear&quot;&gt;Clear all&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- 2. Table --&gt;
+&lt;div class=&quot;table-wrap&quot;&gt;
+  &lt;table class=&quot;resources&quot;&gt;…&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- 3. Pagination --&gt;
+&lt;div class=&quot;pg&quot;&gt;…&lt;/div&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

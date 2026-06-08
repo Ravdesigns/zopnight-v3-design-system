@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Animation orchestration · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-animation-orchestration"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · motion</div>
+<h1 class="ds-h1">Animation orchestration</h1>
+<p class="ds-lead">Motion gallery covers individual animations. This page covers how they sequence · route changes, staggered list reveals, modal/drawer choreography. The 3% rule still holds.</p>
+
+<section class="ds-section"><h2>Tokens · the orchestration knobs</h2>
+<table class="ds-table"><thead><tr><th>Token</th><th>Default</th><th>What it controls</th></tr></thead><tbody>
+<tr><td><code>--stagger-step</code></td><td>40ms</td><td>Delay between successive items in a list reveal</td></tr>
+<tr><td><code>--stagger-max</code></td><td>320ms</td><td>Cap so 30+ items don't crawl</td></tr>
+<tr><td><code>--page-fade-in</code></td><td>180ms</td><td>Route-change fade duration</td></tr>
+<tr><td><code>--page-slide-in</code></td><td>240ms</td><td>Drawer / sheet enter duration</td></tr>
+<tr><td><code>--shimmer-cycle</code></td><td>1400ms</td><td>Skeleton sweep period</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Page transition · the standard</h2>
+<p>Route change = 180ms fade + 2px upward translate. Subtle enough that the eye doesn't track it · firm enough that "something happened".</p>
+<div class="ds-code"><pre>&lt;main class="page-enter"&gt;
+  &lt;!-- route content --&gt;
+&lt;/main&gt;
+
+/* design.css ships .page-enter · drop it on any route outer */
+.page-enter {
+  animation: page-enter var(--page-fade-in) ease-out;
+}</pre></div>
+<p>What we don't do: slide transitions across routes, scale, rotation, page flips. Those belong in marketing pages, not the product.</p>
+</section>
+
+<section class="ds-section"><h2>Staggered list reveal</h2>
+<p>When a list mounts (search results, dashboard widgets, deploy steps), each item fades up 40ms after the previous. Caps at 8 items · the rest appear instantly so we don't make the user wait.</p>
+<div class="ds-demo">
+  <ul class="stagger-in" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;">
+    <li class="card" style="padding:8px 12px;font-size:12.5px;">acme-prod · us-east-1</li>
+    <li class="card" style="padding:8px 12px;font-size:12.5px;">acme-staging · us-east-1</li>
+    <li class="card" style="padding:8px 12px;font-size:12.5px;">acme-dev · eu-west-2</li>
+    <li class="card" style="padding:8px 12px;font-size:12.5px;">internal-tools · us-west-2</li>
+  </ul>
+</div>
+<div class="ds-code"><pre>&lt;ul class="stagger-in"&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;  &lt;!-- 0ms delay --&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;  &lt;!-- 40ms --&gt;
+  &lt;li&gt;Item 3&lt;/li&gt;  &lt;!-- 80ms --&gt;
+  ...
+&lt;/ul&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Modal · drawer enter/exit choreography</h2>
+<table class="ds-table"><thead><tr><th>Stage</th><th>Element</th><th>Motion</th><th>Duration</th></tr></thead><tbody>
+<tr><td rowspan="2">Open</td><td>Backdrop</td><td>Fade 0 → 0.4 opacity</td><td>180ms</td></tr>
+<tr><td>Surface</td><td>Slide / scale in</td><td>240ms</td></tr>
+<tr><td rowspan="2">Close</td><td>Surface</td><td>Slide / fade out</td><td>160ms</td></tr>
+<tr><td>Backdrop</td><td>Fade out</td><td>180ms</td></tr>
+</tbody></table>
+<p>Backdrop fades a hair longer than the surface · keeps the page context shaded just long enough for the eye to settle. <strong>Easing: <code>cubic-bezier(0.16, 1, 0.3, 1)</code></strong> for entering (decelerate), <code>ease-in</code> for exiting.</p>
+</section>
+
+<section class="ds-section"><h2>The 3% rule applied to orchestration</h2>
+<p>Even when sequencing, no more than 3% of the screen is in motion at once. If you're staggering 10 list items, only the 1–2 currently animating count. If you're page-transitioning, the entire viewport doesn't count · it's a single event.</p>
+<p>What to avoid:</p>
+<ul style="line-height:1.7;color:var(--g-700);">
+  <li>Parallax scroll on dashboards</li>
+  <li>Continuous "shimmer" effects on multiple panels at once</li>
+  <li>Auto-playing chart redraws every N seconds</li>
+  <li>Toast animations while drawer is also animating</li>
+</ul>
+</section>
+
+<section class="ds-section"><h2>Reduced motion · what happens</h2>
+<p>When the user has <code>prefers-reduced-motion: reduce</code>:</p>
+<ul style="line-height:1.7;color:var(--g-700);">
+  <li>Stagger collapses to 0 · items appear simultaneously in final state.</li>
+  <li>Page transition reduces to opacity-only · 100ms.</li>
+  <li>Modal/drawer skip the slide · fade only.</li>
+  <li>Nimbus idle breathing pauses · he still moves on intent (wave, money) but at half speed.</li>
+</ul>
+<div class="ds-code"><pre>@media (prefers-reduced-motion: reduce) {
+  .stagger-in &gt; *,
+  .page-enter { animation: none; opacity: 1; transform: none; }
+}</pre></div>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>Stagger 4 KPI cards on dashboard load · 40ms apart · done in 160ms</div>
+    <div class="why">Subtle establishing motion · then content rest.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>Stagger 50 table rows · 150ms apart · 7+ seconds of motion</div>
+    <div class="why">User waits to scan. Caps + tight steps prevent this.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

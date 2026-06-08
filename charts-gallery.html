@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>ApexCharts · preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="design.css" />
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.1/dist/apexcharts.min.js"></script>
+  <style>
+    body { background: var(--bg-app); padding: 32px 40px; min-height:100vh; font-family: 'Inter', sans-serif; }
+    .title { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 600; letter-spacing:-0.02em; margin: 0 0 4px; color: var(--ink); }
+    .sub { font-family: 'Inter'; font-size: 11px; color: var(--g-500); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 32px; font-weight: 600; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1400px; }
+    .tile {
+      background: var(--paper); border: 1px solid var(--line);
+      padding: 18px 20px 8px;
+    }
+    .tile h3 {
+      font-family: 'Space Grotesk'; font-size: 14px; font-weight: 600;
+      color: var(--ink); margin: 0 0 4px; letter-spacing: -0.01em;
+    }
+    .tile .lbl {
+      font-family: 'Inter'; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--g-500); margin-bottom: 8px;
+    }
+    .stage { width: 100%; }
+
+    /* ──── ApexCharts tooltip · brand-matched (solid ink pill, paper text, Inter) ──── */
+    .apexcharts-tooltip.apexcharts-theme-light,
+    .apexcharts-tooltip.apexcharts-theme-dark {
+      background: var(--ink) !important;
+      color: var(--paper) !important;
+      border: 0 !important;
+      border-radius: 3px !important;
+      box-shadow: 0 4px 12px rgba(10,10,10,0.18) !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 11.5px !important;
+      padding: 0 !important;
+      opacity: 1 !important;
+    }
+    .apexcharts-tooltip-title {
+      background: rgba(255,255,255,0.06) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+      color: var(--paper) !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 10px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 10px !important;
+      margin: 0 !important;
+    }
+    .apexcharts-tooltip-series-group {
+      padding: 6px 10px !important;
+    }
+    .apexcharts-tooltip-text {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 12px !important;
+      color: var(--paper) !important;
+    }
+    .apexcharts-tooltip-text-y-label,
+    .apexcharts-tooltip-text-x-label,
+    .apexcharts-tooltip-text-goals-label,
+    .apexcharts-tooltip-text-z-label { color: rgba(255,255,255,0.7) !important; font-weight: 500 !important; }
+    .apexcharts-tooltip-text-y-value,
+    .apexcharts-tooltip-text-x-value,
+    .apexcharts-tooltip-text-goals-value,
+    .apexcharts-tooltip-text-z-value { color: var(--paper) !important; font-weight: 600 !important; font-variant-numeric: tabular-nums; }
+    .apexcharts-tooltip-marker { margin-right: 6px !important; }
+    .apexcharts-xaxistooltip, .apexcharts-yaxistooltip {
+      background: var(--ink) !important;
+      color: var(--paper) !important;
+      border: 0 !important;
+      border-radius: 2px !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 10.5px !important;
+      font-weight: 600 !important;
+      padding: 4px 8px !important;
+    }
+    .apexcharts-xaxistooltip::before, .apexcharts-xaxistooltip::after,
+    .apexcharts-yaxistooltip::before, .apexcharts-yaxistooltip::after {
+      border-color: transparent !important;
+    }
+    .apexcharts-xaxistooltip-bottom::before { border-bottom-color: var(--ink) !important; }
+    .apexcharts-xaxistooltip-bottom::after  { border-bottom-color: var(--ink) !important; }
+    .apexcharts-xaxistooltip-top::before    { border-top-color:    var(--ink) !important; }
+    .apexcharts-xaxistooltip-top::after     { border-top-color:    var(--ink) !important; }
+    .apexcharts-legend-text { font-family: 'Inter', sans-serif !important; font-size: 11.5px !important; color: var(--g-700) !important; }
+  </style>
+</head>
+<body>
+
+<h1 class="title">ApexCharts · preview</h1>
+<div class="sub">CDN drop-in · wired with brand colours + Inter font · zero React</div>
+
+<div class="grid">
+  <div class="tile">
+    <h3>Spend trend</h3>
+    <div class="lbl">7-day line · area fill · brand orange</div>
+    <div class="stage" id="apex-line"></div>
+  </div>
+  <div class="tile">
+    <h3>By account</h3>
+    <div class="lbl">Horizontal bars · tooltip on hover</div>
+    <div class="stage" id="apex-bar"></div>
+  </div>
+  <div class="tile">
+    <h3>Provider split</h3>
+    <div class="lbl">Donut · 4 brand colours · animated sweep</div>
+    <div class="stage" id="apex-donut"></div>
+  </div>
+  <div class="tile">
+    <h3>Activity heatmap</h3>
+    <div class="lbl">24h × 7d · brand orange ramp</div>
+    <div class="stage" id="apex-heat"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Budget gauge</h3>
+    <div class="lbl">% consumed · radial · warns past 80%</div>
+    <div class="stage" id="apex-gauge"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Forecast cone</h3>
+    <div class="lbl">Actual + predicted · confidence band</div>
+    <div class="stage" id="apex-forecast"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Spend with anomalies</h3>
+    <div class="lbl">Red markers flag outliers</div>
+    <div class="stage" id="apex-anomaly"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Savings captured (by source)</h3>
+    <div class="lbl">Stacked area · schedules vs right-size vs idle</div>
+    <div class="stage" id="apex-stack"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Schedule timeline</h3>
+    <div class="lbl">Range bars · per-resource on/off windows</div>
+    <div class="stage" id="apex-range"></div>
+  </div>
+
+  <div class="tile">
+    <h3>MoM change drivers</h3>
+    <div class="lbl">Waterfall · what moved spend +/−</div>
+    <div class="stage" id="apex-waterfall"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Cost treemap</h3>
+    <div class="lbl">Hierarchical · service × team blocks</div>
+    <div class="stage" id="apex-tree"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Savings pipeline</h3>
+    <div class="lbl">Funnel · identified → approved → captured</div>
+    <div class="stage" id="apex-funnel"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Cost vs utilisation</h3>
+    <div class="lbl">Bubble · find right-sizing targets</div>
+    <div class="stage" id="apex-bubble"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Spend vs forecast vs committed</h3>
+    <div class="lbl">Combo · columns + line</div>
+    <div class="stage" id="apex-combo"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Instance cost distribution</h3>
+    <div class="lbl">Box plot · spot outliers per family</div>
+    <div class="stage" id="apex-box"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Service mix</h3>
+    <div class="lbl">Polar area · spend per service category</div>
+    <div class="stage" id="apex-polar"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Daily spend calendar</h3>
+    <div class="lbl">GitHub-style · 12 weeks of daily spend</div>
+    <div class="stage" id="apex-calendar"></div>
+  </div>
+
+  <div class="tile">
+    <h3>QoQ compare</h3>
+    <div class="lbl">Multi-line · Q1 vs Q2 vs Q3 vs Q4</div>
+    <div class="stage" id="apex-multi"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Concentric donuts</h3>
+    <div class="lbl">Inner: provider · outer: service</div>
+    <div class="stage" id="apex-concentric"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Anomaly band</h3>
+    <div class="lbl">Spend with control band (mean ± 2σ)</div>
+    <div class="stage" id="apex-band"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Stacked column · 100%</h3>
+    <div class="lbl">Service mix per month (% of total)</div>
+    <div class="stage" id="apex-stack100"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Mini KPI sparklines</h3>
+    <div class="lbl">Sparkline-only · for stat cells</div>
+    <div class="stage" id="apex-mini" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Pareto · top spenders</h3>
+    <div class="lbl">Bars + cumulative line · 80/20 rule</div>
+    <div class="stage" id="apex-pareto"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Actual vs target</h3>
+    <div class="lbl">Bullet · per-account budget vs spend</div>
+    <div class="stage" id="apex-bullet"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Semi-circle gauge</h3>
+    <div class="lbl">Half donut · 0-100 quality score</div>
+    <div class="stage" id="apex-semi"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Stepped pricing tiers</h3>
+    <div class="lbl">Stepped line · tier changes over time</div>
+    <div class="stage" id="apex-stepped"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Dual-axis combo</h3>
+    <div class="lbl">Spend ($) + instance count on same chart</div>
+    <div class="stage" id="apex-dual"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Reservation coverage</h3>
+    <div class="lbl">Stacked column · on-demand vs reserved vs spot</div>
+    <div class="stage" id="apex-cover"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Donut + legend table</h3>
+    <div class="lbl">Side-by-side · numbers + slice</div>
+    <div class="stage" id="apex-dlegend" style="display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:center;"></div>
+  </div>
+
+  <div class="tile">
+    <h3>Multi-sparkline grid</h3>
+    <div class="lbl">9 mini trends · one per service</div>
+    <div class="stage" id="apex-multispark" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"></div>
+  </div>
+</div>
+
+<script>
+  /* Shared brand tokens read from CSS custom props at runtime */
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const tokens = {
+    orange: css('--zop-orange') || '#F58549',
+    blue:   css('--zop-blue')   || '#2A4494',
+    green:  css('--state-success') || '#5F8642',
+    ink:    css('--ink')        || '#0A0A0A',
+    g500:   css('--g-500')      || '#737373',
+    g300:   css('--g-300')      || '#D4D4D4',
+    paper:  css('--paper')      || '#FAF7EC',
+    line:   css('--line')       || '#E5E5E5',
+  };
+
+  const baseOpts = {
+    chart: { fontFamily: "'Inter', sans-serif", toolbar: { show: false }, foreColor: tokens.g500 },
+    grid: { borderColor: tokens.line, strokeDashArray: 3 },
+    dataLabels: { enabled: false },
+    tooltip: { theme: 'light', style: { fontFamily: "'Inter', sans-serif" }, marker: { show: true } },
+  };
+
+  /* 1 · Line/area */
+  new ApexCharts(document.querySelector('#apex-line'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'area', height: 220 }),
+    series: [{ name: 'Spend', data: [12, 18, 22, 28, 34, 30, 38] }],
+    xaxis: { categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    colors: [tokens.orange],
+    stroke: { curve: 'smooth', width: 2 },
+    fill: { type: 'gradient', gradient: { shadeIntensity: 0.6, opacityFrom: 0.35, opacityTo: 0.05 } },
+  })).render();
+
+  /* 2 · Horizontal bar */
+  new ApexCharts(document.querySelector('#apex-bar'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bar', height: 220 }),
+    series: [{ name: 'MTD', data: [42, 31, 28, 18, 12] }],
+    xaxis: { categories: ['prod-aws','analytics','platform','qa','dev'], labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    yaxis: { labels: { style: { colors: tokens.ink, fontWeight: 500 } } },
+    plotOptions: { bar: { horizontal: true, borderRadius: 0, barHeight: '60%' } },
+    colors: [tokens.orange],
+  })).render();
+
+  /* 3 · Donut */
+  new ApexCharts(document.querySelector('#apex-donut'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'donut', height: 240 }),
+    series: [52, 28, 14, 6],
+    labels: ['AWS', 'GCP', 'Azure', 'K8s'],
+    colors: [tokens.orange, tokens.blue, tokens.green, tokens.ink],
+    legend: { position: 'bottom', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+    plotOptions: { pie: { donut: { size: '72%', labels: { show: true, total: { show: true, label: 'Spend', fontSize: '11px', color: tokens.g500, formatter: () => '$84K' }, value: { fontSize: '24px', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: tokens.ink } } } } },
+    stroke: { width: 0 },
+  })).render();
+
+  /* 4 · Heatmap */
+  const heatData = Array.from({ length: 7 }, (_, d) => ({
+    name: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][d],
+    data: Array.from({ length: 24 }, (_, h) => ({ x: String(h).padStart(2, '0'), y: Math.round(Math.random() * 10) })),
+  })).reverse();
+  new ApexCharts(document.querySelector('#apex-heat'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'heatmap', height: 240 }),
+    series: heatData,
+    colors: [tokens.orange],
+    xaxis: { labels: { style: { colors: tokens.g500, fontSize: '9px' } } },
+    plotOptions: { heatmap: { radius: 0, useFillColorAsStroke: false, colorScale: { ranges: [
+      { from: 0, to: 2, color: tokens.line },
+      { from: 3, to: 5, color: '#F9C39B' },
+      { from: 6, to: 8, color: tokens.orange },
+      { from: 9, to: 10, color: tokens.ink },
+    ] } } },
+  })).render();
+
+  /* 5 · Budget gauge (radialBar) */
+  new ApexCharts(document.querySelector('#apex-gauge'), {
+    chart: { type: 'radialBar', height: 240, fontFamily: "'Inter', sans-serif", toolbar: { show: false } },
+    series: [84],
+    colors: [tokens.orange],
+    plotOptions: { radialBar: {
+      hollow: { size: '60%' },
+      track: { background: tokens.line, strokeWidth: '100%' },
+      dataLabels: {
+        name: { offsetY: -8, color: tokens.g500, fontSize: '11px', fontFamily: "'Inter', sans-serif", fontWeight: 600 },
+        value: { offsetY: 0, color: tokens.ink, fontSize: '32px', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, formatter: (v) => v + '%' },
+      },
+    } },
+    labels: ['Consumed'],
+    stroke: { lineCap: 'butt' },
+  }).render();
+
+  /* 6 · Forecast cone (range area) */
+  new ApexCharts(document.querySelector('#apex-forecast'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'rangeArea', height: 240 }),
+    series: [
+      { type: 'rangeArea', name: 'Confidence', data: [
+        { x: '01', y: [22, 22] }, { x: '08', y: [24, 28] }, { x: '15', y: [26, 32] }, { x: '22', y: [28, 36] }, { x: '30', y: [30, 42] },
+      ] },
+      { type: 'line', name: 'Forecast', data: [
+        { x: '01', y: 22 }, { x: '08', y: 26 }, { x: '15', y: 29 }, { x: '22', y: 32 }, { x: '30', y: 36 },
+      ] },
+      { type: 'line', name: 'Actual', data: [
+        { x: '01', y: 22 }, { x: '08', y: 25 }, { x: '15', y: 28 }, { x: '22', y: null }, { x: '30', y: null },
+      ] },
+    ],
+    colors: [tokens.orange, tokens.orange, tokens.ink],
+    fill: { opacity: [0.15, 1, 1] },
+    stroke: { curve: 'smooth', width: [0, 2, 2.5], dashArray: [0, 4, 0] },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    legend: { show: false },
+  })).render();
+
+  /* 7 · Line with anomaly markers */
+  const anomalyIdx = [3, 7];
+  new ApexCharts(document.querySelector('#apex-anomaly'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'line', height: 240 }),
+    series: [{ name: 'Spend', data: [12, 14, 13, 28, 15, 16, 18, 38, 19, 20, 22] }],
+    colors: [tokens.ink],
+    stroke: { curve: 'smooth', width: 2 },
+    markers: {
+      size: 4, colors: [tokens.ink], strokeColors: tokens.paper, strokeWidth: 2,
+      discrete: anomalyIdx.map((i) => ({ seriesIndex: 0, dataPointIndex: i, fillColor: '#D94646', strokeColor: tokens.paper, size: 7 })),
+    },
+    xaxis: { categories: ['1','2','3','4','5','6','7','8','9','10','11'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    annotations: { points: anomalyIdx.map((i) => ({
+      x: String(i + 1), y: [28, 38][anomalyIdx.indexOf(i)],
+      marker: { size: 0 },
+      label: { borderColor: '#D94646', style: { background: '#D94646', color: '#fff', fontSize: '9px', fontFamily: "'Inter', sans-serif", fontWeight: 600 }, text: 'ANOMALY' },
+    })) },
+  })).render();
+
+  /* 8 · Stacked savings area */
+  new ApexCharts(document.querySelector('#apex-stack'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'area', stacked: true, height: 240 }),
+    series: [
+      { name: 'Schedules',   data: [4, 6, 8, 10, 12, 14, 16] },
+      { name: 'Right-sizing', data: [2, 3, 4, 6, 8, 9, 11] },
+      { name: 'Idle cleanup', data: [1, 2, 2, 3, 4, 5, 7] },
+    ],
+    xaxis: { categories: ['Wk1','Wk2','Wk3','Wk4','Wk5','Wk6','Wk7'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    colors: [tokens.green, tokens.orange, tokens.blue],
+    stroke: { curve: 'smooth', width: 0 },
+    fill: { opacity: 0.85 },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 9 · Range bar (schedule timeline) */
+  new ApexCharts(document.querySelector('#apex-range'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'rangeBar', height: 240 }),
+    series: [{
+      data: [
+        { x: 'payments-api', y: [new Date('2024-01-01T09:00').getTime(), new Date('2024-01-01T19:00').getTime()], fillColor: tokens.orange },
+        { x: 'analytics',    y: [new Date('2024-01-01T08:00').getTime(), new Date('2024-01-01T22:00').getTime()], fillColor: tokens.blue },
+        { x: 'platform-eks', y: [new Date('2024-01-01T00:00').getTime(), new Date('2024-01-01T23:59').getTime()], fillColor: tokens.ink },
+        { x: 'qa-warehouse', y: [new Date('2024-01-01T10:00').getTime(), new Date('2024-01-01T18:00').getTime()], fillColor: tokens.green },
+        { x: 'dev-cluster',  y: [new Date('2024-01-01T11:00').getTime(), new Date('2024-01-01T17:00').getTime()], fillColor: tokens.g500 },
+      ],
+    }],
+    plotOptions: { bar: { horizontal: true, barHeight: '50%', borderRadius: 0 } },
+    xaxis: { type: 'datetime', labels: { format: 'HH:mm', style: { colors: tokens.g500 } } },
+    yaxis: { labels: { style: { colors: tokens.ink, fontWeight: 500 } } },
+  })).render();
+
+  /* 10 · Waterfall (MoM change drivers) */
+  const wfData = [
+    { x: 'Last month', y: 48 },
+    { x: 'EC2 right-size', y: -6 },
+    { x: 'Schedules', y: -4 },
+    { x: 'New ML workload', y: 8 },
+    { x: 'Idle cleanup', y: -2 },
+    { x: 'This month', y: 44 },
+  ];
+  new ApexCharts(document.querySelector('#apex-waterfall'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bar', height: 240 }),
+    series: [{ data: wfData.map((d, i) => ({ x: d.x, y: d.y, fillColor: i === 0 || i === wfData.length - 1 ? tokens.ink : (d.y > 0 ? '#D94646' : tokens.green) })) }],
+    plotOptions: { bar: { columnWidth: '55%', borderRadius: 0 } },
+    xaxis: { labels: { style: { colors: tokens.g500, fontSize: '10px' }, rotate: -30 } },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    dataLabels: { enabled: true, formatter: (v) => (v > 0 ? '+' : '') + '$' + v + 'K', style: { fontFamily: "'Inter', sans-serif", fontSize: '10px', fontWeight: 600, colors: [tokens.ink] }, offsetY: -16 },
+  })).render();
+
+  /* 11 · Treemap */
+  new ApexCharts(document.querySelector('#apex-tree'), {
+    chart: { type: 'treemap', height: 260, fontFamily: "'Inter', sans-serif", toolbar: { show: false }, foreColor: tokens.paper },
+    series: [{ data: [
+      { x: 'EC2',       y: 18200 }, { x: 'RDS',     y: 9400 },
+      { x: 'S3',        y: 6200 }, { x: 'CloudFront', y: 3200 },
+      { x: 'Lambda',    y: 2800 }, { x: 'DynamoDB', y: 1800 },
+      { x: 'BigQuery',  y: 7400 }, { x: 'Cloud Run', y: 2200 },
+    ] }],
+    plotOptions: { treemap: { distributed: true, enableShades: false } },
+    colors: [tokens.orange, '#F19367', '#EAA174', '#E0AF82', '#D6BD90', '#CCCB9F', tokens.blue, '#5470A5'],
+    dataLabels: { enabled: true, style: { fontFamily: "'Inter', sans-serif", fontSize: '11px', fontWeight: 600 }, formatter: (text, op) => [text, '$' + (op.value/1000).toFixed(1) + 'K'] },
+    legend: { show: false },
+  }).render();
+
+  /* 12 · Funnel (using horizontal bar with custom widths) */
+  new ApexCharts(document.querySelector('#apex-funnel'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bar', height: 240 }),
+    series: [{ name: 'Stage', data: [
+      { x: 'Identified', y: 142 },
+      { x: 'Reviewed',   y: 98 },
+      { x: 'Approved',   y: 64 },
+      { x: 'Applied',    y: 41 },
+      { x: 'Captured ($)', y: 28 },
+    ] }],
+    plotOptions: { bar: { horizontal: true, distributed: true, barHeight: '70%', borderRadius: 0 } },
+    colors: ['#F4BC93', '#F19367', tokens.orange, tokens.ink, tokens.green],
+    dataLabels: { enabled: true, formatter: (v) => v, style: { colors: [tokens.paper], fontFamily: "'Inter', sans-serif", fontWeight: 600 } },
+    xaxis: { categories: ['Identified', 'Reviewed', 'Approved', 'Applied', 'Captured'], labels: { style: { colors: tokens.g500 } } },
+    legend: { show: false },
+  })).render();
+
+  /* 13 · Bubble (cost vs utilisation) */
+  new ApexCharts(document.querySelector('#apex-bubble'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bubble', height: 260 }),
+    series: [{ name: 'Resources', data: [
+      [82, 1284, 22], [18, 2840, 38], [64, 412, 14], [12, 3210, 42], [48, 842, 22],
+      [28, 1980, 30], [92, 220, 8], [38, 1480, 24], [22, 2120, 30], [72, 380, 12],
+    ] }],
+    colors: [tokens.orange],
+    fill: { opacity: 0.55 },
+    xaxis: { type: 'numeric', title: { text: 'CPU utilisation %', style: { color: tokens.g500, fontWeight: 600, fontSize: '10px' } }, labels: { formatter: (v) => v + '%', style: { colors: tokens.g500 } } },
+    yaxis: { title: { text: 'Monthly cost ($)', style: { color: tokens.g500, fontWeight: 600, fontSize: '10px' } }, labels: { formatter: (v) => '$' + v, style: { colors: tokens.g500 } } },
+    annotations: { xaxis: [{ x: 30, x2: 0, fillColor: tokens.orange, opacity: 0.06, label: { text: 'Right-size targets', style: { color: tokens.orange, fontFamily: "'Inter', sans-serif", fontSize: '9px', fontWeight: 600 } } }] },
+  })).render();
+
+  /* 14 · Combo (column + line) */
+  new ApexCharts(document.querySelector('#apex-combo'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'line', height: 240 }),
+    series: [
+      { name: 'Spend',     type: 'column', data: [22, 26, 32, 28, 34, 38] },
+      { name: 'Forecast',  type: 'line',   data: [24, 28, 30, 32, 36, 40] },
+      { name: 'Committed', type: 'line',   data: [25, 25, 25, 25, 25, 25] },
+    ],
+    colors: [tokens.orange, tokens.ink, tokens.green],
+    stroke: { width: [0, 2, 2], dashArray: [0, 0, 5] },
+    plotOptions: { bar: { columnWidth: '40%', borderRadius: 0 } },
+    fill: { opacity: [0.85, 1, 1] },
+    xaxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 15 · Box plot */
+  new ApexCharts(document.querySelector('#apex-box'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'boxPlot', height: 240 }),
+    series: [{ name: 'Cost per instance', data: [
+      { x: 't3', y: [18, 24, 30, 38, 56] },
+      { x: 'm5', y: [42, 64, 84, 110, 168] },
+      { x: 'c5', y: [38, 58, 78, 102, 142] },
+      { x: 'r5', y: [98, 124, 168, 210, 290] },
+      { x: 'g4', y: [240, 320, 420, 540, 720] },
+    ] }],
+    colors: [tokens.ink],
+    plotOptions: { boxPlot: { colors: { upper: tokens.orange, lower: tokens.line } } },
+    xaxis: { labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v, style: { colors: tokens.g500 } } },
+  })).render();
+
+  /* 16 · Polar area */
+  new ApexCharts(document.querySelector('#apex-polar'), {
+    chart: { type: 'polarArea', height: 260, fontFamily: "'Inter', sans-serif", toolbar: { show: false } },
+    series: [42, 28, 18, 14, 12, 8],
+    labels: ['Compute', 'Storage', 'Database', 'Network', 'ML', 'Other'],
+    colors: [tokens.orange, tokens.blue, tokens.green, '#E0AF82', tokens.ink, tokens.g500],
+    fill: { opacity: 0.75 },
+    stroke: { width: 1, colors: [tokens.paper] },
+    legend: { position: 'bottom', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+    yaxis: { show: false },
+    tooltip: { theme: 'light' },
+    plotOptions: { polarArea: { rings: { strokeColor: tokens.line }, spokes: { strokeWidth: 0 } } },
+  }).render();
+
+  /* 17 · Daily spend calendar (12-week heatmap, GitHub-style) */
+  const calData = Array.from({ length: 12 }, (_, w) => ({
+    name: 'W' + (w + 1),
+    data: Array.from({ length: 7 }, (_, d) => ({ x: ['M','T','W','T','F','S','S'][d], y: Math.round(Math.random() * 50 + (w * 2)) })),
+  }));
+  new ApexCharts(document.querySelector('#apex-calendar'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'heatmap', height: 240 }),
+    series: calData,
+    colors: [tokens.orange],
+    xaxis: { labels: { style: { colors: tokens.g500, fontSize: '9px' } } },
+    plotOptions: { heatmap: { radius: 2, useFillColorAsStroke: false, colorScale: { ranges: [
+      { from: 0, to: 15, color: tokens.line },
+      { from: 16, to: 30, color: '#F9C39B' },
+      { from: 31, to: 50, color: tokens.orange },
+      { from: 51, to: 999, color: '#C7521A' },
+    ] } } },
+  })).render();
+
+  /* 18 · QoQ multi-line compare */
+  new ApexCharts(document.querySelector('#apex-multi'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'line', height: 240 }),
+    series: [
+      { name: 'Q1', data: [22, 24, 26] },
+      { name: 'Q2', data: [25, 28, 30] },
+      { name: 'Q3', data: [28, 32, 34] },
+      { name: 'Q4 (so far)', data: [32, 38, null] },
+    ],
+    colors: [tokens.line, tokens.g500, tokens.blue, tokens.orange],
+    stroke: { curve: 'smooth', width: [2, 2, 2, 3] },
+    markers: { size: 0, hover: { size: 5 } },
+    xaxis: { categories: ['M1','M2','M3'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 19 · Concentric donuts (using two stacked donuts via positioning) */
+  document.querySelector('#apex-concentric').innerHTML =
+    '<div style="position:relative;height:240px;"><div id="ring-outer" style="position:absolute;inset:0;"></div><div id="ring-inner" style="position:absolute;inset:36px;"></div></div>';
+  new ApexCharts(document.querySelector('#ring-outer'), {
+    chart: { type: 'donut', height: 240, fontFamily: "'Inter', sans-serif", toolbar: { show: false } },
+    series: [42, 18, 12, 10, 8, 6, 4],
+    labels: ['EC2','RDS','S3','Lambda','BigQuery','GCS','Functions'],
+    colors: [tokens.orange, '#F19367', '#EAA174', '#E0AF82', tokens.blue, '#5470A5', '#7793BD'],
+    plotOptions: { pie: { donut: { size: '85%', labels: { show: false } } } },
+    legend: { show: false },
+    stroke: { width: 1, colors: [tokens.paper] },
+    dataLabels: { enabled: false },
+    tooltip: { theme: 'light' },
+  }).render();
+  new ApexCharts(document.querySelector('#ring-inner'), {
+    chart: { type: 'donut', height: 168, fontFamily: "'Inter', sans-serif", toolbar: { show: false } },
+    series: [52, 28, 14, 6],
+    labels: ['AWS','GCP','Azure','K8s'],
+    colors: [tokens.orange, tokens.blue, tokens.green, tokens.ink],
+    plotOptions: { pie: { donut: { size: '60%', labels: { show: true, total: { show: true, label: 'Total', fontSize: '10px', color: tokens.g500, formatter: () => '$84K' }, value: { fontSize: '18px', color: tokens.ink, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 } } } } },
+    legend: { show: false },
+    stroke: { width: 1, colors: [tokens.paper] },
+    dataLabels: { enabled: false },
+    tooltip: { theme: 'light' },
+  }).render();
+
+  /* 20 · Anomaly band (line + range area for control band) */
+  new ApexCharts(document.querySelector('#apex-band'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'rangeArea', height: 240 }),
+    series: [
+      { type: 'rangeArea', name: 'Control band', data: [
+        { x: 1, y: [18, 26] }, { x: 2, y: [19, 27] }, { x: 3, y: [20, 28] }, { x: 4, y: [21, 29] }, { x: 5, y: [22, 30] }, { x: 6, y: [22, 30] }, { x: 7, y: [23, 31] },
+      ] },
+      { type: 'line', name: 'Spend', data: [
+        { x: 1, y: 22 }, { x: 2, y: 24 }, { x: 3, y: 36 }, { x: 4, y: 25 }, { x: 5, y: 28 }, { x: 6, y: 42 }, { x: 7, y: 27 },
+      ] },
+    ],
+    colors: [tokens.line, tokens.ink],
+    fill: { opacity: [0.45, 1] },
+    stroke: { curve: 'smooth', width: [0, 2] },
+    markers: { size: [0, 4], colors: [undefined, tokens.ink], strokeColors: tokens.paper, strokeWidth: 2,
+      discrete: [
+        { seriesIndex: 1, dataPointIndex: 2, fillColor: '#D94646', strokeColor: tokens.paper, size: 7 },
+        { seriesIndex: 1, dataPointIndex: 5, fillColor: '#D94646', strokeColor: tokens.paper, size: 7 },
+      ],
+    },
+    yaxis: { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 21 · Stacked column 100% */
+  new ApexCharts(document.querySelector('#apex-stack100'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bar', stacked: true, stackType: '100%', height: 240 }),
+    series: [
+      { name: 'Compute', data: [44, 42, 45, 48, 52, 50] },
+      { name: 'Storage', data: [22, 24, 22, 20, 18, 22] },
+      { name: 'Database', data: [18, 20, 18, 18, 16, 16] },
+      { name: 'Network', data: [16, 14, 15, 14, 14, 12] },
+    ],
+    colors: [tokens.orange, tokens.blue, tokens.green, tokens.g500],
+    plotOptions: { bar: { columnWidth: '55%', borderRadius: 0 } },
+    fill: { opacity: 0.9 },
+    xaxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => v + '%', style: { colors: tokens.g500 } } },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 22 · Mini KPI sparklines (3 in a row) */
+  const miniHost = document.querySelector('#apex-mini');
+  miniHost.innerHTML = `
+    <div><div style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--g-500);">Spend</div>
+      <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;color:var(--ink);margin-bottom:2px;">$48K</div>
+      <div id="mini-1" style="height:38px;"></div></div>
+    <div><div style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--g-500);">Saved</div>
+      <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;color:var(--state-success);margin-bottom:2px;">$12K</div>
+      <div id="mini-2" style="height:38px;"></div></div>
+    <div><div style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--g-500);">Critical</div>
+      <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;color:var(--state-error);margin-bottom:2px;">3</div>
+      <div id="mini-3" style="height:38px;"></div></div>
+  `;
+  const sparkBase = { chart: { type: 'line', height: 38, sparkline: { enabled: true } }, stroke: { width: 1.5, curve: 'smooth' } };
+  new ApexCharts(document.querySelector('#mini-1'), Object.assign({}, sparkBase, { series: [{ data: [22, 24, 26, 28, 26, 30, 34, 32, 38] }], colors: [tokens.orange] })).render();
+  new ApexCharts(document.querySelector('#mini-2'), Object.assign({}, sparkBase, { series: [{ data: [4, 5, 7, 8, 9, 10, 11, 12, 12] }], colors: [tokens.green] })).render();
+  new ApexCharts(document.querySelector('#mini-3'), Object.assign({}, sparkBase, { series: [{ data: [1, 1, 2, 1, 2, 3, 3, 3, 3] }], colors: [tokens.ink] })).render();
+
+  /* 23 · Pareto (bars + cumulative line) */
+  const paretoVals = [42, 28, 18, 12, 8, 6, 4, 3, 2, 1];
+  const paretoSum = paretoVals.reduce((a, b) => a + b, 0);
+  let cum = 0;
+  const paretoCum = paretoVals.map((v) => { cum += v; return Math.round((cum / paretoSum) * 100); });
+  new ApexCharts(document.querySelector('#apex-pareto'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'line', height: 260 }),
+    series: [
+      { name: 'Spend',      type: 'column', data: paretoVals },
+      { name: 'Cumulative %', type: 'line', data: paretoCum },
+    ],
+    colors: [tokens.orange, tokens.ink],
+    stroke: { width: [0, 2.5], curve: 'smooth' },
+    plotOptions: { bar: { columnWidth: '60%', borderRadius: 0 } },
+    markers: { size: [0, 4] },
+    xaxis: { categories: ['EC2','RDS','BigQuery','S3','Lambda','GCS','Redshift','DynamoDB','EBS','Other'], labels: { style: { colors: tokens.g500, fontSize: '9px' }, rotate: -30 } },
+    yaxis: [
+      { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+      { opposite: true, labels: { formatter: (v) => v + '%', style: { colors: tokens.g500 } }, max: 100 },
+    ],
+    annotations: { yaxis: [{ y: 80, yAxisIndex: 1, borderColor: tokens.orange, label: { text: '80%', borderColor: tokens.orange, style: { color: tokens.paper, background: tokens.orange, fontFamily: "'Inter', sans-serif", fontSize: '9px', fontWeight: 600 } } }] },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 24 · Bullet (actual vs target) — simulated with horizontal stacked bar */
+  new ApexCharts(document.querySelector('#apex-bullet'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bar', height: 240, stacked: false }),
+    series: [
+      { name: 'Spent', data: [38, 22, 28, 18] },
+      { name: 'Budget', data: [50, 30, 25, 20] },
+    ],
+    colors: [tokens.orange, tokens.line],
+    plotOptions: { bar: { horizontal: true, barHeight: '70%', borderRadius: 0 } },
+    fill: { opacity: [0.95, 0.55] },
+    xaxis: { categories: ['prod-aws','analytics','platform','qa'], labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.g500 } } },
+    yaxis: { labels: { style: { colors: tokens.ink, fontWeight: 500 } } },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 25 · Semi-circle gauge */
+  new ApexCharts(document.querySelector('#apex-semi'), {
+    chart: { type: 'radialBar', height: 240, fontFamily: "'Inter', sans-serif", toolbar: { show: false } },
+    series: [72],
+    colors: [tokens.orange],
+    plotOptions: { radialBar: {
+      startAngle: -90, endAngle: 90,
+      hollow: { size: '55%' },
+      track: { background: tokens.line, strokeWidth: '100%' },
+      dataLabels: {
+        name: { offsetY: -8, color: tokens.g500, fontSize: '11px', fontWeight: 600 },
+        value: { offsetY: -16, color: tokens.ink, fontSize: '32px', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 },
+      },
+    } },
+    labels: ['Quality score'],
+    stroke: { lineCap: 'butt' },
+  }).render();
+
+  /* 26 · Stepped line */
+  new ApexCharts(document.querySelector('#apex-stepped'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'line', height: 240 }),
+    series: [{ name: 'Per-unit price', data: [0.08, 0.08, 0.08, 0.06, 0.06, 0.04, 0.04, 0.04] }],
+    colors: [tokens.orange],
+    stroke: { curve: 'stepline', width: 2 },
+    xaxis: { categories: ['M1','M2','M3','M4','M5','M6','M7','M8'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => '$' + v.toFixed(2), style: { colors: tokens.g500 } } },
+  })).render();
+
+  /* 27 · Dual-axis combo */
+  new ApexCharts(document.querySelector('#apex-dual'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'line', height: 240 }),
+    series: [
+      { name: 'Spend',     type: 'column', data: [22, 26, 32, 28, 34, 38] },
+      { name: 'Instances', type: 'line',   data: [120, 140, 180, 160, 190, 220] },
+    ],
+    colors: [tokens.orange, tokens.ink],
+    stroke: { width: [0, 2.5], curve: 'smooth' },
+    plotOptions: { bar: { columnWidth: '50%', borderRadius: 0 } },
+    fill: { opacity: [0.9, 1] },
+    xaxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: [
+      { labels: { formatter: (v) => '$' + v + 'K', style: { colors: tokens.orange } }, title: { text: 'Spend', style: { color: tokens.orange, fontWeight: 600, fontSize: '10px' } } },
+      { opposite: true, labels: { formatter: (v) => v, style: { colors: tokens.ink } }, title: { text: 'Instances', style: { color: tokens.ink, fontWeight: 600, fontSize: '10px' } } },
+    ],
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 28 · Reservation coverage */
+  new ApexCharts(document.querySelector('#apex-cover'), Object.assign({}, baseOpts, {
+    chart: Object.assign({}, baseOpts.chart, { type: 'bar', stacked: true, height: 240 }),
+    series: [
+      { name: 'Reserved',   data: [60, 65, 68, 70, 72, 75] },
+      { name: 'On-demand',  data: [30, 27, 25, 22, 20, 18] },
+      { name: 'Spot',       data: [10,  8,  7,  8,  8,  7] },
+    ],
+    colors: [tokens.green, tokens.orange, tokens.blue],
+    plotOptions: { bar: { columnWidth: '55%', borderRadius: 0 } },
+    fill: { opacity: 0.9 },
+    xaxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun'], labels: { style: { colors: tokens.g500 } } },
+    yaxis: { labels: { formatter: (v) => v + '%', style: { colors: tokens.g500 } }, max: 100 },
+    legend: { position: 'top', horizontalAlign: 'left', fontFamily: "'Inter', sans-serif", labels: { colors: tokens.g500 } },
+  })).render();
+
+  /* 29 · Donut + legend table */
+  const dHost = document.querySelector('#apex-dlegend');
+  dHost.innerHTML = `<div id="dl-donut"></div>
+    <div style="font-family:'Inter';font-size:12px;color:var(--g-700);">
+      <div style="display:grid;grid-template-columns:10px 1fr auto;gap:6px 10px;align-items:center;line-height:1.7;">
+        <span style="width:8px;height:8px;background:${tokens.orange};"></span><span>AWS</span><span style="font-family:'Space Grotesk';font-weight:600;color:var(--ink);">$44K</span>
+        <span style="width:8px;height:8px;background:${tokens.blue};"></span><span>GCP</span><span style="font-family:'Space Grotesk';font-weight:600;color:var(--ink);">$24K</span>
+        <span style="width:8px;height:8px;background:${tokens.green};"></span><span>Azure</span><span style="font-family:'Space Grotesk';font-weight:600;color:var(--ink);">$12K</span>
+        <span style="width:8px;height:8px;background:${tokens.ink};"></span><span>K8s</span><span style="font-family:'Space Grotesk';font-weight:600;color:var(--ink);">$4K</span>
+      </div>
+    </div>`;
+  new ApexCharts(document.querySelector('#dl-donut'), {
+    chart: { type: 'donut', height: 160, fontFamily: "'Inter', sans-serif", toolbar: { show: false } },
+    series: [44, 24, 12, 4],
+    colors: [tokens.orange, tokens.blue, tokens.green, tokens.ink],
+    labels: ['AWS','GCP','Azure','K8s'],
+    plotOptions: { pie: { donut: { size: '68%', labels: { show: true, total: { show: true, label: 'Total', fontSize: '10px', color: tokens.g500, formatter: () => '$84K' }, value: { fontSize: '16px', color: tokens.ink, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 } } } } },
+    legend: { show: false },
+    stroke: { width: 1, colors: [tokens.paper] },
+    dataLabels: { enabled: false },
+    tooltip: { theme: 'light' },
+  }).render();
+
+  /* 30 · Multi-sparkline grid (9 services) */
+  const services = ['EC2','RDS','S3','BigQuery','Lambda','DynamoDB','CloudFront','GCS','Functions'];
+  const mHost = document.querySelector('#apex-multispark');
+  mHost.innerHTML = services.map((s, i) => `
+    <div>
+      <div style="font-size:10px;font-weight:600;color:var(--g-500);">${s}</div>
+      <div style="font-family:'Space Grotesk';font-size:14px;font-weight:600;color:var(--ink);">$${(Math.random() * 10 + 1).toFixed(1)}K</div>
+      <div id="ms-${i}" style="height:28px;"></div>
+    </div>
+  `).join('');
+  services.forEach((_, i) => {
+    const data = Array.from({ length: 12 }, () => Math.random() * 10 + 2);
+    new ApexCharts(document.querySelector('#ms-' + i), {
+      chart: { type: 'area', height: 28, sparkline: { enabled: true } },
+      series: [{ data }],
+      colors: [i % 3 === 0 ? tokens.orange : i % 3 === 1 ? tokens.blue : tokens.green],
+      stroke: { width: 1.2, curve: 'smooth' },
+      fill: { opacity: 0.18 },
+    }).render();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Cards · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="cards"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Organism · surface</div>
+<h1 class="ds-h1">Cards</h1>
+<p class="ds-lead">Three sizes + callout + hoverable + active. Hoverable uses the marketing-site bento signature: −4px lift + ink offset shadow + 4px orange left stripe.</p>
+<section class="ds-section"><h2>Sizes</h2><p><code>.card.sm</code> · default · <code>.card.lg</code>. Pick by surface (table row → sm · feature hero → lg).</p><div class="ds-demo"><div class="card sm" style="margin:0;max-width:280px;"><h3 style="margin:0 0 4px;font-family:var(--font-display);font-size:14px;">Inline finding</h3><p style="margin:0;font-size:12px;color:var(--g-600);">Compact card.</p></div>
+<div class="card" style="margin:0;max-width:280px;"><h3 style="margin:0 0 6px;font-family:var(--font-display);font-size:16px;">Default card</h3><p style="margin:0;font-size:13px;color:var(--g-600);">Standard surface.</p></div></div><div class="ds-code"><pre>&lt;div class=&quot;card&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;card sm&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;card lg&quot;&gt;…&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Hoverable · marketing bento signature</h2><p>−4px lift + ink offset block + 4px orange left stripe grows top→bottom. Same hover used on the marketing site.</p><div class="ds-demo"><div class="card hoverable" style="margin:0;max-width:300px;cursor:pointer;"><h3 style="margin:0 0 6px;font-family:var(--font-display);font-size:16px;">business-hours</h3><p style="margin:0;font-size:13px;color:var(--g-600);">Hover to see the lift + ink offset + orange stripe.</p></div></div><div class="ds-code"><pre>&lt;div class=&quot;card hoverable&quot;&gt;
+  &lt;h3&gt;business-hours&lt;/h3&gt;
+  &lt;p&gt;…&lt;/p&gt;
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Active · selected</h2><p>Permanent stripe + lift.</p><div class="ds-demo"><div class="card active" style="margin:0;max-width:300px;"><h3 style="margin:0 0 6px;font-family:var(--font-display);font-size:16px;">Selected</h3><p style="margin:0;font-size:13px;color:var(--g-600);">Currently picked card.</p></div></div><div class="ds-code"><pre>&lt;div class=&quot;card active&quot;&gt;…&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Callout · subtle lift</h2><p><code>.card.callout</code> · surface-2 bg · use sparingly.</p><div class="ds-demo"><div class="card callout" style="margin:0;max-width:420px;"><h3 class="with-mark" style="margin:0 0 6px;font-family:var(--font-display);font-size:16px;">Per-resource cost is estimated</h3><p style="margin:0;font-size:13px;color:var(--g-600);">Subtle lift signals "different" without shouting.</p></div></div><div class="ds-code"><pre>&lt;div class=&quot;card callout&quot;&gt;…&lt;/div&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>More components · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="more"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Atoms · molecules · molecules</div>
+<h1 class="ds-h1">More components</h1>
+<p class="ds-lead">Patterns lifted from the existing OG app and formalised. The first 13 are net-new system additions; the rest are styled in <code>design.css</code> and surfaced here so devs can find them.</p>
+
+<section class="ds-section">
+  <h2>Breadcrumb</h2>
+  <p>Trail of links above page title. Last item is the current page (no link).</p>
+  <div class="ds-demo">
+    <nav class="breadcrumb">
+      <a href="#">Resources</a>
+      <span class="sep">·</span>
+      <a href="#">payments</a>
+      <span class="sep">·</span>
+      <span class="current">payments-api-prod</span>
+    </nav>
+  </div>
+  <div class="ds-code"><pre>&lt;nav class="breadcrumb"&gt;
+  &lt;a href="#"&gt;Resources&lt;/a&gt;
+  &lt;span class="sep"&gt;·&lt;/span&gt;
+  &lt;span class="current"&gt;payments-api-prod&lt;/span&gt;
+&lt;/nav&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Bulk-action banner</h2>
+  <p>Appears above a table when rows are selected. Ink background asserts "you are in bulk-action mode."</p>
+  <div class="ds-demo column">
+    <div class="bulk-banner" style="margin:0;">
+      <span class="bulk-count">3</span>
+      <span class="bulk-label">resources selected</span>
+      <span class="bulk-spacer"></span>
+      <button class="btn btn-sm">Tag</button>
+      <button class="btn btn-sm">Attach schedule</button>
+      <button class="btn btn-sm btn-destructive">Stop</button>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="bulk-banner"&gt;
+  &lt;span class="bulk-count"&gt;3&lt;/span&gt;
+  &lt;span class="bulk-label"&gt;resources selected&lt;/span&gt;
+  &lt;span class="bulk-spacer"&gt;&lt;/span&gt;
+  &lt;button class="btn btn-sm"&gt;Tag&lt;/button&gt;
+  &lt;button class="btn btn-sm btn-destructive"&gt;Stop&lt;/button&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Avatar · user pill</h2>
+  <p>Initials chip in one of 5 brand colors. Hash the name to pick the color.</p>
+  <div class="ds-demo">
+    <span class="avatar c1">PT</span>
+    <span class="avatar c2">JM</span>
+    <span class="avatar c3">AK</span>
+    <span class="avatar c4">RS</span>
+    <span class="avatar c5">NW</span>
+    <span class="avatar sm c2">JM</span>
+    <span class="avatar lg c1">PT</span>
+  </div>
+  <div class="ds-demo">
+    <span class="user-pill"><span class="avatar c1">PT</span><span><span class="name">Priya Tarun</span> <span class="role">Owner</span></span></span>
+  </div>
+  <div class="ds-code"><pre>&lt;span class="avatar c1"&gt;PT&lt;/span&gt;
+&lt;span class="avatar lg c2"&gt;JM&lt;/span&gt;
+
+&lt;span class="user-pill"&gt;
+  &lt;span class="avatar c1"&gt;PT&lt;/span&gt;
+  &lt;span&gt;&lt;span class="name"&gt;Priya Tarun&lt;/span&gt; &lt;span class="role"&gt;Owner&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Switch · boolean toggle</h2>
+  <p>For boolean states where a checkbox feels too utilitarian (settings, notification preferences).</p>
+  <div class="ds-demo">
+    <label class="switch"><input type="checkbox" checked /> Email digest</label>
+    <label class="switch"><input type="checkbox" /> Slack alerts</label>
+    <label class="switch"><input type="checkbox" disabled /> Disabled</label>
+  </div>
+  <div class="ds-code"><pre>&lt;label class="switch"&gt;
+  &lt;input type="checkbox" checked /&gt; Email digest
+&lt;/label&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Dropdown menu / popover</h2>
+  <p>"More actions" menu. Opens on click, closes on outside-click. Use for destructive or low-frequency actions.</p>
+  <div class="ds-demo">
+    <div class="dropdown is-open" style="position:relative;">
+      <button class="btn btn-ghost btn-sm">More ▾</button>
+      <div class="dropdown-menu" style="position:relative; top:auto; right:auto; margin-top:4px;">
+        <span class="label">Schedule</span>
+        <button>Attach schedule</button>
+        <button>Detach</button>
+        <hr/>
+        <button>Tag resource</button>
+        <button>Copy ID</button>
+        <hr/>
+        <button class="destructive">Remove from tracking</button>
+      </div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="dropdown is-open"&gt;
+  &lt;button class="btn btn-ghost btn-sm"&gt;More ▾&lt;/button&gt;
+  &lt;div class="dropdown-menu"&gt;
+    &lt;span class="label"&gt;Schedule&lt;/span&gt;
+    &lt;button&gt;Attach schedule&lt;/button&gt;
+    &lt;hr/&gt;
+    &lt;button class="destructive"&gt;Remove&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Progress bar</h2>
+  <p>Explicit progress for budgets, uploads, sync states. Different from skeleton shimmer (which signals loading without a known percentage).</p>
+  <div class="ds-demo column" style="gap:20px;">
+    <div class="progress-row">
+      <div class="meta"><span>Budget · prod-aws</span><strong>$3,840 / $5,000 · 76%</strong></div>
+      <div class="progress"><div class="progress-fill" style="width:76%;"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="meta"><span>Budget · analytics</span><strong>$4,640 / $5,000 · 92%</strong></div>
+      <div class="progress warn"><div class="progress-fill" style="width:92%;"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="meta"><span>Budget · qa</span><strong>$1,124 / $1,000 · 112%</strong></div>
+      <div class="progress over"><div class="progress-fill" style="width:100%;"></div></div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="progress-row"&gt;
+  &lt;div class="meta"&gt;
+    &lt;span&gt;Budget · prod-aws&lt;/span&gt;
+    &lt;strong&gt;$3,840 / $5,000 · 76%&lt;/strong&gt;
+  &lt;/div&gt;
+  &lt;div class="progress"&gt;
+    &lt;div class="progress-fill" style="width:76%;"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- States · .progress.warn · .progress.over --&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Date input</h2>
+  <p>Native <code>type=date</code> with our styling. For ranges, combine two.</p>
+  <div class="ds-demo">
+    <input type="date" class="date-input" value="2026-05-22" />
+    <div class="date-range">
+      <input type="date" class="date-input" value="2026-05-01" />
+      <span class="sep">→</span>
+      <input type="date" class="date-input" value="2026-05-22" />
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;input type="date" class="date-input" /&gt;
+
+&lt;div class="date-range"&gt;
+  &lt;input type="date" class="date-input" /&gt;
+  &lt;span class="sep"&gt;→&lt;/span&gt;
+  &lt;input type="date" class="date-input" /&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Inline stepper</h2>
+  <p>Numeric increment/decrement. For "how many" without typing.</p>
+  <div class="ds-demo">
+    <div class="stepper">
+      <button>−</button>
+      <input type="number" value="12" />
+      <button>+</button>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="stepper"&gt;
+  &lt;button&gt;−&lt;/button&gt;
+  &lt;input type="number" value="12" /&gt;
+  &lt;button&gt;+&lt;/button&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Diff view</h2>
+  <p>Before/after change visualisation for audit logs and policy changes.</p>
+  <div class="ds-demo column" style="padding:0; min-height: 0;">
+    <div class="diff" style="width:100%; margin:0;">
+      <div class="diff-row meta"><span class="sign"></span><span class="code">@@ tag-policy/prod-aws @@</span></div>
+      <div class="diff-row rem"><span class="sign">−</span><span class="code">  cost-center: "infra"</span></div>
+      <div class="diff-row add"><span class="sign">+</span><span class="code">  cost-center: "platform-infra"</span></div>
+      <div class="diff-row add"><span class="sign">+</span><span class="code">  owner: "priya@zopdev.io"</span></div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="diff"&gt;
+  &lt;div class="diff-row meta"&gt;&lt;span class="sign"&gt;&lt;/span&gt;&lt;span class="code"&gt;@@ tag-policy @@&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="diff-row rem"&gt;&lt;span class="sign"&gt;−&lt;/span&gt;&lt;span class="code"&gt;  old line&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="diff-row add"&gt;&lt;span class="sign"&gt;+&lt;/span&gt;&lt;span class="code"&gt;  new line&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Budget chip</h2>
+  <p>Cost-vs-target indicator. Three thresholds: OK · warn · over.</p>
+  <div class="ds-demo">
+    <span class="budget-chip"><span><span class="budget-label">prod-aws</span><br><span class="budget-val">$3,840</span></span><span class="budget-bar"><span style="width:76%;"></span></span></span>
+    <span class="budget-chip warn"><span><span class="budget-label">analytics</span><br><span class="budget-val">$4,640</span></span><span class="budget-bar"><span style="width:92%;"></span></span></span>
+    <span class="budget-chip over"><span><span class="budget-label">qa</span><br><span class="budget-val">$1,124</span></span><span class="budget-bar"><span style="width:100%;"></span></span></span>
+  </div>
+  <div class="ds-code"><pre>&lt;span class="budget-chip"&gt;
+  &lt;span&gt;&lt;span class="budget-label"&gt;prod-aws&lt;/span&gt;&lt;span class="budget-val"&gt;$3,840&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="budget-bar"&gt;&lt;span style="width:76%;"&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;/span&gt;
+
+&lt;!-- States · .budget-chip.warn · .budget-chip.over --&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Action queue row</h2>
+  <p>Recommendation approval inline. Approve/dismiss without leaving the list.</p>
+  <div class="ds-demo column">
+    <div class="action-queue-row" style="margin:0; width:100%;">
+      <div class="aq-body">
+        <div class="aq-title">Right-size payments-api-prod → c6i.2xlarge</div>
+        <div class="aq-meta"><span>Risk · <strong style="color:var(--ink)">low</strong></span><span>Saves $642/mo</span></div>
+      </div>
+      <div class="aq-actions">
+        <button class="btn btn-ghost btn-sm">Skip</button>
+        <button class="btn btn-primary btn-sm">Approve</button>
+      </div>
+    </div>
+    <div class="action-queue-row" style="margin:0; width:100%;">
+      <div class="aq-body">
+        <div class="aq-title">Delete 12 orphaned EBS volumes</div>
+        <div class="aq-meta"><span>Risk · <strong style="color:var(--ink)">very low</strong></span><span>Saves $84/mo</span></div>
+      </div>
+      <div class="aq-actions">
+        <button class="btn btn-ghost btn-sm">Skip</button>
+        <button class="btn btn-primary btn-sm">Approve</button>
+      </div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="action-queue-row"&gt;
+  &lt;div class="aq-body"&gt;
+    &lt;div class="aq-title"&gt;…&lt;/div&gt;
+    &lt;div class="aq-meta"&gt;…&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="aq-actions"&gt;
+    &lt;button class="btn btn-ghost btn-sm"&gt;Skip&lt;/button&gt;
+    &lt;button class="btn btn-primary btn-sm"&gt;Approve&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Snackbar</h2>
+  <p>Ink-pill ephemeral feedback at bottom-right. Different from <code>.alert</code> (which is inline). Auto-dismiss after 4s.</p>
+  <div class="ds-demo" style="background: var(--bg-app); min-height: 140px; position: relative; padding: 0;">
+    <div class="snackbar" style="position:absolute; right:16px; bottom:16px;">
+      <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--state-success);"><path d="M3 8.5l3.5 3.5L13 5"/></svg>
+      <div><strong>Schedule attached</strong><div class="body">28 resources will follow business-hours.</div></div>
+      <button class="close"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M3 3l6 6M9 3l-6 6"/></svg></button>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="snackbar ok"&gt;
+  &lt;svg class="ico"&gt;…&lt;/svg&gt;
+  &lt;div&gt;
+    &lt;strong&gt;Schedule attached&lt;/strong&gt;
+    &lt;div class="body"&gt;28 resources will follow…&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="close"&gt;×&lt;/button&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Calendar / week view</h2>
+  <p>7-column grid for schedule visualisation. Cells highlight today, mute non-month days, dot for events.</p>
+  <div class="ds-demo column" style="padding: 0;">
+    <div class="cal" style="width: 100%;">
+      <div class="cal-h">Mon</div><div class="cal-h">Tue</div><div class="cal-h">Wed</div><div class="cal-h">Thu</div><div class="cal-h">Fri</div><div class="cal-h">Sat</div><div class="cal-h">Sun</div>
+      <div class="cal-cell muted"><div class="cal-day">28</div></div>
+      <div class="cal-cell muted"><div class="cal-day">29</div></div>
+      <div class="cal-cell muted"><div class="cal-day">30</div></div>
+      <div class="cal-cell has-event"><div class="cal-day">1</div></div>
+      <div class="cal-cell has-event"><div class="cal-day">2</div></div>
+      <div class="cal-cell"><div class="cal-day">3</div></div>
+      <div class="cal-cell"><div class="cal-day">4</div></div>
+      <div class="cal-cell"><div class="cal-day">5</div></div>
+      <div class="cal-cell has-event"><div class="cal-day">6</div></div>
+      <div class="cal-cell has-event today"><div class="cal-day">7</div></div>
+      <div class="cal-cell"><div class="cal-day">8</div></div>
+      <div class="cal-cell has-event"><div class="cal-day">9</div></div>
+      <div class="cal-cell"><div class="cal-day">10</div></div>
+      <div class="cal-cell"><div class="cal-day">11</div></div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="cal"&gt;
+  &lt;div class="cal-h"&gt;Mon&lt;/div&gt; …
+  &lt;div class="cal-cell today has-event"&gt;
+    &lt;div class="cal-day"&gt;7&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cal-cell muted"&gt;&lt;div class="cal-day"&gt;30&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section system">
+  <h2>Search input · ⌘K hint</h2>
+  <p>Toolbar search with leading icon + trailing keyboard hint that fades on focus.</p>
+  <div class="ds-demo">
+    <label class="search" style="max-width:380px;">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3" stroke-linecap="round"/></svg>
+      <input type="search" placeholder="Search resources, UIDs, tags…" />
+      <kbd class="kbd">⌘ K</kbd>
+    </label>
+  </div>
+  <div class="ds-code"><pre>&lt;label class="search"&gt;
+  &lt;svg&gt;…magnifier…&lt;/svg&gt;
+  &lt;input type="search" placeholder="Search resources…" /&gt;
+  &lt;kbd class="kbd"&gt;⌘ K&lt;/kbd&gt;
+&lt;/label&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Command palette · ⌘K modal</h2>
+  <p>Global search modal with grouped results. Triggered by <code>⌘ K</code>. Use <code>data-cmdk-overlay</code> + nested <code>.cmdk-panel</code> · <code>.cmdk-input-wrap</code> · <code>.cmdk-list</code> · <code>.cmdk-row</code> · <code>.cmdk-group</code> · <code>.cmdk-foot</code>. Already styled in <code>design.css</code>.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Look for <code>.cmdk-*</code> classes. The modal is keyboard-navigated (↑↓⏎Esc) with active row highlighted.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Kebab menu · 3-dot action menu</h2>
+  <p>Compact menu trigger for row-level actions in tables. Same model as <code>.dropdown</code> but with a vertical 3-dot icon button.</p>
+  <div class="ds-demo">
+    <div class="kebab-host" style="position:relative;">
+      <button class="kebab" aria-label="More" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:transparent;border:0;color:var(--g-500);cursor:pointer;">
+        <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="7" cy="11" r="1"/></svg>
+      </button>
+    </div>
+    <div class="kebab-host" style="position:relative;">
+      <button class="kebab" aria-label="More" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--surface-2);border:0;color:var(--ink);cursor:pointer;">
+        <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="7" cy="11" r="1"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="kebab-host"&gt;
+  &lt;button class="kebab" aria-label="More"&gt;⋮&lt;/button&gt;
+  &lt;div class="kebab-menu"&gt;
+    &lt;button&gt;Edit&lt;/button&gt;
+    &lt;button class="destructive"&gt;Delete&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<section class="ds-section">
+  <h2>Toggles · theme · view density</h2>
+  <p><code>.theme-toggle</code> switches light/dark. <code>.view-toggle</code> switches list/grid view density on data pages.</p>
+  <div class="ds-demo">
+    <div class="theme-toggle" style="display:inline-flex;border:1px solid var(--line);">
+      <button data-theme-btn="light" aria-pressed="true" style="padding:6px 10px;background:var(--ink);color:var(--paper);border:0;font-size:11px;">Light</button>
+      <button data-theme-btn="dark" style="padding:6px 10px;background:transparent;color:var(--g-500);border:0;border-left:1px solid var(--line);font-size:11px;">Dark</button>
+    </div>
+    <div class="view-toggle" role="group" style="display:inline-flex;border:1px solid var(--line);margin-left:8px;">
+      <button aria-pressed="true" style="padding:6px;background:var(--ink);color:var(--paper);border:0;display:inline-flex;align-items:center;"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg></button>
+      <button style="padding:6px;background:transparent;color:var(--g-500);border:0;border-left:1px solid var(--line);"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5"/><rect x="9" y="2" width="5" height="5"/><rect x="2" y="9" width="5" height="5"/><rect x="9" y="9" width="5" height="5"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section">
+  <h2>Metric card · widget grid</h2>
+  <p>For dashboard tiles: <code>.metric-card</code> sits inside a <code>.widget-grid</code>. The card has its own header and chart slot.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Use <code>.widget-grid</code> for the layout container and <code>.metric-card</code> for each tile. Pair with ApexCharts inline previews.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Timeline · activity stream</h2>
+  <p>Chronological event list used in History and Audit pages. Rows use <code>.tl-row</code> inside <code>.timeline</code>. Each row has time + action + actor.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Use <code>.timeline &gt; .tl-row</code>. Pair with <code>.path-crumbs</code> for audit-log path display.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Override badge</h2>
+  <p>Inline badge that signals a value has been manually overridden. Different from <code>.tag-pill</code> in that it has a distinct visual mark (small orange tick).</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Use <code>.override-badge</code>.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Auth shell · sign-in / onboarding</h2>
+  <p>Full-page two-column layout: pitch + form. <code>.auth-shell</code> wraps · <code>.auth-aside</code> holds the pitch · <code>.auth-form</code> holds the form. Nimbus waves in the corner.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Reference <code>signin.html</code> + <code>onboarding.html</code>.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Settings shell · two-column settings</h2>
+  <p>Sticky left nav (<code>.settings-nav</code>) + right pane sections (<code>.settings-section</code>). Already covered in the <a href="../patterns/settings-form.html">Settings form pattern</a> · the shell is the page wrapper.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Reference <code>settings.html</code>.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Keyboard shortcuts help (⌘?)</h2>
+  <p>Modal overlay listing all keyboard shortcuts grouped by section. Triggered by <code>?</code>.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Use <code>.kbd-help-overlay &gt; .kbd-help-panel</code> with <code>.kbd-help-group</code> + <code>.kbd-help-row</code>.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Path crumbs · audit/event paths</h2>
+  <p>Monospace path display for audit logs (e.g. <code>resources/i-0a3f9b7c/schedule</code>). Tabular layout with arrow separators.</p>
+  <div class="ds-callout"><strong>Already in design.css.</strong> Use <code>.path-crumbs</code>.</div>
+</section>
+
+<section class="ds-section">
+  <h2>Role / permission matrix</h2>
+  <p>Grid of policies (rows) × roles (columns). Used on Settings → Roles. Three cell states: <code>.yes</code> (full access · green) · <code>.scoped</code> (limited · grey caps) · <code>.no</code> (no access · faint).</p>
+  <div class="ds-demo" style="padding: 0;">
+    <div class="role-matrix" style="width:100%;">
+      <div class="h">Policy</div>
+      <div class="h">Owner</div>
+      <div class="h">Admin</div>
+      <div class="h">Operator</div>
+      <div class="h">Viewer</div>
+      <div class="h">Billing</div>
+
+      <div class="l">View resources</div>
+      <div class="c yes">✓</div>
+      <div class="c yes">✓</div>
+      <div class="c yes">✓</div>
+      <div class="c yes">✓</div>
+      <div class="c scoped">cost only</div>
+
+      <div class="l">Attach schedules</div>
+      <div class="c yes">✓</div>
+      <div class="c yes">✓</div>
+      <div class="c yes">✓</div>
+      <div class="c no">·</div>
+      <div class="c no">·</div>
+
+      <div class="l">Delete resources</div>
+      <div class="c yes">✓</div>
+      <div class="c scoped">prod only</div>
+      <div class="c no">·</div>
+      <div class="c no">·</div>
+      <div class="c no">·</div>
+
+      <div class="l">Manage billing</div>
+      <div class="c yes">✓</div>
+      <div class="c no">·</div>
+      <div class="c no">·</div>
+      <div class="c no">·</div>
+      <div class="c yes">✓</div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="role-matrix"&gt;
+  &lt;!-- Header row · 6 cells with .h --&gt;
+  &lt;div class="h"&gt;Policy&lt;/div&gt;
+  &lt;div class="h"&gt;Owner&lt;/div&gt; ...
+
+  &lt;!-- Each subsequent row · 1 label + 5 cells --&gt;
+  &lt;div class="l"&gt;View resources&lt;/div&gt;
+  &lt;div class="c yes"&gt;✓&lt;/div&gt;
+  &lt;div class="c scoped"&gt;cost only&lt;/div&gt;
+  &lt;div class="c no"&gt;·&lt;/div&gt;
+&lt;/div&gt;</pre></div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

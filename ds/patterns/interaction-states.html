@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Interaction states matrix · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+<style>
+  /* Matrix layout · 6 columns: component label + 5 state cells */
+  .state-row {
+    display: grid;
+    grid-template-columns: 120px repeat(5, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--row-line);
+  }
+  .state-row:last-child { border-bottom: 0; }
+  .state-row > .row-label {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 600;
+    color: var(--ink);
+  }
+  .state-row > .row-label .alias {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--g-500);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .state-header {
+    display: grid;
+    grid-template-columns: 120px repeat(5, 1fr);
+    gap: 12px;
+    padding: 12px 0 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .state-header > div {
+    font-family: var(--font-body);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--g-500);
+  }
+  .state-cell {
+    display: flex; align-items: center; justify-content: flex-start;
+    min-height: 36px;
+  }
+
+  /* Helpers · forced hover treatments for static display.
+     Matches the real :hover from design.css · an OUTSET shadow bar below
+     the button (not inset), so the affordance reads identically. */
+  .force-hover-btn-primary  { box-shadow: 0 4px 0 -1px var(--zop-orange); }
+  .force-hover-btn-secondary{ border-color: var(--ink) !important; box-shadow: 0 4px 0 -1px var(--zop-orange); }
+  .force-hover-btn-ghost    { color: var(--ink) !important; background: var(--surface-2) !important; }
+  .force-hover-btn-upgrade  { box-shadow: 0 4px 0 -1px var(--ink); }
+  .force-hover-btn-destruct { box-shadow: 0 4px 0 -1px var(--ink); }
+
+  .force-hover-card {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 -4px var(--ink);
+    position: relative;
+  }
+  .force-hover-card::after {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--zop-orange);
+  }
+
+  .force-focus-input {
+    border-color: var(--ink) !important;
+    outline: 2px solid var(--ink);
+    outline-offset: -1px;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    display: inline-block;
+    width: 12px; height: 12px;
+    border: 1.5px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-right: 6px;
+    vertical-align: -2px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation: none; border-top-color: currentColor; opacity: 0.5; } }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-states"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · system rules</div>
+<h1 class="ds-h1">Interaction states matrix</h1>
+<p class="ds-lead">Every interactive component runs through the same state matrix. Consistent treatments make behaviour predictable.</p>
+
+<section class="ds-section">
+  <h2>The system</h2>
+  <table class="ds-table">
+    <thead><tr><th>State</th><th>Visual treatment</th><th>Where it shows up</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Idle</strong></td><td>Default token colors</td><td>All components</td></tr>
+      <tr><td><strong>Hover</strong></td><td><code>surface-2</code> tint · OR contrast hover-bar · OR bento −4px lift</td><td>Buttons · pills · cards · table rows · tabs · pagination</td></tr>
+      <tr><td><strong>Active / selected</strong></td><td>Ink fill · OR orange left stripe · OR <code>surface-2</code> bg + bold</td><td>Buttons · cards · tree nodes · tabs · drawer rows · radio</td></tr>
+      <tr><td><strong>Focus</strong></td><td>2px ink outline, offset −1px · respects <code>:focus-visible</code></td><td>All inputs · buttons · interactive surfaces</td></tr>
+      <tr><td><strong>Disabled</strong></td><td>45% opacity · <code>pointer-events: none</code></td><td>Buttons · pills · inputs · pagination</td></tr>
+      <tr><td><strong>Loading</strong></td><td>Skeleton shimmer · OR inline spinner</td><td>Tables · cards · stat strip · charts (mount)</td></tr>
+      <tr><td><strong>Error</strong></td><td>Red text + red border on inputs · red icon on alerts</td><td>Form fields · banners</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Live matrix</h2>
+  <p>Each row shows the same component across the 5 most common states. Built from the locked-in component classes · no fakes.</p>
+
+  <div class="ds-demo column" style="padding: 16px 24px;">
+
+    <div class="state-header">
+      <div></div>
+      <div>Idle</div>
+      <div>Hover</div>
+      <div>Active / selected</div>
+      <div>Disabled</div>
+      <div>Loading</div>
+    </div>
+
+    <!-- BUTTON · PRIMARY -->
+    <div class="state-row">
+      <div class="row-label">Button<span class="alias">.btn-primary</span></div>
+      <div class="state-cell"><button class="btn btn-primary btn-sm">Save</button></div>
+      <div class="state-cell"><button class="btn btn-primary btn-sm force-hover-btn-primary">Save</button></div>
+      <div class="state-cell"><button class="btn btn-primary btn-sm" aria-pressed="true">Saved</button></div>
+      <div class="state-cell"><button class="btn btn-primary btn-sm" disabled>Save</button></div>
+      <div class="state-cell"><button class="btn btn-primary btn-sm" disabled><span class="spinner"></span>Saving…</button></div>
+    </div>
+
+    <!-- BUTTON · SECONDARY -->
+    <div class="state-row">
+      <div class="row-label">Button<span class="alias">.btn-secondary</span></div>
+      <div class="state-cell"><button class="btn btn-secondary btn-sm">Cancel</button></div>
+      <div class="state-cell"><button class="btn btn-secondary btn-sm force-hover-btn-secondary">Cancel</button></div>
+      <div class="state-cell"><button class="btn btn-secondary btn-sm" aria-pressed="true">Cancelled</button></div>
+      <div class="state-cell"><button class="btn btn-secondary btn-sm" disabled>Cancel</button></div>
+      <div class="state-cell"><button class="btn btn-secondary btn-sm" disabled><span class="spinner"></span>Working…</button></div>
+    </div>
+
+    <!-- BUTTON · GHOST -->
+    <div class="state-row">
+      <div class="row-label">Button<span class="alias">.btn-ghost</span></div>
+      <div class="state-cell"><button class="btn btn-ghost btn-sm">Dismiss</button></div>
+      <div class="state-cell"><button class="btn btn-ghost btn-sm force-hover-btn-ghost">Dismiss</button></div>
+      <div class="state-cell">·</div>
+      <div class="state-cell"><button class="btn btn-ghost btn-sm" disabled>Dismiss</button></div>
+      <div class="state-cell"><button class="btn btn-ghost btn-sm" disabled><span class="spinner"></span>…</button></div>
+    </div>
+
+    <!-- BUTTON · DESTRUCTIVE -->
+    <div class="state-row">
+      <div class="row-label">Button<span class="alias">.btn-destructive</span></div>
+      <div class="state-cell"><button class="btn btn-destructive btn-sm">Delete</button></div>
+      <div class="state-cell"><button class="btn btn-destructive btn-sm force-hover-btn-destruct">Delete</button></div>
+      <div class="state-cell">·</div>
+      <div class="state-cell"><button class="btn btn-destructive btn-sm" disabled>Delete</button></div>
+      <div class="state-cell"><button class="btn btn-destructive btn-sm" disabled><span class="spinner"></span>Deleting…</button></div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="state-row">
+      <div class="row-label">Input<span class="alias">.form-input</span></div>
+      <div class="state-cell"><input class="form-input" placeholder="prod-aws" style="max-width:140px;" /></div>
+      <div class="state-cell"><input class="form-input" placeholder="prod-aws" style="max-width:140px;border-color:var(--g-500);" /></div>
+      <div class="state-cell"><input class="form-input force-focus-input" value="prod-aws" style="max-width:140px;" /></div>
+      <div class="state-cell"><input class="form-input" value="prod-aws" disabled style="max-width:140px;" /></div>
+      <div class="state-cell"><input class="form-input is-error" value="bad@" style="max-width:140px;" /></div>
+    </div>
+
+    <!-- CHECKBOX -->
+    <div class="state-row">
+      <div class="row-label">Checkbox<span class="alias">.zn-check</span></div>
+      <div class="state-cell"><input type="checkbox" class="zn-check" /></div>
+      <div class="state-cell"><input type="checkbox" class="zn-check" style="border-color:var(--ink);" /></div>
+      <div class="state-cell"><input type="checkbox" class="zn-check" checked /></div>
+      <div class="state-cell"><input type="checkbox" class="zn-check" disabled /></div>
+      <div class="state-cell"><input type="checkbox" class="zn-check" checked disabled /></div>
+    </div>
+
+    <!-- FILTER PILL -->
+    <div class="state-row">
+      <div class="row-label">Filter pill<span class="alias">.fp</span></div>
+      <div class="state-cell"><button class="fp"><span class="lbl">Account</span><span class="sep">·</span><span class="val">All</span></button></div>
+      <div class="state-cell"><button class="fp" style="background:var(--surface-2);"><span class="lbl">Account</span><span class="sep">·</span><span class="val">All</span></button></div>
+      <div class="state-cell"><button class="fp is-active"><span class="lbl">Account</span><span class="sep">·</span><span class="val">prod-aws</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button></div>
+      <div class="state-cell"><button class="fp is-disabled"><span class="lbl">Account</span><span class="sep">·</span><span class="val">All</span></button></div>
+      <div class="state-cell">·</div>
+    </div>
+
+    <!-- TAB -->
+    <div class="state-row">
+      <div class="row-label">Tab<span class="alias">.tb button</span></div>
+      <div class="state-cell"><div class="tb" style="margin:0;border-bottom:0;"><button>Resources</button></div></div>
+      <div class="state-cell"><div class="tb" style="margin:0;border-bottom:0;"><button style="color:var(--ink);background:var(--surface-2);">Resources</button></div></div>
+      <div class="state-cell"><div class="tb" style="margin:0;border-bottom:0;"><button aria-selected="true">Resources</button></div></div>
+      <div class="state-cell"><div class="tb" style="margin:0;border-bottom:0;"><button style="opacity:0.45;pointer-events:none;">Resources</button></div></div>
+      <div class="state-cell">·</div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="state-row">
+      <div class="row-label">Pagination<span class="alias">.pg button</span></div>
+      <div class="state-cell"><div class="pg" style="padding:0;border:0;"><span class="pages"><button>2</button></span></div></div>
+      <div class="state-cell"><div class="pg" style="padding:0;border:0;"><span class="pages"><button style="background:var(--surface-2);color:var(--ink);">2</button></span></div></div>
+      <div class="state-cell"><div class="pg" style="padding:0;border:0;"><span class="pages"><button aria-current="page">2</button></span></div></div>
+      <div class="state-cell"><div class="pg" style="padding:0;border:0;"><span class="pages"><button disabled>2</button></span></div></div>
+      <div class="state-cell">·</div>
+    </div>
+
+    <!-- CARD -->
+    <div class="state-row">
+      <div class="row-label">Card<span class="alias">.card.hoverable</span></div>
+      <div class="state-cell"><div class="card hoverable sm" style="margin:0;max-width:160px;font-size:11px;padding:10px 12px;"><strong>business-hours</strong><div style="color:var(--g-500);font-size:10px;">28 resources</div></div></div>
+      <div class="state-cell"><div class="card sm force-hover-card" style="margin:0;max-width:160px;font-size:11px;padding:10px 12px;"><strong>business-hours</strong><div style="color:var(--g-500);font-size:10px;">28 resources</div></div></div>
+      <div class="state-cell"><div class="card active sm" style="margin:0;max-width:160px;font-size:11px;padding:10px 12px;"><strong>business-hours</strong><div style="color:var(--g-500);font-size:10px;">28 resources</div></div></div>
+      <div class="state-cell"><div class="card sm" style="margin:0;max-width:160px;font-size:11px;padding:10px 12px;opacity:0.45;"><strong>business-hours</strong><div style="color:var(--g-500);font-size:10px;">28 resources</div></div></div>
+      <div class="state-cell"><div class="card sm" style="margin:0;max-width:160px;padding:10px 12px;"><div class="skel" style="display:block;height:10px;width:70%;background:linear-gradient(90deg,var(--surface-2) 0%,var(--surface-3) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:skel-shimmer 1.4s linear infinite;margin-bottom:4px;"></div><div class="skel" style="display:block;height:8px;width:50%;background:linear-gradient(90deg,var(--surface-2) 0%,var(--surface-3) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:skel-shimmer 1.4s linear infinite;"></div></div></div>
+    </div>
+
+    <!-- TABLE ROW -->
+    <div class="state-row">
+      <div class="row-label">Table row<span class="alias">tr (.resources)</span></div>
+      <div class="state-cell" style="grid-column: span 5;">
+        <div class="table-wrap" style="width:100%;margin:0;">
+          <table class="resources">
+            <thead><tr><th style="width:50px;">State</th><th>Row</th><th class="num">Cost</th></tr></thead>
+            <tbody>
+              <tr><td style="color:var(--g-500);font-size:11px;">Idle</td><td>payments-api-prod</td><td class="num">$1,284</td></tr>
+              <tr style="background:var(--surface-2);"><td style="color:var(--g-500);font-size:11px;">Hover</td><td>payments-api-prod</td><td class="num">$1,284</td></tr>
+              <tr class="selected"><td style="color:var(--g-500);font-size:11px;">Selected</td><td>payments-api-prod</td><td class="num">$1,284</td></tr>
+              <tr><td style="color:var(--g-500);font-size:11px;">Loading</td><td><div class="skel" style="display:block;height:10px;width:50%;background:linear-gradient(90deg,var(--surface-2) 0%,var(--surface-3) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:skel-shimmer 1.4s linear infinite;"></div></td><td class="num"><div class="skel" style="display:inline-block;height:10px;width:40px;background:linear-gradient(90deg,var(--surface-2) 0%,var(--surface-3) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:skel-shimmer 1.4s linear infinite;"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TREE ROW -->
+    <div class="state-row">
+      <div class="row-label">Tree row<span class="alias">.tr-row</span></div>
+      <div class="state-cell"><div class="tr" style="margin:0;border:1px solid var(--line);width:100%;"><div class="tr-row" style="--depth:0;"><span class="twist open"><svg viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 1 5 3.5L2 8"/></svg></span><span class="name"><span class="kind">ns</span>payments</span></div></div></div>
+      <div class="state-cell"><div class="tr" style="margin:0;border:1px solid var(--line);width:100%;"><div class="tr-row" style="--depth:0;background:var(--surface-2);"><span class="twist open"><svg viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 1 5 3.5L2 8"/></svg></span><span class="name"><span class="kind">ns</span>payments</span></div></div></div>
+      <div class="state-cell"><div class="tr" style="margin:0;border:1px solid var(--line);width:100%;"><div class="tr-row selected" style="--depth:0;"><span class="twist open"><svg viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 1 5 3.5L2 8"/></svg></span><span class="name"><span class="kind">ns</span>payments</span></div></div></div>
+      <div class="state-cell">·</div>
+      <div class="state-cell">·</div>
+    </div>
+
+    <!-- SUGGESTION ROW -->
+    <div class="state-row">
+      <div class="row-label">Suggestion<span class="alias">.sg</span></div>
+      <div class="state-cell" style="grid-column:span 5;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;">
+          <div class="sg" style="margin:0;grid-template-columns:1fr;"><h3 class="sg-title" style="margin:0;font-family:var(--font-display);font-size:13px;">Idle</h3><div class="sg-savings" style="font-size:16px;">$642<span style="font-size:11px;color:var(--g-500);">/mo</span></div></div>
+          <div class="sg is-new" style="margin:0;grid-template-columns:1fr;"><h3 class="sg-title" style="margin:0;font-family:var(--font-display);font-size:13px;">is-new (persistent stripe)</h3><div class="sg-savings" style="font-size:16px;">$642<span style="font-size:11px;color:var(--g-500);">/mo</span></div></div>
+          <div class="sg applied" style="margin:0;grid-template-columns:1fr;"><h3 class="sg-title" style="margin:0;font-family:var(--font-display);font-size:13px;">Applied (strike + dim)</h3><div class="sg-savings" style="font-size:16px;">$642<span style="font-size:11px;color:var(--g-500);">/mo</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS DOT · variations not states -->
+    <div class="state-row">
+      <div class="row-label">Status dot<span class="alias">.status-dot</span></div>
+      <div class="state-cell" style="grid-column:span 5;">
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+          <span class="status-dot ok"><span class="dot"></span>OK</span>
+          <span class="status-dot info"><span class="dot"></span>Updated</span>
+          <span class="status-dot warn"><span class="dot"></span>Expiring</span>
+          <span class="status-dot crit"><span class="dot"></span>Critical · pulses</span>
+          <span class="status-dot ghost"><span class="dot"></span>Archived</span>
+          <span class="status-dot paused"><span class="dot"></span>Paused</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="ds-section">
+  <h2>Hover treatments · three families</h2>
+  <p>The system has three hover idioms. Pick the right one for the surface · never mix them on the same screen.</p>
+  <table class="ds-table">
+    <thead><tr><th>Treatment</th><th>Used by</th><th>Mechanic</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Surface-2 tint</strong></td><td>Buttons (ghost) · pagination · tabs · table rows · tree rows · row icons</td><td>Background swap to <code>var(--surface-2)</code></td></tr>
+      <tr><td><strong>Contrast bar</strong></td><td>Buttons (primary · secondary · upgrade · destructive)</td><td>6px inset shadow at bottom · color contrasts the variant fill</td></tr>
+      <tr><td><strong>Bento lift</strong></td><td>Cards · suggestion rows</td><td>−4px Y + ink offset shadow + 4px orange left stripe top→bottom</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Active / selected treatments · three families</h2>
+  <table class="ds-table">
+    <thead><tr><th>Treatment</th><th>Used by</th><th>Mechanic</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ink fill</strong></td><td>Buttons (when toggled on) · pagination current page · checkbox · tabs (underline)</td><td>Background = <code>--ink</code> · color = <code>--paper</code></td></tr>
+      <tr><td><strong>Orange left stripe</strong></td><td>Cards · suggestion rows (new / critical) · tree nodes</td><td>4px <code>--zop-orange</code> stripe via <code>::after</code>, top→bottom</td></tr>
+      <tr><td><strong>Surface-2 bg + bold</strong></td><td>Filter pills · tree rows · tab strip · drawer rows</td><td>Soft bg + label color shift</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section">
+  <h2>Disabled · never just grey out</h2>
+  <p>Disabled state keeps the variant identity (color hint stays) but drops to 45% opacity and disables pointer events. Don't paint disabled items grey from scratch · that destroys the recognisability of the underlying variant.</p>
+  <div class="ds-code"><pre>.btn[disabled],
+.fp.is-disabled,
+.cd.expired { opacity: 0.45; pointer-events: none; }</pre></div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

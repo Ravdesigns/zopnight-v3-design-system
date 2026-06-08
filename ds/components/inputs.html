@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Inputs · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="inputs"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Atom · form</div>
+<h1 class="ds-h1">Inputs</h1>
+<p class="ds-lead">Text · select · textarea · checkbox · radio. One shape (square), three sizes, full state matrix.</p>
+<section class="ds-section"><h2>Text input + label</h2><p>Default size · 36px height · 1px line border · ink focus ring.</p><div class="ds-demo"><div class="form-field" style="max-width:340px;">
+  <label class="form-label">Account name</label>
+  <input type="text" class="form-input" placeholder="prod-aws" />
+  <span class="form-hint">Visible to all members</span>
+</div></div><div class="ds-code"><pre>&lt;div class=&quot;form-field&quot;&gt;
+  &lt;label class=&quot;form-label&quot;&gt;Account name&lt;/label&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-input&quot; placeholder=&quot;prod-aws&quot; /&gt;
+  &lt;span class=&quot;form-hint&quot;&gt;Visible to all members&lt;/span&gt;
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Sizes</h2><p><code>.form-input.sm</code> (28px), default (36px), <code>.form-input.lg</code> (44px).</p><div class="ds-demo"><input class="form-input sm" placeholder="Small" style="max-width:200px;" />
+<input class="form-input" placeholder="Default" style="max-width:200px;" />
+<input class="form-input lg" placeholder="Large" style="max-width:200px;" /></div><div class="ds-code"><pre>&lt;input class=&quot;form-input sm&quot; placeholder=&quot;Small&quot; /&gt;
+&lt;input class=&quot;form-input&quot; placeholder=&quot;Default&quot; /&gt;
+&lt;input class=&quot;form-input lg&quot; placeholder=&quot;Large&quot; /&gt;</pre></div></section><section class="ds-section"><h2>Select</h2><p>Native select with custom chevron · same dimensions as text input.</p><div class="ds-demo"><select class="form-input" style="max-width:240px;">
+  <option>us-east-1</option><option>us-west-2</option><option>eu-west-1</option>
+</select></div><div class="ds-code"><pre>&lt;select class=&quot;form-input&quot;&gt;
+  &lt;option&gt;us-east-1&lt;/option&gt;
+&lt;/select&gt;</pre></div></section><section class="ds-section"><h2>Textarea</h2><p>Auto-grows · same border / focus / disabled states.</p><div class="ds-demo"><textarea class="form-input" rows="3" placeholder="Add a note..." style="max-width:440px;"></textarea></div><div class="ds-code"><pre>&lt;textarea class=&quot;form-input&quot; rows=&quot;3&quot; placeholder=&quot;...&quot;&gt;&lt;/textarea&gt;</pre></div></section><section class="ds-section"><h2>Checkbox · radio</h2><p>Square checkbox · 14×14 · ink fill when checked. Same shape never rounded.</p><div class="ds-demo"><label style="display:inline-flex;gap:6px;align-items:center;font-size:13px;"><input type="checkbox" class="zn-check" checked /> Enabled</label>
+<label style="display:inline-flex;gap:6px;align-items:center;font-size:13px;"><input type="checkbox" class="zn-check" /> Notify me</label>
+<label style="display:inline-flex;gap:6px;align-items:center;font-size:13px;"><input type="radio" name="opt" class="zn-radio" checked /> Daily</label>
+<label style="display:inline-flex;gap:6px;align-items:center;font-size:13px;"><input type="radio" name="opt" class="zn-radio" /> Weekly</label></div><div class="ds-code"><pre>&lt;input type=&quot;checkbox&quot; class=&quot;zn-check&quot; /&gt; Enabled
+&lt;input type=&quot;radio&quot; class=&quot;zn-radio&quot; /&gt; Daily</pre></div></section><section class="ds-section"><h2>States</h2><p>Error · disabled · with helper text.</p><div class="ds-demo"><div class="form-field" style="max-width:340px;">
+  <label class="form-label">Email</label>
+  <input type="text" class="form-input is-error" value="bad@" />
+  <span class="form-hint is-error">Enter a valid email</span>
+</div>
+<div class="form-field" style="max-width:340px;">
+  <label class="form-label">Provider</label>
+  <input type="text" class="form-input" value="AWS" disabled />
+  <span class="form-hint">Read-only · managed by ops</span>
+</div></div><div class="ds-code"><pre>&lt;input class=&quot;form-input is-error&quot; /&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

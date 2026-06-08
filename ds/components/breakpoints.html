@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Breakpoints · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="breakpoints"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Foundation · layout</div>
+<h1 class="ds-h1">Breakpoints</h1>
+<p class="ds-lead">Five canonical breakpoints. Pull from the tokens · never hard-code <code>768px</code> in component CSS. The system is desktop-first (the app is a control plane, not a marketing site) but every component degrades gracefully to phone.</p>
+
+<section class="ds-section"><h2>The five tokens</h2>
+<table class="ds-table"><thead><tr><th>Token</th><th>Value</th><th>Target device</th><th>What changes at this size</th></tr></thead><tbody>
+<tr><td><code>--bp-sm</code></td><td>640px</td><td>phone landscape</td><td>Tables collapse to card list · stat-strip becomes 1-column</td></tr>
+<tr><td><code>--bp-md</code></td><td>768px</td><td>tablet portrait</td><td>Sidebar collapses to icon rail · drawers go full-width</td></tr>
+<tr><td><code>--bp-lg</code></td><td>1024px</td><td>tablet landscape / small laptop</td><td>3-column dashboards drop to 2 · KPI strips wrap</td></tr>
+<tr><td><code>--bp-xl</code></td><td>1280px</td><td>desktop</td><td>Default · all features at full density</td></tr>
+<tr><td><code>--bp-2xl</code></td><td>1536px</td><td>wide / external monitor</td><td>Optional wider gutters · charts get extra real estate</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Usage</h2>
+<p>Media queries don't yet support CSS custom properties directly. The fix is to mirror the token value in a sass map / JS object, or use container queries where supported. For now: copy the value, leave a comment with the token name so future maintainers know where to update.</p>
+<div class="ds-code"><pre>/* Desktop-first · collapse at md */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) {  /* var(--bp-lg) */
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {   /* var(--bp-md) */
+  .dashboard-grid { grid-template-columns: 1fr; }
+}</pre></div>
+</section>
+
+<section class="ds-section"><h2>What collapses where · component matrix</h2>
+<table class="ds-table"><thead><tr><th>Component</th><th>≤ md (768)</th><th>≤ sm (640)</th></tr></thead><tbody>
+<tr><td>Sidebar</td><td>Icon rail (48px wide)</td><td>Drawer · trigger via hamburger</td></tr>
+<tr><td>Top bar</td><td>Search collapses to ⌘K icon</td><td>Org switcher in menu</td></tr>
+<tr><td>Drawer</td><td>Half-width → full-width</td><td>Full-width sheet from bottom</td></tr>
+<tr><td>Stat strip · 4-up</td><td>2 × 2 grid</td><td>1 per row</td></tr>
+<tr><td>KPI strip</td><td>Wrap · 2 per row</td><td>1 per row · numbers shrink</td></tr>
+<tr><td>Table</td><td>Horizontal scroll inside card</td><td>Card list · row-as-card</td></tr>
+<tr><td>Filter bar</td><td>Wrap to 2 lines</td><td>Toggle drawer "Filters" with count badge</td></tr>
+<tr><td>Tabs</td><td>Scroll horizontally</td><td>Same · or convert to dropdown if &gt; 5</td></tr>
+<tr><td>Modal · default</td><td>92% width</td><td>Bottom sheet · drag-to-dismiss</td></tr>
+<tr><td>Charts</td><td>Stack 2-up → 1-up · y-axis condenses</td><td>Hide legend · move to tooltip</td></tr>
+<tr><td>Settings 2-col form</td><td>Single column · labels above</td><td>Same</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Mobile nav drawer</h2>
+<p>Below <code>md</code>, the sidebar becomes a drawer that slides from the left. Hamburger in the top bar triggers it. Tap outside to close · <code>Esc</code> if keyboard focused.</p>
+<div class="ds-code"><pre>&lt;button class="hamburger" aria-label="Open menu" aria-expanded="false"&gt;
+  &lt;svg width="20" height="14" viewBox="0 0 20 14"&gt;
+    &lt;rect width="20" height="2"/&gt;
+    &lt;rect y="6" width="20" height="2"/&gt;
+    &lt;rect y="12" width="20" height="2"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;nav class="mobile-nav-drawer" data-open="false"&gt;
+  &lt;!-- sidebar nav content --&gt;
+&lt;/nav&gt;</pre></div>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div class="ds-code" style="margin:0;"><pre>@media (max-width: 768px) { /* var(--bp-md) */
+  .grid { grid-template-columns: 1fr; }
+}</pre></div>
+    <div class="why">Use a canonical breakpoint with a comment naming the token.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div class="ds-code" style="margin:0;"><pre>@media (max-width: 743px) {
+  .grid { grid-template-columns: 1fr; }
+}</pre></div>
+    <div class="why">One-off pixel value · drifts from the rest of the system · hard to find later.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

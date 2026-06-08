@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Gap-fill · 70 items · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+<style>
+  .gap-toc { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 4px 16px; margin: 16px 0 32px; font-size: 12px; }
+  .gap-toc a { color: var(--g-700); text-decoration: none; padding: 3px 0; }
+  .gap-toc a:hover { color: var(--zop-orange); }
+  .gap-toc .group-label { font-family: var(--font-body); font-size: 9.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g-500); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--row-line); }
+  .gap-toc .group-label:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+  .ds-section h3 { font-size: 15px; margin-top: 24px; }
+  .meta-line { font-size: 11px; color: var(--g-500); font-family: 'JetBrains Mono', monospace; margin: 2px 0 8px; }
+  .demo-grid { display: grid; gap: 16px; margin: 12px 0 0; }
+  .demo-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .demo-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 800px) { .demo-grid.cols-2, .demo-grid.cols-3 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<aside class="ds-sidebar" data-current="gap-fill"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Gap-fill · 70 items</div>
+<h1 class="ds-h1">Codebase → DS</h1>
+<p class="ds-lead">Patterns devs audited in the 3 apps (ZopNight, ZopDay, Internal) that weren't yet in the design system. All CSS is now in <code>design.css</code>. This page is the index · find a pattern, copy the class, ship.</p>
+
+<div class="gap-toc">
+  <span class="group-label">Foundation</span>
+  <a href="#status-taxonomy">Status taxonomy</a>
+  <a href="#z-index">Z-index tokens</a>
+  <a href="#provider-colors">Provider colors</a>
+  <a href="#series-palette">10-color series palette</a>
+  <a href="#glow-shadows">Glow shadows</a>
+  <a href="#scrollbar">Scrollbar</a>
+  <a href="#autofill">Autofill</a>
+  <a href="#theme-trans">Theme transition</a>
+
+  <span class="group-label">Forms · selection</span>
+  <a href="#tooltip">Tooltip</a>
+  <a href="#info-tooltip">Info tooltip</a>
+  <a href="#combobox">Searchable combobox</a>
+  <a href="#grouped-dropdown">Grouped multi-select</a>
+  <a href="#slider">Threshold slider</a>
+  <a href="#dropzone">File dropzone</a>
+  <a href="#selection-card">Selection card</a>
+
+  <span class="group-label">Feedback · loading</span>
+  <a href="#spinner">Spinner</a>
+  <a href="#loading-dots">Loading dots</a>
+  <a href="#error-state">Error state</a>
+  <a href="#empty-tiers">Empty state · 2 tiers</a>
+
+  <span class="group-label">Data display</span>
+  <a href="#kpi-card">KPI card</a>
+  <a href="#kanban">Kanban</a>
+  <a href="#activity-timeline">Activity timeline</a>
+  <a href="#expandable-table">Expandable rows</a>
+  <a href="#resource-picker">Resource picker</a>
+  <a href="#tags-badge">Tags badge</a>
+  <a href="#nav-action-card">Nav action card</a>
+
+  <span class="group-label">Charts</span>
+  <a href="#recharts">Recharts contract</a>
+  <a href="#chart-tooltip">Chart tooltip</a>
+  <a href="#terminal-log">Terminal log viewer</a>
+
+  <span class="group-label">Process · workflow</span>
+  <a href="#stepper">Stepper · 3 variants</a>
+  <a href="#deploy-stepper">Deploy stepper</a>
+  <a href="#workflow-step">Workflow step list</a>
+  <a href="#wizard-chrome">Wizard chrome</a>
+  <a href="#revision-timeline">Revision timeline</a>
+
+  <span class="group-label">Domain atoms</span>
+  <a href="#currency">Currency value</a>
+  <a href="#data-freshness">Data freshness</a>
+  <a href="#imported-from">Imported from</a>
+  <a href="#purchase-type">Purchase type</a>
+
+  <span class="group-label">Layout · chrome</span>
+  <a href="#mobile-nav">Mobile nav drawer</a>
+  <a href="#user-menu">User / org menu</a>
+  <a href="#sticky-col">Sticky column</a>
+  <a href="#brand-marks">Brand marks</a>
+
+  <span class="group-label">Variants on covered</span>
+  <a href="#btn-variants">Buttons · ghost-danger · full · loading</a>
+  <a href="#tag-extras">Tags · orange · blue</a>
+  <a href="#modal-sizes">Modal sizes</a>
+  <a href="#drawer-half">Drawer half-width</a>
+  <a href="#pagination-cursor">Pagination · hasMore</a>
+  <a href="#stat-extras">Stat strip · icon · sub</a>
+  <a href="#seg">Segmented control</a>
+  <a href="#filter-extras">Filter chips · Clear all</a>
+  <a href="#filter-bar">Composite filter bar</a>
+  <a href="#filter-chip-toggle">Filter chip toggle</a>
+  <a href="#alert-variants">Alert variants</a>
+  <a href="#avatar-ruling">Avatar · square vs round</a>
+  <a href="#drawer-tabs">Drawer tabs</a>
+  <a href="#copyable-uid">Copyable UID</a>
+
+  <span class="group-label">Ops chrome</span>
+  <a href="#health-strip">Health indicator</a>
+  <a href="#cron-dropdown">Cron dropdown</a>
+
+  <span class="group-label">Status pills · marketing</span>
+  <a href="#marketing-status">Marketing status taxonomy</a>
+</div>
+
+<section class="ds-section" id="status-taxonomy">
+  <h2>Status → color taxonomy</h2>
+  <p>One canonical mapping. All ~30 cloud statuses (ZopNight) + revision outcomes (ZopDay) + 20+ marketing statuses (Internal) compose down to <strong>6 families</strong>.</p>
+  <table class="ds-table">
+    <thead><tr><th>Family</th><th>Token</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>OK</strong></td><td><code>--st-ok</code></td><td>running · healthy · completed · succeeded · attached · reserved · active</td></tr>
+      <tr><td><strong>WARN</strong></td><td><code>--st-warn</code></td><td>expiring · queued · scheduled · transitioning · paused · draft · ended</td></tr>
+      <tr><td><strong>ERROR</strong></td><td><code>--st-err</code></td><td>failed · error · critical · breach · complained · bounced</td></tr>
+      <tr><td><strong>INFO</strong></td><td><code>--st-info</code></td><td>updated · live · sent · neutral state change</td></tr>
+      <tr><td><strong>GHOST</strong></td><td><code>--st-ghost</code></td><td>archived · deleted · unsubscribed · disabled</td></tr>
+      <tr><td><strong>PULSE</strong></td><td><code>--st-pulse</code></td><td>"happening now" only · sending · in-flight · active breach (animate)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section" id="tooltip">
+  <h2>Tooltip</h2>
+  <p class="meta-line">.tooltip · .info-icon · onlyOnOverflow + wrapDisabled flags handled by Floating UI</p>
+  <div class="ds-demo">
+    <div style="position:relative; display:inline-block; padding-top:32px;">
+      <div class="tooltip" data-placement="top" style="position:relative;">payments-api-prod · attached to business-hours</div>
+    </div>
+  </div>
+  <div class="ds-code"><pre>&lt;div class="tooltip" data-placement="top"&gt;Tooltip text&lt;/div&gt;
+&lt;span class="info-icon"&gt;ⓘ&lt;/span&gt;  &lt;!-- ⓘ-icon trigger --&gt;</pre></div>
+</section>
+
+<section class="ds-section" id="combobox">
+  <h2>Searchable combobox</h2>
+  <p class="meta-line">.combobox · single + multi · group headers · sublabels · keyboard nav</p>
+  <div class="ds-demo column">
+    <div class="combobox" data-open="true" style="display:inline-flex; align-self:flex-start;">
+      <button class="combobox-trigger" aria-expanded="true">Region <span class="placeholder">·</span> <span>us-east-1</span><span class="count-pill">+2</span><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 4.5 3 3 3-3"/></svg></button>
+      <div class="combobox-listbox" style="position:relative; top:auto;">
+        <div class="combobox-search">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="3.5"/><path d="m7.5 7.5 3 3"/></svg>
+          <input placeholder="Search regions..." />
+        </div>
+        <div class="combobox-options">
+          <div class="combobox-group-header">North America</div>
+          <div class="combobox-option" aria-selected="true"><span></span><span><span class="opt-label">us-east-1</span><span class="opt-sub">N. Virginia</span></span><svg class="opt-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l3 3 5-7"/></svg></div>
+          <div class="combobox-option is-active"><span></span><span><span class="opt-label">us-west-2</span><span class="opt-sub">Oregon</span></span><svg class="opt-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l3 3 5-7"/></svg></div>
+          <div class="combobox-group-header">Europe</div>
+          <div class="combobox-option" aria-selected="true"><span></span><span><span class="opt-label">eu-west-1</span><span class="opt-sub">Ireland</span></span><svg class="opt-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l3 3 5-7"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="grouped-dropdown">
+  <h2>Grouped multi-select dropdown</h2>
+  <p class="meta-line">.grouped-dropdown · provider-level select-all · indeterminate · pinned "Selected" section</p>
+  <div class="ds-demo column">
+    <div style="position:relative; display:inline-flex; align-self:flex-start;">
+      <div class="grouped-dropdown" style="position:relative; top:auto; right:auto;">
+        <div class="group-section">
+          <div class="group-header"><input type="checkbox" class="zn-check" checked /><span class="group-name">AWS</span><span class="count-chip">8 of 12</span></div>
+          <div class="group-items">
+            <label class="group-item"><input type="checkbox" class="zn-check" checked /> prod-aws-main</label>
+            <label class="group-item"><input type="checkbox" class="zn-check" checked /> prod-aws-replica</label>
+            <label class="group-item"><input type="checkbox" class="zn-check" /> dev-aws</label>
+          </div>
+        </div>
+        <div class="group-section">
+          <div class="group-header"><input type="checkbox" class="zn-check" /><span class="group-name">GCP</span><span class="count-chip">0 of 4</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="spinner">
+  <h2>Spinner · loading dots</h2>
+  <p class="meta-line">.spinner · .loading-dots · standalone (page-level)</p>
+  <div class="ds-demo">
+    <span class="spinner sm"></span>
+    <span class="spinner"></span>
+    <span class="spinner lg"></span>
+    <span class="loading-dots">Transitioning<span></span><span></span><span></span></span>
+  </div>
+</section>
+
+<section class="ds-section" id="error-state">
+  <h2>Error states</h2>
+  <p class="meta-line">.error-state · the mandatory third UI state · paired with isError on every data page</p>
+  <div class="ds-demo column">
+    <div class="error-state" style="padding:32px 16px;">
+      <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="20"/><path d="M24 14v12M24 30v2"/></svg>
+      <h2>Couldn't load resources</h2>
+      <p>We hit a snag fetching from AWS. Check your connection and try again.</p>
+      <div class="error-actions"><button class="btn btn-primary btn-sm">Retry</button><button class="btn btn-ghost btn-sm">Get help</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="slider">
+  <h2>Severity threshold slider</h2>
+  <p class="meta-line">.threshold-slider · stepped · cumulative (pick "critical" → enables critical + lower)</p>
+  <div class="ds-demo column">
+    <div class="threshold-slider" style="max-width: 360px;">
+      <div class="track"><div class="fill" style="width:75%;"></div><div class="steps"><div class="step active"></div><div class="step active"></div><div class="step active"></div><div class="step"></div></div></div>
+      <div class="labels"><span class="active">Low</span><span class="active">Medium</span><span class="active">High</span><span>Critical</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="dropzone">
+  <h2>File dropzone</h2>
+  <p class="meta-line">.dropzone · the one legit dashed border in the system · drag-over + error states</p>
+  <div class="ds-demo">
+    <div class="dropzone" style="max-width: 380px;">
+      <svg class="ico" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 4v16M8 10l6-6 6 6M4 22h20"/></svg>
+      <strong>Drop CSV here</strong>
+      <span class="hint">or click to browse · 10 MB max</span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="selection-card">
+  <h2>Selection card · radio card</h2>
+  <p class="meta-line">.selection-card · acts as radio input · "Recommended" slot</p>
+  <div class="ds-demo">
+    <div class="selection-card selected" style="width:240px;">
+      <span class="recommended">Recommended</span>
+      <strong style="font-family: var(--font-display); font-size: 15px;">Connect via IAM role</strong>
+      <p style="font-size: 12.5px; color: var(--g-600); margin: 6px 0 0;">Read-only access. Recommended for first-time setup.</p>
+      <span class="check"></span>
+    </div>
+    <div class="selection-card" style="width:240px;">
+      <strong style="font-family: var(--font-display); font-size: 15px;">Connect via access keys</strong>
+      <p style="font-size: 12.5px; color: var(--g-600); margin: 6px 0 0;">Use long-lived IAM credentials.</p>
+      <span class="check"></span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="kpi-card">
+  <h2>KPI card · with delta + accent stripe</h2>
+  <p class="meta-line">.kpi-card · ok | warn | err | info | brand top accent · ▲▼ delta</p>
+  <div class="ds-demo">
+    <div class="kpi-card ok" style="width:200px;">
+      <div class="kpi-label">Active leads</div>
+      <div><span class="kpi-val">8,420</span><span class="kpi-delta up">▲ 12%</span></div>
+      <div class="kpi-sub">vs last week</div>
+    </div>
+    <div class="kpi-card warn" style="width:200px;">
+      <div class="kpi-label">Bounce rate</div>
+      <div><span class="kpi-val">2.4%</span><span class="kpi-delta down">▼ 0.3</span></div>
+      <div class="kpi-sub">last 7 days</div>
+    </div>
+    <div class="kpi-card brand" style="width:200px;">
+      <div class="kpi-label">Open rate</div>
+      <div><span class="kpi-val">38.6%</span><span class="kpi-delta up">▲ 4.2</span></div>
+      <div class="kpi-sub">launch broadcast</div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="kanban">
+  <h2>Broadcast pipeline · kanban</h2>
+  <p class="meta-line">.kanban · 5-column status board · sending column animates</p>
+  <div class="ds-demo column">
+    <div class="kanban" style="width:100%;">
+      <div class="kanban-col"><div class="kanban-col-h"><span class="dot"></span>Draft<span class="count">3</span></div><div class="kanban-col-body"><div class="kanban-card"><div class="title">Spring drop</div><div class="meta">2 drafts</div></div></div></div>
+      <div class="kanban-col"><div class="kanban-col-h"><span class="dot"></span>Scheduled<span class="count">2</span></div><div class="kanban-col-body"><div class="kanban-card"><div class="title">Webinar reminder</div><div class="meta">Tomorrow · 10:00</div></div></div></div>
+      <div class="kanban-col"><div class="kanban-col-h sending"><span class="dot"></span>Sending<span class="count">1</span></div><div class="kanban-col-body"><div class="kanban-card"><div class="title">Launch campaign</div><div class="meta">12,420 / 18,000</div></div></div></div>
+      <div class="kanban-col"><div class="kanban-col-h"><span class="dot"></span>Sent<span class="count">12</span></div><div class="kanban-col-body"><div class="kanban-card"><div class="title">Welcome flow</div><div class="meta">Apr 18</div></div></div></div>
+      <div class="kanban-col"><div class="kanban-col-h"><span class="dot" style="background:var(--state-error)"></span>Failed<span class="count">0</span></div><div class="kanban-col-body"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="activity-timeline">
+  <h2>Activity timeline · grouped by day</h2>
+  <p class="meta-line">.activity-timeline · sticky day headers · per-type icon tint · compact mode</p>
+  <div class="ds-demo column" style="padding:0;">
+    <div class="activity-timeline" style="width:100%; padding: 14px 18px;">
+      <div class="activity-day-h">Today</div>
+      <div class="activity-row email_open"><div class="act-ico"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="10" height="8"/><path d="M2 4l5 4 5-4"/></svg></div><div class="act-body"><div class="act-title">priya@acme.com opened "Spring drop"</div><div class="act-meta">payments-api-prod · 12:43 PM</div></div><div class="act-time">2m ago</div></div>
+      <div class="activity-row form_submit"><div class="act-ico"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="10" height="8"/><path d="M5 7h4M5 9h2"/></svg></div><div class="act-body"><div class="act-title">jane@octa.dev submitted demo form</div><div class="act-meta">Plan: Enterprise · 11:18 AM</div></div><div class="act-time">1h ago</div></div>
+      <div class="activity-day-h">Yesterday</div>
+      <div class="activity-row click"><div class="act-ico"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l8 3-3 1-1 3z"/></svg></div><div class="act-body"><div class="act-title">noah@kepler.io clicked CTA "Get started"</div><div class="act-meta">Email · launch broadcast</div></div><div class="act-time">Yest 4:21 PM</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="resource-picker">
+  <h2>Resource picker item</h2>
+  <p class="meta-line">.resource-picker-item · canonical row for schedule/group attach flows</p>
+  <div class="ds-demo column">
+    <div class="resource-picker-item selected" style="width:100%; max-width:520px;">
+      <span class="provider-mark sm aws"></span>
+      <div class="body">
+        <div class="name">payments-api-prod</div>
+        <div class="meta"><span>i-0a3f9b7c</span><span>us-east-1</span><span>ec2-instance</span></div>
+      </div>
+      <span class="tag-overflow">+3 tags</span>
+    </div>
+    <div class="resource-picker-item" style="width:100%; max-width:520px;">
+      <span class="provider-mark sm gcp"></span>
+      <div class="body">
+        <div class="name">analytics-warehouse</div>
+        <div class="meta"><span>bigquery</span><span>us-central1</span></div>
+      </div>
+      <span class="read-only-badge"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 0a2 2 0 0 0-2 2v2H2v6h6V4H7V2a2 2 0 0 0-2-2z"/></svg>Read-only</span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="recharts">
+  <h2>Recharts token contract</h2>
+  <p class="meta-line">Read CSS vars at chart init time · pass them to Recharts as inline style objects</p>
+  <div class="ds-code"><pre>const css = (n) =&gt; getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const T = {
+  grid:     css('--chart-grid'),
+  axis:     css('--chart-axis'),
+  cursor:   css('--chart-cursor'),
+  series:   [css('--series-1'), css('--series-2'), css('--series-3'), /* ... up to --series-10 */],
+};
+
+&lt;LineChart&gt;
+  &lt;CartesianGrid stroke={T.grid} strokeDasharray="3 3" /&gt;
+  &lt;XAxis stroke={T.axis} tick={{ fill: T.axis, fontSize: 11 }} /&gt;
+  &lt;Tooltip content={&lt;ChartTooltip /&gt;} cursor={{ stroke: T.cursor }} /&gt;
+  &lt;Line stroke={T.series[0]} /&gt;
+&lt;/LineChart&gt;</pre></div>
+</section>
+
+<section class="ds-section" id="chart-tooltip">
+  <h2>Chart tooltip · canonical Recharts component</h2>
+  <p class="meta-line">.chart-tooltip · ink pill · same shape used by ApexCharts override + marketing dashboard</p>
+  <div class="ds-demo">
+    <div class="chart-tooltip" style="padding:8px 10px;">
+      <div class="tooltip-title">Wed · May 22</div>
+      <div class="tooltip-row"><span class="swatch" style="background:#F58549"></span><span class="label">Spend</span><span class="value">$22K</span></div>
+      <div class="tooltip-row"><span class="swatch" style="background:#2A4494"></span><span class="label">Saved</span><span class="value">$8K</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="terminal-log">
+  <h2>Terminal log viewer + 10-color series palette</h2>
+  <p class="meta-line">.code-viewer · level colors · pod-differentiating palette · 10 distinguishable hues</p>
+  <div class="ds-demo column" style="padding:0;">
+    <div class="code-viewer" style="width:100%;">
+      <span class="line"><span class="ts">12:43:01.221</span><span class="pod" style="color:var(--series-1)">payments-api</span>Server listening on :8080</span>
+      <span class="line info"><span class="ts">12:43:02.114</span><span class="pod" style="color:var(--series-2)">worker-3</span>processed batch · 412 items in 1.2s</span>
+      <span class="line warn"><span class="ts">12:43:04.819</span><span class="pod" style="color:var(--series-1)">payments-api</span>slow query &gt; 800ms · /api/v1/charge</span>
+      <span class="line err"><span class="ts">12:43:05.034</span><span class="pod" style="color:var(--series-3)">refund-worker</span>FAIL upstream timeout · retrying (3/5)</span>
+      <span class="line debug"><span class="ts">12:43:05.881</span><span class="pod" style="color:var(--series-4)">scheduler</span>tick · next run in 14m</span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="stepper">
+  <h2>Stepper · 3 variants</h2>
+  <p class="meta-line">.stepper-h horizontal · .stepper-v vertical timeline · .wizard-chrome compact</p>
+  <h3>Horizontal bar</h3>
+  <div class="ds-demo column">
+    <div class="stepper-h" style="width:100%; max-width:520px;">
+      <div class="step done"><span class="num">✓</span>Connect</div>
+      <div class="connector done"></div>
+      <div class="step current"><span class="num">2</span>Pick resources</div>
+      <div class="connector"></div>
+      <div class="step"><span class="num">3</span>Confirm</div>
+    </div>
+  </div>
+  <h3>Vertical timeline</h3>
+  <div class="ds-demo column">
+    <div class="stepper-v" style="width:100%; max-width:320px;">
+      <div class="step done"><span class="num">✓</span><div><div class="label">Connect cloud</div><div class="sub">prod-aws connected</div></div></div>
+      <div class="step done"><span class="num">✓</span><div><div class="label">First scan</div><div class="sub">412 resources discovered</div></div></div>
+      <div class="step current"><span class="num">3</span><div><div class="label">Review recommendations</div><div class="sub">28 pending</div></div></div>
+      <div class="step"><span class="num">4</span><div><div class="label">Attach schedule</div><div class="sub">Saves $642/mo</div></div></div>
+    </div>
+  </div>
+  <h3>Compact wizard chrome</h3>
+  <div class="ds-demo column" style="padding:0;">
+    <div class="wizard-chrome" style="width:100%;">
+      <span class="crumb">Connect</span><span class="sep">/</span>
+      <span class="crumb current">Pick resources</span><span class="sep">/</span>
+      <span class="crumb" style="color:var(--g-400);">Confirm</span>
+      <div class="progress"><span style="width:66%;"></span></div>
+      <span class="count">Step 2 of 3</span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="deploy-stepper">
+  <h2>Deploy pipeline stepper</h2>
+  <p class="meta-line">.deploy-stepper · active stage pulses · complete/failed/active marker states</p>
+  <div class="ds-demo">
+    <div class="deploy-stepper" style="width:100%; max-width:560px;">
+      <div class="stage complete"><div class="marker"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l3 3 5-7"/></svg></div><div class="label">Build</div></div>
+      <div class="connector complete"></div>
+      <div class="stage complete"><div class="marker"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l3 3 5-7"/></svg></div><div class="label">Test</div></div>
+      <div class="connector complete"></div>
+      <div class="stage active"><div class="marker"><span style="font-family:var(--font-display); font-size:11px; font-weight:700;">3</span></div><div class="label">Deploy</div></div>
+      <div class="connector"></div>
+      <div class="stage"><div class="marker"><span style="font-family:var(--font-display); font-size:11px; font-weight:700; color:var(--g-500);">4</span></div><div class="label">Verify</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="workflow-step">
+  <h2>Workflow step list</h2>
+  <p class="meta-line">.workflow-step · auto · manual · approval · error kinds</p>
+  <div class="ds-demo column">
+    <div class="workflow-step-list" style="width:100%;">
+      <div class="workflow-step auto"><div class="status-pill">✓</div><div><div class="kind">Auto</div><div class="title">Stop 12 idle EC2 instances</div><div class="meta"><span>2s ago</span><span>$84/mo</span></div></div><span></span></div>
+      <div class="workflow-step approval"><div class="status-pill">!</div><div><div class="kind">Approval needed</div><div class="title">Delete 4 orphaned EBS volumes</div><div class="meta"><span>Risk · low</span><span>$120/mo</span></div></div><button class="btn btn-primary btn-sm">Review</button></div>
+      <div class="workflow-step error"><div class="status-pill">×</div><div><div class="kind">Failed</div><div class="title">Right-size payments-api-prod</div><div class="meta" style="color:var(--state-error)"><span>IAM denied permission</span></div></div><button class="btn btn-ghost btn-sm">Retry</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="seg">
+  <h2>Segmented control</h2>
+  <p class="meta-line">.seg · ink fill on active · aria-pressed</p>
+  <div class="ds-demo">
+    <div class="seg">
+      <button>List</button><button aria-pressed="true">Grid</button><button>Map</button>
+    </div>
+    <div class="seg">
+      <button aria-pressed="true">Daily</button><button>Weekly</button><button>Monthly</button>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="filter-bar">
+  <h2>Composite filter bar</h2>
+  <p class="meta-line">.filter-bar · labeled columns with separators · seg + dropdown combos inline</p>
+  <div class="ds-demo column">
+    <div class="filter-bar" style="width:100%;">
+      <div class="col"><div class="col-label">View</div><div class="seg"><button aria-pressed="true">List</button><button>Grid</button></div></div>
+      <div class="col"><div class="col-label">Account</div><button class="fp"><span class="lbl">All</span></button></div>
+      <div class="col"><div class="col-label">Region</div><button class="fp is-active"><span class="lbl">us-east-1</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="filter-extras">
+  <h2>Filter chips · "Filters · N" prefix + clear all</h2>
+  <p class="meta-line">.filter-chips-row · contextual prefix when filters are active</p>
+  <div class="ds-demo">
+    <div class="filter-chips-row" style="width:100%;">
+      <span class="filters-prefix">Filters<span class="count">2</span></span>
+      <button class="fp is-active"><span class="lbl">Status</span><span class="sep">·</span><span class="val">Running</span><span class="count">+2</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>
+      <button class="fp is-active"><span class="lbl">Region</span><span class="sep">·</span><span class="val">us-east-1</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>
+      <button class="fp-clear">Clear all</button>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="filter-chip-toggle">
+  <h2>Filter chip toggle</h2>
+  <p class="meta-line">.filter-chip-toggle · controlled toggle variant (different from .fp dropdown trigger)</p>
+  <div class="ds-demo">
+    <button class="filter-chip-toggle">Active <span class="count">12</span></button>
+    <button class="filter-chip-toggle" aria-pressed="true">Failed <span class="count">3</span></button>
+    <button class="filter-chip-toggle">Paused <span class="count">8</span></button>
+  </div>
+</section>
+
+<section class="ds-section" id="tags-badge">
+  <h2>Tags badge · count + tooltip</h2>
+  <p class="meta-line">.tags-badge · tag icon + count · hover for full k:v list</p>
+  <div class="ds-demo">
+    <span class="tags-badge"><svg class="ico" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5l5-3 4 4-5 5-4-4z"/><circle cx="5" cy="5" r="1"/></svg><span class="count">4</span></span>
+    <span class="tags-badge"><svg class="ico" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5l5-3 4 4-5 5-4-4z"/><circle cx="5" cy="5" r="1"/></svg><span class="count">12</span></span>
+  </div>
+</section>
+
+<section class="ds-section" id="nav-action-card">
+  <h2>Nav action card · "view blast radius"</h2>
+  <p class="meta-line">.nav-action-card · cross-feature navigation affordance</p>
+  <div class="ds-demo">
+    <a href="#" class="nav-action-card" style="width:320px;">
+      <div class="ico"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="6"/><circle cx="7" cy="7" r="2"/></svg></div>
+      <div class="body"><strong>View blast radius</strong><div class="sub">4 services depend on this resource</div></div>
+      <span class="link">Explore →</span>
+    </a>
+  </div>
+</section>
+
+<section class="ds-section" id="btn-variants">
+  <h2>Button · ghost-danger · full-width · loading</h2>
+  <p class="meta-line">.btn-ghost-danger · .btn-full · .btn.is-loading</p>
+  <div class="ds-demo">
+    <button class="btn btn-ghost-danger btn-sm">Disconnect</button>
+    <button class="btn btn-primary is-loading btn-sm">Saving</button>
+  </div>
+  <div class="ds-demo column">
+    <button class="btn btn-primary btn-full">Sign in</button>
+  </div>
+</section>
+
+<section class="ds-section" id="tag-extras">
+  <h2>Tag pill · orange + blue variants</h2>
+  <p class="meta-line">.tag-pill.orange · .tag-pill.blue · used distinctly from .warn / .info</p>
+  <div class="ds-demo">
+    <span class="tag-pill ok">Running</span>
+    <span class="tag-pill warn">Expiring</span>
+    <span class="tag-pill orange">Override</span>
+    <span class="tag-pill blue">Reserved</span>
+  </div>
+</section>
+
+<section class="ds-section" id="modal-sizes">
+  <h2>Modal sizes · sm / lg / xl</h2>
+  <p class="meta-line">.modal · .modal.sm (380) · .modal.lg (512) · .modal.xl (896) · .modal.full</p>
+  <div class="ds-callout"><strong>Use:</strong> sm for confirmations, lg for forms, xl for log/YAML/preview viewers.</div>
+</section>
+
+<section class="ds-section" id="drawer-half">
+  <h2>Drawer · half-width variant</h2>
+  <p class="meta-line">.drawer-panel.half · clamp(480px, 50vw, 720px)</p>
+</section>
+
+<section class="ds-section" id="pagination-cursor">
+  <h2>Pagination · hasMore cursor mode</h2>
+  <p class="meta-line">.pg.has-more · current-only display when total unknown</p>
+  <div class="ds-demo">
+    <div class="pg has-more" style="padding:0; border:0;">
+      <span class="summary">Showing <strong>1–25</strong></span>
+      <span class="pages">
+        <button class="arrow" disabled><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m7.5 3-3 3 3 3"/></svg></button>
+        <button class="current-only">1</button>
+        <button class="arrow"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4.5 3 3 3-3 3"/></svg></button>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="empty-tiers">
+  <h2>Empty state · 2 tiers</h2>
+  <p class="meta-line">.empty-v3 · default (enhanced · 180px Nimbus + CTA) · .simple (120px · message only)</p>
+</section>
+
+<section class="ds-section" id="expandable-table">
+  <h2>Expandable table rows</h2>
+  <p class="meta-line">tr.expanded + tr.expansion · collapsible detail rows</p>
+  <div class="ds-demo column">
+    <div class="table-wrap" style="width:100%; margin:0;">
+      <table class="resources">
+        <thead><tr><th style="width:30px;"></th><th>Name</th><th class="num">Pods</th></tr></thead>
+        <tbody>
+          <tr class="expanded"><td><span class="expand-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 2 4 3-4 3"/></svg></span></td><td>platform-prod-eks</td><td class="num">412</td></tr>
+          <tr class="expansion"><td colspan="3"><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; font-size:12px;"><div><strong>Region</strong><div>us-east-1</div></div><div><strong>Version</strong><div>1.28</div></div><div><strong>Nodes</strong><div>12</div></div></div></td></tr>
+          <tr><td><span class="expand-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 2 4 3-4 3"/></svg></span></td><td>analytics-gke</td><td class="num">64</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="copyable-uid">
+  <h2>Copyable UID</h2>
+  <p class="meta-line">.copyable-uid · interactive mono-id with persistent copy icon</p>
+  <div class="ds-demo">
+    <span class="copyable-uid">i-0a3f9b7c<svg class="copy-ico" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><path d="M3 3h-1v7h7v-1"/></svg></span>
+  </div>
+</section>
+
+<section class="ds-section" id="brand-marks">
+  <h2>Brand marks</h2>
+  <p class="meta-line">.brand-mark-zopnight · .brand-mark-zopday · locked brand assets</p>
+  <div class="ds-demo">
+    <span class="brand-mark-zopnight"></span>
+    <span class="brand-mark-zopday"></span>
+  </div>
+</section>
+
+<section class="ds-section" id="z-index">
+  <h2>Z-index scale</h2>
+  <table class="ds-table">
+    <thead><tr><th>Token</th><th>Value</th><th>Use for</th></tr></thead>
+    <tbody>
+      <tr><td><code>--z-base</code></td><td>1</td><td>baseline</td></tr>
+      <tr><td><code>--z-dropdown</code></td><td>10</td><td>menus, popovers</td></tr>
+      <tr><td><code>--z-sticky</code></td><td>20</td><td>sticky cols, day headers</td></tr>
+      <tr><td><code>--z-overlay</code></td><td>50</td><td>command palette, modals' overlay</td></tr>
+      <tr><td><code>--z-drawer</code></td><td>90</td><td>drawer overlay + panel</td></tr>
+      <tr><td><code>--z-modal</code></td><td>100</td><td>modal</td></tr>
+      <tr><td><code>--z-toast</code></td><td>110</td><td>toast</td></tr>
+      <tr><td><code>--z-tooltip</code></td><td>200</td><td>highest · always on top</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section" id="provider-colors">
+  <h2>Provider colors</h2>
+  <table class="ds-table">
+    <thead><tr><th>Provider</th><th>Token</th><th>Hex</th></tr></thead>
+    <tbody>
+      <tr><td>AWS</td><td><code>--provider-aws</code></td><td>#F58549 (matches brand orange)</td></tr>
+      <tr><td>GCP</td><td><code>--provider-gcp</code></td><td>#4285F4</td></tr>
+      <tr><td>Azure</td><td><code>--provider-azure</code></td><td>#0078D4</td></tr>
+      <tr><td>Kubernetes</td><td><code>--provider-k8s</code></td><td>#326CE5</td></tr>
+      <tr><td>Oracle</td><td><code>--provider-oracle</code></td><td>#C74634</td></tr>
+      <tr><td>DigitalOcean</td><td><code>--provider-do</code></td><td>#0080FF</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="ds-section" id="series-palette">
+  <h2>10-color series palette</h2>
+  <p class="meta-line">--series-1 through --series-10 · for ≥10 distinguishable lines/pods/columns</p>
+  <div class="ds-demo">
+    <div style="display:flex; gap:8px;">
+      <span style="width:24px; height:24px; background:var(--series-1)"></span>
+      <span style="width:24px; height:24px; background:var(--series-2)"></span>
+      <span style="width:24px; height:24px; background:var(--series-3)"></span>
+      <span style="width:24px; height:24px; background:var(--series-4)"></span>
+      <span style="width:24px; height:24px; background:var(--series-5)"></span>
+      <span style="width:24px; height:24px; background:var(--series-6)"></span>
+      <span style="width:24px; height:24px; background:var(--series-7)"></span>
+      <span style="width:24px; height:24px; background:var(--series-8)"></span>
+      <span style="width:24px; height:24px; background:var(--series-9)"></span>
+      <span style="width:24px; height:24px; background:var(--series-10)"></span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="currency">
+  <h2>Domain atoms · currency · freshness · imported · purchase</h2>
+  <div class="ds-demo column">
+    <div>
+      <span class="currency-value">$1,284.40</span>
+      <span class="currency-value" id="data-freshness">$1,284.40 <span class="converted">≈ ₹1,07,000</span></span>
+    </div>
+    <div>
+      <span class="data-freshness" id="data-freshness"><svg class="ico" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Updated 2 min ago</span>
+      <span class="data-freshness stale" id="data-freshness"><svg class="ico" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Stale · 2 days ago</span>
+    </div>
+    <div id="imported-from">
+      <span class="imported-from"><span class="provider-mark sm aws"></span>AWS · prod-aws</span>
+      <span class="imported-from"><span class="provider-mark sm gcp"></span>GCP · prod-gcp</span>
+    </div>
+    <div id="purchase-type">
+      <span class="purchase-type reserved">Reserved · 1y</span>
+      <span class="purchase-type spot">Spot</span>
+      <span class="purchase-type savings-plan">Savings plan</span>
+      <span class="purchase-type cud">CUD · 3y</span>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="mobile-nav">
+  <h2>Mobile nav drawer · user/org menu · sticky col</h2>
+  <p>Layout primitives lifted from <code>Layout.jsx</code> and <code>UserMenu.jsx</code>. CSS in design.css under <code>.mobile-nav-*</code>, <code>.user-menu</code>, <code>.sticky-col</code>.</p>
+</section>
+
+<section class="ds-section" id="alert-variants">
+  <h2>Alert variants from app</h2>
+  <p class="meta-line">.alert.permission · .alert.connect-prompt · .alert.missing-perms-bn (expandable per-account)</p>
+  <div class="ds-demo column">
+    <div class="alert permission" style="width:100%;">
+      <span class="icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="10" height="7"/><path d="M5 7V4a3 3 0 0 1 6 0v3"/></svg></span>
+      <div class="body"><strong>Read-only access</strong>You're viewing this with scoped permissions. Editing requires owner role.</div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="avatar-ruling">
+  <h2>Avatar · square (product) vs round (marketing)</h2>
+  <p class="meta-line">.avatar.square (product surfaces) · .avatar.round (marketing surfaces)</p>
+  <div class="ds-demo">
+    <span class="avatar c1 square">PT</span>
+    <span class="avatar c2 square">JM</span>
+    <span class="avatar c1 round">PT</span>
+    <span class="avatar c2 round">JM</span>
+  </div>
+</section>
+
+<section class="ds-section" id="marketing-status">
+  <h2>Status pill · 20+ marketing statuses</h2>
+  <div class="ds-demo">
+    <span class="status-pill active"><span class="dot"></span>Active</span>
+    <span class="status-pill sending"><span class="dot"></span>Sending</span>
+    <span class="status-pill scheduled"><span class="dot"></span>Scheduled</span>
+    <span class="status-pill draft"><span class="dot"></span>Draft</span>
+    <span class="status-pill failed"><span class="dot"></span>Failed</span>
+    <span class="status-pill bounced"><span class="dot"></span>Bounced</span>
+    <span class="status-pill unsubscribed"><span class="dot"></span>Unsubscribed</span>
+  </div>
+</section>
+
+<section class="ds-section" id="health-strip">
+  <h2>Health indicator</h2>
+  <p class="meta-line">.health-strip · service-status dot row · ops nav</p>
+  <div class="ds-demo">
+    <span class="health-strip">
+      <span class="h-dot ok"></span><span class="h-dot ok"></span><span class="h-dot ok"></span><span class="h-dot warn"></span><span class="h-dot ok"></span><span class="h-dot ok"></span><span class="h-dot err"></span><span class="h-dot ok"></span><span class="h-dot ok"></span><span class="h-dot ok"></span>
+    </span>
+    <span style="font-size:11px; color:var(--g-500); margin-left:8px;">10 services · 1 warn · 1 error</span>
+  </div>
+</section>
+
+<section class="ds-section" id="drawer-tabs">
+  <h2>Drawer tabs · scoped variant</h2>
+  <p class="meta-line">.drawer-tabs · lighter than .tb · for tab strips inside drawers</p>
+  <div class="ds-demo column" style="padding:0;">
+    <div class="drawer-tabs" style="width:100%;">
+      <button aria-selected="true">Details</button>
+      <button>Activity <span class="count-pill">12</span></button>
+      <button>Settings</button>
+    </div>
+  </div>
+</section>
+
+<section class="ds-section" id="cron-dropdown">
+  <h2>Cron dropdown · ops job menu</h2>
+  <p class="meta-line">.cron-dropdown · last-run · latency · locked states</p>
+  <div class="ds-demo column">
+    <div class="cron-dropdown" style="background:var(--paper); border:1px solid var(--line);">
+      <div class="cron-row"><svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3 2 11 7 3 12 3 2"/></svg><div><div>Rebuild cost index</div><div class="meta">Last run 2m ago · 1.4s</div></div><button class="btn btn-ghost btn-sm">Run</button></div>
+      <div class="cron-row locked"><svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="8" height="6"/><path d="M5 6V4a2 2 0 0 1 4 0v2"/></svg><div><div>Force reconcile billing</div><div class="meta">Admin only · last run 6h ago</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.1 · gap-fill</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

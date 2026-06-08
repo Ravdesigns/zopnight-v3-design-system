@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Microcopy · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-microcopy"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · voice</div>
+<h1 class="ds-h1">Microcopy</h1>
+<p class="ds-lead">The smallest unit of voice. Button labels, empty-state lines, error sentences, tooltip blurbs. The system is not a designer's vibe · it's a library devs can paste from.</p>
+
+<section class="ds-section"><h2>Voice in one sentence</h2>
+<p style="font-size:14px;color:var(--ink);"><strong>Calm, specific, useful.</strong> Like a coworker who actually knows the system, not a marketing chatbot.</p>
+<ul style="line-height:1.7;color:var(--g-700);">
+  <li><strong>Sentence case</strong>. Not Title Case. "Save changes" not "Save Changes".</li>
+  <li><strong>No exclamation points.</strong> Ever. "Welcome!" → "Welcome".</li>
+  <li><strong>No emoji in product UI.</strong> Reserve for Nimbus + marketing.</li>
+  <li><strong>Verb-first for buttons</strong>. "Save invoice" not "Click here to save".</li>
+  <li><strong>Address the user as "you"</strong>. Not "users". Not "I" (the product is not first-person).</li>
+  <li><strong>Numbers as digits.</strong> "5 items" not "five items".</li>
+</ul>
+</section>
+
+<section class="ds-section"><h2>Button labels · the library</h2>
+<table class="ds-table"><thead><tr><th>Pattern</th><th>Use</th><th>Avoid</th></tr></thead><tbody>
+<tr><td>Save · Save changes</td><td>Form persists</td><td>Submit · OK · Done</td></tr>
+<tr><td>Create [object]</td><td>New resource · "Create project"</td><td>Add · New · + button alone</td></tr>
+<tr><td>Add [object]</td><td>Add to existing collection</td><td>Insert · Plus</td></tr>
+<tr><td>Delete [object]</td><td>Destructive · permanent</td><td>Remove · Trash · Drop</td></tr>
+<tr><td>Remove</td><td>Take out of group · reversible · "Remove from team"</td><td>Delete (different meaning)</td></tr>
+<tr><td>Archive</td><td>Hide but keep · soft-delete</td><td>Hide</td></tr>
+<tr><td>Cancel</td><td>Discard pending change</td><td>No · Abort · Nevermind</td></tr>
+<tr><td>Close</td><td>Dismiss modal · no changes</td><td>Done · OK · Got it</td></tr>
+<tr><td>Continue · Next</td><td>Wizard step forward</td><td>Proceed · Onward</td></tr>
+<tr><td>Back</td><td>Wizard step back</td><td>Previous · Return</td></tr>
+<tr><td>Retry</td><td>After a failure</td><td>Try again · Reload</td></tr>
+<tr><td>Sign in</td><td>Returning user auth</td><td>Login · Log in (two words)</td></tr>
+<tr><td>Sign up · Create account</td><td>New user</td><td>Register · Join</td></tr>
+<tr><td>Connect [provider]</td><td>OAuth · integrations</td><td>Link · Hook up</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Destructive language · the three tiers</h2>
+<table class="ds-table"><thead><tr><th>Verb</th><th>Reversibility</th><th>Confirm needed</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>Archive</strong></td><td>Fully reversible · 30 days+</td><td>Single click · undo toast</td><td>"Archive project"</td></tr>
+<tr><td><strong>Remove</strong></td><td>Reversible by re-adding · no data loss</td><td>Single click · undo toast</td><td>"Remove member"</td></tr>
+<tr><td><strong>Delete</strong></td><td>Permanent · data gone</td><td>Modal · type name to confirm</td><td>"Delete workspace"</td></tr>
+</tbody></table>
+<p>Pick the smallest tier that fits. If you're deleting and not destroying data, the verb is wrong.</p>
+</section>
+
+<section class="ds-section"><h2>Empty-state copy library</h2>
+<table class="ds-table"><thead><tr><th>Context</th><th>Headline</th><th>Sub-copy + CTA</th></tr></thead><tbody>
+<tr><td>First-run · no projects</td><td>No projects yet</td><td>Spin up your first project to start tracking deploys · <code>Create project</code></td></tr>
+<tr><td>No alerts</td><td>Nothing to see here</td><td>Your services are healthy · Nimbus is taking a nap.</td></tr>
+<tr><td>Filtered to zero</td><td>No matches</td><td>Try a different search or <code>Clear filters</code></td></tr>
+<tr><td>Search · 0 results</td><td>Nothing matched "{query}"</td><td>Check spelling, or browse all projects</td></tr>
+<tr><td>Inbox · all caught up</td><td>You're caught up</td><td>No pending reviews. Nice work.</td></tr>
+<tr><td>Activity feed · new account</td><td>It's quiet here</td><td>Activity from your team will show up once they start shipping</td></tr>
+<tr><td>Permission denied</td><td>You don't have access</td><td>Ask {admin} to grant the {role} role.</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Error message library</h2>
+<table class="ds-table"><thead><tr><th>Failure</th><th>User-facing copy</th></tr></thead><tbody>
+<tr><td>Network timeout</td><td>Couldn't reach our servers · check your connection and <a>retry</a></td></tr>
+<tr><td>500 · backend error</td><td>Something went wrong on our end · we've been notified. <a>Retry</a></td></tr>
+<tr><td>403 · forbidden</td><td>You don't have permission to do that · ask an admin for access</td></tr>
+<tr><td>404 · resource gone</td><td>Couldn't find {resource} · it may have been deleted</td></tr>
+<tr><td>409 · conflict</td><td>This was changed since you opened it · <a>reload</a> to see the latest</td></tr>
+<tr><td>413 · file too large</td><td>File is too big · max is {limit}</td></tr>
+<tr><td>422 · validation</td><td>[Field-level error · see Form validation page]</td></tr>
+<tr><td>429 · rate limit</td><td>Too many requests · try again in a moment</td></tr>
+<tr><td>Quota exceeded</td><td>You've hit the {plan} limit for {resource} · <a>upgrade</a> or <a>remove some</a></td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Toast copy</h2>
+<table class="ds-table"><thead><tr><th>Trigger</th><th>Copy</th><th>Action</th></tr></thead><tbody>
+<tr><td>Saved</td><td>"Saved"</td><td>(no button)</td></tr>
+<tr><td>Created · with route</td><td>"Project created"</td><td><code>View</code></td></tr>
+<tr><td>Deleted · reversible</td><td>"Member removed"</td><td><code>Undo</code> · 6s timeout</td></tr>
+<tr><td>Action sent · async</td><td>"Deploy started"</td><td><code>Track</code></td></tr>
+<tr><td>Error</td><td>"Couldn't save · <a>Retry</a>"</td><td>Persists until dismissed</td></tr>
+</tbody></table>
+</section>
+
+<section class="ds-section"><h2>Tooltip copy</h2>
+<p>Tooltips are <em>hints</em>, not documentation. One sentence · no period if &lt; 8 words · no emoji.</p>
+<ul style="line-height:1.7;color:var(--g-700);">
+  <li>"Total cost across all linked providers" ✓</li>
+  <li>"Click here to see the total cost across all providers and additional metadata" ✗</li>
+  <li>"Last synced 4 minutes ago" ✓</li>
+  <li>"This represents the most recent time the data was synchronized from the source system" ✗</li>
+</ul>
+</section>
+
+<section class="ds-section"><h2>Don't do this</h2>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>"Nothing matched <code>kafka</code>"</div>
+    <div class="why">Echo the query · user sees what they searched.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>"No results found! 😢"</div>
+    <div class="why">Emoji + exclamation + emotional appeal. Not the voice.</div>
+  </div>
+</div>
+<div class="ds-dodont">
+  <div class="ds-do"><span class="tag">✓ Do</span>
+    <div>"Delete workspace"</div>
+    <div class="why">Specific. Names what gets destroyed.</div>
+  </div>
+  <div class="ds-dont"><span class="tag">✗ Don't</span>
+    <div>"Yes, I'm sure"</div>
+    <div class="why">Doesn't name the action · easy to misclick after losing focus.</div>
+  </div>
+</div>
+</section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

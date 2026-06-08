@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Tree explorer · ZopNight V3 DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="tree"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Organism · hierarchy</div>
+<h1 class="ds-h1">Tree explorer</h1>
+<p class="ds-lead">CSS-var depth (any level), faint dashed indent guides, selected state with orange stripe, leaf-node modifier.</p>
+<section class="ds-section"><h2>CSS-var depth · indent guides</h2><p>Indent driven by <code>--depth: N</code>. Faint dashed guides show parent→child hierarchy.</p><div class="ds-demo"><div class="tr" style="margin:0;"><div class="tr-row" data-depth="0" style="--depth:0;"><span class="twist open"><svg viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 1 5 3.5L2 8"/></svg></span><span class="name"><span class="kind">cluster</span>platform-prod-eks</span><span class="meta">412 pods</span></div><div class="tr-row" data-depth="1" style="--depth:1;"><span class="twist open"><svg viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 1 5 3.5L2 8"/></svg></span><span class="name"><span class="kind">ns</span>payments</span><span class="meta">128</span></div><div class="tr-row selected" data-depth="2" style="--depth:2;"><span class="twist open"><svg viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 1 5 3.5L2 8"/></svg></span><span class="name"><span class="kind">deploy</span>payments-api-deploy</span><span class="meta">12</span></div><div class="tr-row" data-depth="3" style="--depth:3;"><span class="twist leaf"></span><span class="name"><span class="kind">pod</span>payments-api-deploy-7f4-xk9w2</span><span class="meta">Running</span></div></div></div><div class="ds-code"><pre>&lt;div class=&quot;tr&quot;&gt;
+  &lt;div class=&quot;tr-row&quot; data-depth=&quot;0&quot; style=&quot;--depth:0;&quot;&gt;
+    &lt;span class=&quot;twist open&quot;&gt;▸&lt;/span&gt;
+    &lt;span class=&quot;name&quot;&gt;&lt;span class=&quot;kind&quot;&gt;cluster&lt;/span&gt;platform-prod-eks&lt;/span&gt;
+    &lt;span class=&quot;meta&quot;&gt;412 pods&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;tr-row&quot; data-depth=&quot;2&quot; style=&quot;--depth:2;&quot;&gt;…&lt;/div&gt;
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>States</h2><table class="ds-table"><thead><tr><th>Modifier</th><th>Behaviour</th></tr></thead><tbody><tr><td><code>.tr-row.selected</code></td><td>Surface-2 bg + orange left stripe + bold name</td></tr><tr><td><code>.twist.open</code></td><td>Chevron rotated 90°</td></tr><tr><td><code>.twist.leaf</code></td><td>Greyed out · no children to expand</td></tr><tr><td><code>--depth: N</code></td><td>Indent · 20px per level · any depth</td></tr></tbody></table></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Multi-step wizard · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-wizard"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · multi-step</div>
+<h1 class="ds-h1">Multi-step wizard</h1>
+<p class="ds-lead">Top step indicator + content + sticky footer with Back/Next. Used for onboarding and complex flows.</p>
+<section class="ds-section"><h2>Step indicator + content + footer</h2><p>Multi-step flow. Indicator at top, content in the middle, sticky nav at bottom.</p><div class="ds-demo"><div style="background:var(--paper);border:1px solid var(--line);"><div style="display:flex;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line);gap:12px;">  <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:24px;background:var(--ink);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:12px;font-weight:600;">1</span><span style="font-size:13px;color:var(--ink);font-weight:600;">Connect account</span></div>  <div style="flex:1;height:1px;background:var(--line);"></div>  <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:24px;background:var(--zop-orange);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:12px;font-weight:600;">2</span><span style="font-size:13px;color:var(--ink);font-weight:600;">Pick resources</span></div>  <div style="flex:1;height:1px;background:var(--line);"></div>  <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:24px;background:var(--surface-2);color:var(--g-500);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:12px;font-weight:600;border:1px solid var(--line);">3</span><span style="font-size:13px;color:var(--g-500);">Attach schedule</span></div></div><div style="padding:32px 24px;min-height:200px;"><h3 style="font-family:var(--font-display);font-size:18px;font-weight:600;margin:0 0 6px;">Pick the resources to attach</h3><p style="font-size:13px;color:var(--g-600);margin:0 0 16px;">Choose which resources business-hours should manage.</p><div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink);"><label style="display:inline-flex;gap:8px;align-items:center;"><input type="checkbox" class="zn-check" checked /> payments-api-prod</label><label style="display:inline-flex;gap:8px;align-items:center;"><input type="checkbox" class="zn-check" checked /> analytics-warehouse</label><label style="display:inline-flex;gap:8px;align-items:center;"><input type="checkbox" class="zn-check" /> platform-prod-eks</label></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 24px;border-top:1px solid var(--line);background:var(--surface);"><span style="color:var(--g-500);font-size:12px;">Step 2 of 3</span><div style="display:flex;gap:8px;"><button class="btn btn-ghost btn-sm">← Back</button><button class="btn btn-primary btn-sm">Next →</button></div></div></div></div><div class="ds-code"><pre>&lt;div class=&quot;wizard&quot;&gt;
+  &lt;div class=&quot;wizard-steps&quot;&gt;
+    &lt;div class=&quot;step done&quot;&gt;…&lt;/div&gt;
+    &lt;div class=&quot;step current&quot;&gt;…&lt;/div&gt;
+    &lt;div class=&quot;step&quot;&gt;…&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wizard-body&quot;&gt;…&lt;/div&gt;
+  &lt;div class=&quot;wizard-foot&quot;&gt;
+    &lt;span&gt;Step 2 of 3&lt;/span&gt;
+    &lt;button class=&quot;btn btn-ghost&quot;&gt;← Back&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot;&gt;Next →&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div></section><section class="ds-section"><h2>Step states</h2><table class="ds-table"><thead><tr><th>State</th><th>Style</th></tr></thead><tbody><tr><td><code>.done</code></td><td>ink fill · checkmark</td></tr><tr><td><code>.current</code></td><td>orange fill · number</td></tr><tr><td><code>.upcoming</code></td><td>surface-2 · grey number · 1px border</td></tr><tr><td><code>.error</code></td><td>red fill · alert icon (validation failed)</td></tr></tbody></table></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>

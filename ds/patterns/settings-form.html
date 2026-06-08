@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Settings form · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-settings"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · forms</div>
+<h1 class="ds-h1">Settings form</h1>
+<p class="ds-lead">Two-column settings layout. Section header left, form fields right, divider between sections.</p>
+<section class="ds-section"><h2>Two-column settings form</h2><p>Section header (left) + form fields (right). Each section separated by a 1px line.</p><div class="ds-demo"><div style="background:var(--paper);border:1px solid var(--line);">
+  <div style="display:grid;grid-template-columns:260px 1fr;gap:32px;padding:28px 32px;border-bottom:1px solid var(--line);">
+    <div>
+      <div class="ds-eyebrow" style="margin-bottom:6px;">Section</div>
+      <h3 style="margin:0 0 6px;font-family:var(--font-display);font-size:16px;">Notifications</h3>
+      <p style="margin:0;font-size:12.5px;color:var(--g-600);line-height:1.5;">Where ZopNight sends alerts and digests.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="form-field"><label class="form-label">Email</label><input class="form-input" value="ops@acme.dev" /></div>
+      <div class="form-field"><label class="form-label">Slack channel</label><input class="form-input" placeholder="#cloud-cost" /></div>
+      <label style="display:inline-flex;gap:8px;align-items:center;font-size:13px;"><input type="checkbox" class="zn-check" checked /> Daily digest at 09:00 ET</label>
+      <label style="display:inline-flex;gap:8px;align-items:center;font-size:13px;"><input type="checkbox" class="zn-check" /> Real-time critical alerts</label>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:260px 1fr;gap:32px;padding:28px 32px;">
+    <div>
+      <div class="ds-eyebrow" style="margin-bottom:6px;">Section</div>
+      <h3 style="margin:0 0 6px;font-family:var(--font-display);font-size:16px;">Danger zone</h3>
+      <p style="margin:0;font-size:12.5px;color:var(--g-600);line-height:1.5;">Actions that can't be undone.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <button class="btn btn-destructive btn-sm" style="align-self:flex-start;">Delete workspace</button>
+    </div>
+  </div>
+</div></div><div class="ds-code"><pre>&lt;form class=&quot;settings-form&quot;&gt;
+  &lt;section class=&quot;settings-section&quot;&gt;
+    &lt;div class=&quot;settings-h&quot;&gt;
+      &lt;div class=&quot;eyebrow&quot;&gt;Section&lt;/div&gt;
+      &lt;h3&gt;Notifications&lt;/h3&gt;
+      &lt;p&gt;…&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;settings-body&quot;&gt;
+      &lt;div class=&quot;form-field&quot;&gt;…&lt;/div&gt;
+      &lt;div class=&quot;form-field&quot;&gt;…&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  …
+&lt;/form&gt;</pre></div></section>
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.0</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>
