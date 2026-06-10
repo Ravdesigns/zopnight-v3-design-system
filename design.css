@@ -135,9 +135,23 @@
   --sidebar-w:   224px;
   --sidebar-w-c: 56px;
 
-  --dur-fast: 110ms;
-  --dur-med:  160ms;
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast:     110ms;     /* hover · color shift · small ui responses */
+  --dur-med:      160ms;     /* default transitions · most cases */
+  --dur-slow:     320ms;     /* drawer / modal / large-surface motion */
+  --dur-xslow:    480ms;     /* page transitions · staged reveals */
+  --dur-pulse:    1400ms;    /* status dot pulse · critical/active beacons */
+  --dur-skel:     1400ms;    /* skeleton shimmer cycle */
+  --dur-debounce: 300ms;     /* async input debounce (search, validation) */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ─── Gradient carve-out (DESIGN.md §11) ─────────────────────────
+   * The system bans gradient TEXT (background-clip: text with a gradient).
+   * Gradient FILLS are permitted for two specific cases only:
+   *   1. Skeleton shimmer · linear-gradient that animates background-position
+   *      Pattern: gradient(90deg, surface-2 0%, surface-3 50%, surface-2 100%)
+   *   2. ApexCharts area / column fills · the gradient fade-down is a chart
+   *      UX convention that helps the reader perceive volume vs. value
+   * Any other gradient usage is forbidden by default. */
 }
 
 html[data-theme='dark'] {
@@ -634,7 +648,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex; flex-direction: column;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-top: 2px solid var(--ink);
+  border-top: 1px solid var(--ink);
   text-decoration: none;
   color: inherit;
   transition: border-color var(--dur-fast, 160ms) ease, transform var(--dur-fast, 160ms) ease;
@@ -778,7 +792,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex; flex-direction: column;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-top: 2px solid var(--ink);
+  border-top: 1px solid var(--ink);
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -1092,7 +1106,7 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex; align-items: center; justify-content: center;
   color: var(--g-500); cursor: pointer; padding: 0;
   transition: color 120ms ease, background 120ms ease;
-  border-radius: 2px;
+  border-radius: 0;
   margin-top: -2px; margin-right: -4px;
 }
 .alert .close:hover { color: var(--ink); background: var(--surface-2); }
@@ -1381,7 +1395,7 @@ h1, h2, h3, h4, h5, h6 {
   min-width: 16px; height: 16px; padding: 0 4px;
   background: var(--ink); color: var(--paper);
   font-size: 10px; font-weight: 600;
-  border-radius: 2px;
+  border-radius: 0;
   margin-left: 2px;
 }
 
@@ -1392,7 +1406,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--g-500); margin-left: 2px;
   cursor: pointer;
   transition: color 120ms ease, background 120ms ease;
-  border-radius: 2px;
+  border-radius: 0;
 }
 .filter-pill .x:hover, .fp .x:hover { color: var(--ink); background: var(--surface-2); }
 .filter-pill .x svg, .fp .x svg { width: 9px; height: 9px; }
@@ -2017,7 +2031,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px 14px 10px 16px;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-left: 2px solid var(--ink);
+  border-left: 1px solid var(--ink);
   margin-bottom: 12px;
 }
 [data-theme="dark"] .bulk-banner {
@@ -2572,27 +2586,17 @@ table.resources tbody tr:focus-within .row-actions { opacity: 1; }
   text-transform: none; letter-spacing: 0;
 }
 /* Hover · color shift only · no background fill (was loud in dark mode
- * and competed visually with the active state). The brightness change
- * is enough to read as interactive. */
+ * and competed visually with the active state). --ink resolves to the
+ * theme-correct foreground in both light and dark (dark text on cream
+ * paper, cream text on dark paper). */
 .tabs button:hover:not([aria-selected="true"]):not(.active),
 .tb button:hover:not([aria-selected="true"]):not(.active) {
   color: var(--ink);
-}
-[data-theme="dark"] .tabs button:hover:not([aria-selected="true"]):not(.active),
-[data-theme="dark"] .tb button:hover:not([aria-selected="true"]):not(.active) {
-  color: var(--paper);
 }
 .tabs button[aria-selected="true"], .tabs button.active,
 .tb button[aria-selected="true"], .tb button.active {
   color: var(--ink); font-weight: 600;
   border-bottom-color: var(--ink);
-}
-[data-theme="dark"] .tabs button[aria-selected="true"],
-[data-theme="dark"] .tabs button.active,
-[data-theme="dark"] .tb button[aria-selected="true"],
-[data-theme="dark"] .tb button.active {
-  color: var(--paper);
-  border-bottom-color: var(--paper);
 }
 .tabs button svg, .tb button svg { width: 14px; height: 14px; }
 
@@ -2602,7 +2606,7 @@ table.resources tbody tr:focus-within .row-actions { opacity: 1; }
   min-width: 18px; height: 18px; padding: 0 5px;
   background: var(--row-line); color: var(--g-700);
   font-family: var(--font-body); font-size: 10px; font-weight: 600;
-  border-radius: 2px;
+  border-radius: 0;
 }
 .tabs button[aria-selected="true"] .badge, .tabs button.active .badge,
 .tb button[aria-selected="true"] .badge, .tb button.active .badge {
@@ -2926,6 +2930,32 @@ table.resources tbody tr:focus-within .row-actions { opacity: 1; }
 :focus-visible {
   outline: 2px solid var(--zop-orange);
   outline-offset: 2px;
+}
+
+/* Secondary focus ring · use inside saturated brand bands where the
+ * orange ring would be invisible on orange (--zop-orange background) or
+ * low-contrast on green (--zop-green). Apply with .on-brand-band on the
+ * parent container; descendants inherit the ink ring. */
+.on-brand-band :focus-visible {
+  outline-color: var(--ink);
+}
+[data-theme="dark"] .on-brand-band :focus-visible {
+  outline-color: var(--paper);
+}
+
+/* ─────────── Reduced motion · top-level safety net ───────────
+ * Component-level @media (prefers-reduced-motion: reduce) blocks cover
+ * specific cases (skeletons, nimbus, switch loader, etc.). This is the
+ * catch-all that suppresses anything we missed. Doesn't disable motion
+ * entirely · just clamps duration to a near-instant value so transitions
+ * still execute (preserving state changes) without animation. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ─────────── Empty · filter-empty · error states · §18.8 ───────────
@@ -4041,7 +4071,7 @@ html[data-theme='dark'] .sb.medium { color: var(--g-600); }
   min-width: 16px; height: 14px; padding: 0 4px;
   background: currentColor; color: var(--paper);
   font-size: 9px; font-weight: 700;
-  border-radius: 2px;
+  border-radius: 0;
   margin-left: 2px;
 }
 .sev-badge .count > span, .sb .count > span { color: var(--paper); }
@@ -6977,7 +7007,7 @@ html[data-theme='dark'] .auth-shell .auth-aside {
   background: var(--ink) !important;
   color: var(--paper) !important;
   border: 0 !important;
-  border-radius: 3px !important;
+  border-radius: 0 !important;
   box-shadow: 0 4px 12px rgba(10,10,10,0.18) !important;
   font-family: var(--font-body) !important;
   font-size: 11.5px !important;
@@ -7015,7 +7045,7 @@ html[data-theme='dark'] .auth-shell .auth-aside {
   background: var(--ink) !important;
   color: var(--paper) !important;
   border: 0 !important;
-  border-radius: 2px !important;
+  border-radius: 0 !important;
   font-family: var(--font-body) !important;
   font-size: 10.5px !important;
   font-weight: 600 !important;
@@ -8251,7 +8281,7 @@ table.resources tr.expanded .expand-toggle { transform: rotate(90deg); color: va
   background: var(--ink) !important;
   color: var(--paper) !important;
   border: 0 !important;
-  border-radius: 3px !important;
+  border-radius: 0 !important;
   padding: 8px 10px !important;
   font-family: var(--font-body) !important;
   font-size: 11px !important;
@@ -8609,15 +8639,18 @@ table.resources tr.expanded .expand-toggle { transform: rotate(90deg); color: va
 
 /* ── 36. Z-index scale tokens ───────────────────────────────────── */
 :root {
-  --z-base:     1;
-  --z-dropdown: 10;
-  --z-sticky:   20;
-  --z-fixed:    30;
-  --z-overlay:  50;
-  --z-drawer:   90;
-  --z-modal:    100;
-  --z-toast:    110;
-  --z-tooltip:  200;
+  /* Stacking ladder · matches the documented scale in
+   * ds/components/composition.html. Each token sits at least 10 above
+   * the layer below so component-local nudges don't escape their box. */
+  --z-base:     0;     /* page content · cards · tables */
+  --z-sticky:   10;    /* sticky table headers · sub-nav · floating CTAs */
+  --z-fixed:    30;    /* fixed app chrome (sidebar collapse, footer banner) */
+  --z-dropdown: 50;    /* combobox · select · kebab menu */
+  --z-overlay:  80;    /* page-level scrim under drawers/modals */
+  --z-drawer:   100;   /* right/left drawers */
+  --z-modal:    200;   /* confirm modals · wizards */
+  --z-toast:    300;   /* snackbar · toast queue */
+  --z-tooltip:  400;   /* tooltips · popovers · top of everything */
 }
 
 /* ── 37. Glow shadows ───────────────────────────────────────────── */
