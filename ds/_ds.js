@@ -66,6 +66,7 @@
     { label: 'Patterns', items: [
       { id: 'p-header',       name: 'Page header',           href: '../patterns/page-header.html' },
       { id: 'p-filter-table', name: 'Filter row + table',    href: '../patterns/filter-table.html' },
+      { id: 'p-filter-popover', name: 'Filter popover',      href: '../patterns/filter-popover.html' },
       { id: 'p-drawer-form',  name: 'Drawer with form',      href: '../patterns/drawer-form.html' },
       { id: 'p-empty',        name: 'Empty state flow',      href: '../patterns/empty-state.html' },
       { id: 'p-recs',         name: 'Recommendations list',  href: '../patterns/recommendations.html' },

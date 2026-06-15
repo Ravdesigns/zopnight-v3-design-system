@@ -12,6 +12,19 @@ Pull `design.css` + `nimbus.js` together — they're versioned in lockstep.
 
 ---
 
+## [1.2.0] · 2026-06-12
+
+### Added
+
+- **Filter popover pattern** (`ds/patterns/filter-popover.html`) — collapses a wide filter row behind a single `Filters` trigger (with an active-count badge) + popover; the search field stays inline and active filters surface below as removable `.fp` pills. Use at 4+ filters; the inline `filter-table` row stays the choice for 1–3. Composes existing `.fp` / `.form-input` / `.btn` — no new `design.css` classes.
+
+### Notes — variants the app adopted (already covered by the system)
+
+- Compact page header (tighter heading→content spacing) — a spacing variant of the existing **Page header** pattern.
+- Copy-on-hover identifier (copy button reveals on row hover) — the hover-reveal variant of the existing **Mono ID + copy** component.
+
+---
+
 ## [1.1.0] · 2026-06-05
 
 ### Added — handoff polish pass

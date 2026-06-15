@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>Filter popover · ZopNight V3 DS · Pattern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../design.css" />
+<link rel="stylesheet" href="../_ds.css" />
+
+</head>
+<body>
+<aside class="ds-sidebar" data-current="p-filter-popover"></aside>
+<main class="ds-main">
+<div class="ds-eyebrow">Pattern · data</div>
+<h1 class="ds-h1">Filter popover</h1>
+<p class="ds-lead">A slim toolbar that collapses a wide filter row behind a single <strong>Filters</strong> button. Search stays inline; every filter moves into a popover; the active ones surface below as removable pills. Reach for it when a list has four-plus filters that would otherwise overflow the toolbar — for one to three filters, the inline <a href="filter-table.html">filter row + table</a> is calmer.</p>
+
+<section class="ds-section"><h2>Collapsed toolbar</h2><p>One line: search + a <code>Filters</code> trigger carrying a count badge, with the active filters shown as removable <a href="../components/filter-pills.html">filter pills</a> beneath. The list keeps full width — nothing is hidden, just folded.</p><div class="ds-demo"><div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <input class="form-input sm" placeholder="Search resources…" style="max-width:240px;" />
+    <button class="fp is-active" aria-expanded="false">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;"><path d="M1.5 2.5h9l-3.5 4v3l-2 1v-4z"/></svg>
+      <span class="lbl">Filters</span><span class="count">2</span>
+    </button>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <button class="fp is-active"><span class="lbl">Status</span><span class="sep">·</span><span class="val">Running</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>
+    <button class="fp is-active"><span class="lbl">Type</span><span class="sep">·</span><span class="val">ec2-instance</span><span class="x"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>
+  </div>
+</div></div></section>
+
+<section class="ds-section"><h2>Open popover</h2><p>The popover floats below the trigger (does not push content), holds one labelled control per filter, and ends with a <code>Reset all</code> link and a primary <code>Done</code>. Dismiss on outside-click, <span class="kbd kbd-sm">Esc</span>, or Done. Width 280–320px; stack labels above controls.</p><div class="ds-demo"><div style="position:relative;min-height:340px;width:100%;">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <input class="form-input sm" placeholder="Search resources…" style="max-width:240px;" />
+    <button class="fp is-active" aria-expanded="true">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;"><path d="M1.5 2.5h9l-3.5 4v3l-2 1v-4z"/></svg>
+      <span class="lbl">Filters</span><span class="count">2</span>
+    </button>
+  </div>
+  <div role="dialog" aria-label="Filters" style="position:absolute;top:44px;left:248px;width:300px;background:var(--surface-1);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(10,10,10,0.12);padding:14px;z-index:5;">
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--g-500);">Account</span><select class="form-input sm" style="width:100%;"><option>All cloud accounts</option></select></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--g-500);">Status</span><select class="form-input sm" style="width:100%;"><option>Running</option></select></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--g-500);">Type</span><select class="form-input sm" style="width:100%;"><option>ec2-instance</option></select></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--g-500);">Region</span><select class="form-input sm" style="width:100%;"><option>All regions</option></select></label>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);margin-top:12px;padding-top:11px;">
+      <button class="fp-clear">Reset all</button>
+      <button class="btn btn-primary btn-sm">Done</button>
+    </div>
+  </div>
+</div></div><div class="ds-code"><pre>&lt;!-- Toolbar: search + Filters trigger --&gt;
+&lt;div class=&quot;filter-toolbar&quot;&gt;
+  &lt;input class=&quot;form-input sm&quot; placeholder=&quot;Search…&quot; /&gt;
+  &lt;button class=&quot;fp is-active&quot; aria-expanded=&quot;false&quot;&gt;
+    &lt;svg&gt;…funnel…&lt;/svg&gt;&lt;span class=&quot;lbl&quot;&gt;Filters&lt;/span&gt;&lt;span class=&quot;count&quot;&gt;2&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Active filters surface as removable pills --&gt;
+&lt;button class=&quot;fp is-active&quot;&gt;
+  &lt;span class=&quot;lbl&quot;&gt;Status&lt;/span&gt;&lt;span class=&quot;sep&quot;&gt;·&lt;/span&gt;&lt;span class=&quot;val&quot;&gt;Running&lt;/span&gt;
+  &lt;span class=&quot;x&quot;&gt;×&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Popover: one labelled control per filter + footer --&gt;
+&lt;div role=&quot;dialog&quot; class=&quot;filter-pop&quot;&gt;
+  &lt;label&gt;&lt;span&gt;Account&lt;/span&gt;&lt;select class=&quot;form-input sm&quot;&gt;…&lt;/select&gt;&lt;/label&gt;
+  …
+  &lt;footer&gt;&lt;button class=&quot;fp-clear&quot;&gt;Reset all&lt;/button&gt;&lt;button class=&quot;btn btn-primary btn-sm&quot;&gt;Done&lt;/button&gt;&lt;/footer&gt;
+&lt;/div&gt;</pre></div></section>
+
+<section class="ds-section"><h2>Rules</h2><ul style="line-height:1.7;color:var(--g-700);list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;">
+  <li class="card" style="padding:8px 12px;font-size:12.5px;"><strong>Threshold.</strong> Four-plus filters → popover. One to three → inline <a href="filter-table.html">filter row</a>. Don't mix both on one screen.</li>
+  <li class="card" style="padding:8px 12px;font-size:12.5px;"><strong>Search stays out.</strong> Keep the search field inline in the toolbar; only the structured filters fold into the popover.</li>
+  <li class="card" style="padding:8px 12px;font-size:12.5px;"><strong>Count badge.</strong> The trigger shows the number of active filters (not the search). Zero active → no badge, default trigger style; one-plus → <code>is-active</code> trigger + badge.</li>
+  <li class="card" style="padding:8px 12px;font-size:12.5px;"><strong>Active pills stay visible.</strong> Each active filter renders as a removable <a href="../components/filter-pills.html">filter pill</a> below the toolbar, so state is never hidden behind a closed popover.</li>
+  <li class="card" style="padding:8px 12px;font-size:12.5px;"><strong>Float, don't push.</strong> The popover overlays content (z-index above the list, below drawers/modals — see <a href="../components/composition.html">composition</a>). Dismiss on outside-click, <span class="kbd kbd-sm">Esc</span>, or Done.</li>
+  <li class="card" style="padding:8px 12px;font-size:12.5px;"><strong>Accent.</strong> Active trigger uses the info tint (<code>--state-info</code>), matching the active filter-pill. Reset / Done use the standard <a href="../components/buttons.html">button</a> ladder.</li>
+</ul></section>
+
+<div class="ds-foot">
+  <div class="left">
+    <svg class="mini-nimbus" viewBox="-2 -2 36 32" shape-rendering="crispEdges" aria-hidden="true">
+      <rect x="12" y="0" width="20" height="4" fill="#FCFAF2"/><rect x="8" y="4" width="40" height="4" fill="#FCFAF2"/><rect x="4" y="8" width="48" height="4" fill="#FCFAF2"/><rect x="0" y="12" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="16" width="56" height="4" fill="#FCFAF2"/><rect x="0" y="20" width="52" height="4" fill="#FCFAF2"/><rect x="4" y="24" width="44" height="4" fill="#FCFAF2"/>
+      <rect x="16" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="36" y="14" width="4" height="6" fill="#0A0A0A"/><rect x="22" y="24" width="12" height="2" fill="#0A0A0A"/>
+    </svg>
+    <span>ZopNight V3</span>
+    <span class="version">v1.2</span>
+  </div>
+  <div class="right">
+    <a href="../index.html">← overview</a>
+  </div>
+</div>
+</main>
+<script src="../_ds.js"></script>
+</body>
+</html>
